@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Mes Révisions CM1 · CM2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── PALETTE OKABE-ITO (daltonisme) ── */
+:root {
+  --maths-color:#0072B2; --maths-light:#E3F1FB; --maths-dark:#004F7C;
+  --histoire-color:#D55E00; --histoire-light:#FDEEE5; --histoire-dark:#9A4400;
+  --cm1-color:#009E73; --cm1-light:#E0F5EE; --cm1-dark:#006E50;
+  --francais-color:#CC79A7; --francais-light:#F9EEF5; --francais-dark:#8B3D6A;
+  --geo-color:#56B4E9; --geo-light:#E8F6FD; --geo-dark:#1A7AAF;
+  --sciences-color:#E69F00; --sciences-light:#FFF8E1; --sciences-dark:#7A5200;
+  --emc-color:#6D3F8B; --emc-light:#F0EAF7; --emc-dark:#4A2060;
+  --success:#0072B2; --success-bg:#E3F1FB; --success-text:#004F7C;
+  --error:#CC3311; --error-bg:#FDECEA; --error-text:#7A1A08;
+  --partial:#E69F00; --partial-bg:#FFF8E1; --partial-text:#7A5200;
+  --bg:#F5F7FA; --text:#1A1A2E; --text-light:#5A5A7A;
+  --radius:18px; --shadow:0 6px 24px rgba(0,0,0,0.08); --shadow-lg:0 14px 40px rgba(0,0,0,0.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── HEADER ── */
+.app-header{background:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 12px rgba(0,0,0,0.07);position:sticky;top:0;z-index:200}
+.logo{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--maths-color)}
+.header-sub{font-size:0.76rem;color:var(--text-light);font-weight:600}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn-history{background:var(--maths-light);color:var(--maths-color);border:2px solid var(--maths-color);border-radius:50px;padding:6px 13px;font-size:0.78rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s}
+.btn-history:hover{background:var(--maths-color);color:#fff}
+.btn-gear{background:none;border:2px solid #E0E0EF;border-radius:50%;width:34px;height:34px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--text-light)}
+.btn-gear:hover,.btn-gear.active{background:var(--bg);border-color:var(--text-light);color:var(--text)}
+
+/* ── API DRAWER ── */
+.api-drawer{background:#FFFBF0;border-bottom:2px solid #FFE082;padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease}
+.api-drawer.open{max-height:80px;padding:10px 16px}
+.api-drawer-inner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:0.78rem;font-weight:700;color:#5A4200}
+.api-key-input{padding:5px 10px;border:2px solid #FFD54F;border-radius:7px;font-family:'Nunito',sans-serif;font-size:0.76rem;font-weight:600;outline:none;width:190px;color:var(--text);background:#fff}
+.key-ok{color:var(--success-text);font-weight:800}
+.key-hint{font-size:0.7rem;color:#8A7040;font-weight:600}
+
+/* ── SCREENS ── */
+.screen{display:none}.screen.active{display:block}
+
+/* ── HOME ── */
+#home{padding:20px 14px;max-width:760px;margin:0 auto}
+.welcome{text-align:center;margin-bottom:20px}
+.welcome h1{font-family:'Fredoka One',cursive;font-size:1.85rem;line-height:1.2}
+.welcome p{color:var(--text-light);font-size:0.88rem;margin-top:5px;font-weight:600}
+
+/* Subject group headers */
+.group-title{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--text-light);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.group-title::after{content:'';flex:1;height:1px;background:#E0E0EF}
+
+.subject-cards{display:flex;flex-direction:column;gap:12px}
+
+/* ── SUBJECT CARD ── */
+.subject-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s,box-shadow .2s;user-select:none}
+.subject-card:active{transform:scale(0.985)}
+.subject-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+
+.subject-card-header{padding:14px 16px 12px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+/* Diagonal stripe pattern per subject — daltonism shape encoding */
+.maths .subject-card-header{background:var(--maths-light);background-image:repeating-linear-gradient(45deg,rgba(0,114,178,.06) 0,rgba(0,114,178,.06) 2px,transparent 2px,transparent 9px)}
+.histoire .subject-card-header{background:var(--histoire-light);background-image:repeating-linear-gradient(90deg,rgba(213,94,0,.06) 0,rgba(213,94,0,.06) 2px,transparent 2px,transparent 9px)}
+.histoire-cm1 .subject-card-header{background:var(--cm1-light);background-image:repeating-linear-gradient(135deg,rgba(0,158,115,.06) 0,rgba(0,158,115,.06) 2px,transparent 2px,transparent 9px)}
+.francais .subject-card-header{background:var(--francais-light);background-image:repeating-linear-gradient(60deg,rgba(204,121,167,.06) 0,rgba(204,121,167,.06) 2px,transparent 2px,transparent 9px)}
+.francais-cm1 .subject-card-header{background:var(--francais-light);background-image:repeating-linear-gradient(120deg,rgba(204,121,167,.06) 0,rgba(204,121,167,.06) 2px,transparent 2px,transparent 9px)}
+.geo .subject-card-header{background:var(--geo-light);background-image:repeating-linear-gradient(0deg,rgba(86,180,233,.06) 0,rgba(86,180,233,.06) 2px,transparent 2px,transparent 9px)}
+.geo-cm1 .subject-card-header{background:var(--geo-light);background-image:repeating-linear-gradient(45deg,rgba(86,180,233,.06) 0,rgba(86,180,233,.06) 2px,transparent 2px,transparent 9px)}
+.sciences .subject-card-header{background:var(--sciences-light);background-image:repeating-linear-gradient(30deg,rgba(230,159,0,.06) 0,rgba(230,159,0,.06) 2px,transparent 2px,transparent 9px)}
+.sciences-cm1 .subject-card-header{background:var(--sciences-light);background-image:repeating-linear-gradient(150deg,rgba(230,159,0,.06) 0,rgba(230,159,0,.06) 2px,transparent 2px,transparent 9px)}
+.emc .subject-card-header{background:var(--emc-light);background-image:repeating-linear-gradient(75deg,rgba(109,63,139,.06) 0,rgba(109,63,139,.06) 2px,transparent 2px,transparent 9px)}
+.emc-cm1 .subject-card-header{background:var(--emc-light);background-image:repeating-linear-gradient(105deg,rgba(109,63,139,.06) 0,rgba(109,63,139,.06) 2px,transparent 2px,transparent 9px)}
+
+.subject-icon-wrap{position:relative;flex-shrink:0}
+.subject-icon{font-size:1.9rem;display:block}
+.level-badge{position:absolute;top:-5px;right:-8px;font-family:'Fredoka One',cursive;font-size:0.56rem;padding:2px 5px;border-radius:4px;color:#fff;border:1.5px solid #fff;letter-spacing:.02em;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+.badge-cm2-h{background:var(--histoire-color)}
+.badge-cm2-m{background:var(--maths-color)}
+.badge-cm2-f{background:var(--francais-color)}
+.badge-cm2-g{background:var(--geo-color)}
+.badge-cm2-s{background:var(--sciences-color)}
+.badge-cm2-e{background:var(--emc-color)}
+.badge-cm1{background:var(--cm1-color);transform:rotate(-6deg)}
+
+.subject-info{flex:1}
+.subject-name{font-family:'Fredoka One',cursive;font-size:1.3rem}
+.maths .subject-name{color:var(--maths-color)}
+.histoire .subject-name,.histoire-cm1 .subject-name{color:var(--histoire-color)}
+.francais .subject-name,.francais-cm1 .subject-name{color:var(--francais-color)}
+.geo .subject-name,.geo-cm1 .subject-name{color:var(--geo-color)}
+.sciences .subject-name,.sciences-cm1 .subject-name{color:var(--sciences-color)}
+.emc .subject-name,.emc-cm1 .subject-name{color:var(--emc-color)}
+.subject-desc{font-size:0.76rem;color:var(--text-light);font-weight:600;margin-top:2px}
+
+.level-strip{display:flex;align-items:center;gap:6px;padding:4px 16px;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.ldot{width:6px;height:6px;border-radius:50%}
+.maths .level-strip{background:#EEF4FA;color:var(--maths-dark);border-top:1px solid #D0E6F5}
+.maths .ldot{background:var(--maths-color)}
+.histoire .level-strip{background:#FEF4EE;color:var(--histoire-dark);border-top:1px solid #F5D9C5}
+.histoire .ldot{background:var(--histoire-color)}
+.histoire-cm1 .level-strip{background:#EDF9F4;color:var(--cm1-dark);border-top:1px solid #C0E8D8}
+.histoire-cm1 .ldot{background:var(--cm1-color)}
+.francais .level-strip,.francais-cm1 .level-strip{background:#FAF0F6;color:var(--francais-dark);border-top:1px solid #EDD5E8}
+.francais .ldot,.francais-cm1 .ldot{background:var(--francais-color)}
+.geo .level-strip,.geo-cm1 .level-strip{background:#EEF7FD;color:var(--geo-dark);border-top:1px solid #C8E8F8}
+.geo .ldot,.geo-cm1 .ldot{background:var(--geo-color)}
+.sciences .level-strip,.sciences-cm1 .level-strip{background:#FEF9EC;color:var(--sciences-dark);border-top:1px solid #F0DFA0}
+.sciences .ldot,.sciences-cm1 .ldot{background:var(--sciences-color)}
+.emc .level-strip,.emc-cm1 .level-strip{background:#F2EBF8;color:var(--emc-dark);border-top:1px solid #D8C4EC}
+.emc .ldot,.emc-cm1 .ldot{background:var(--emc-color)}
+
+.subject-card-body{padding:10px 16px 14px}
+.themes-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:11px}
+.theme-chip{background:#F0F0F7;border-radius:50px;padding:3px 10px;font-size:0.73rem;font-weight:700;color:var(--text-light);border:1.5px solid #E0E0EF}
+.card-actions{display:flex;gap:7px}
+.btn-action{flex:1;padding:11px 5px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:2px}
+.badge{font-size:0.6rem;background:rgba(255,255,255,.3);border-radius:50px;padding:1px 6px;font-weight:700}
+
+/* Button colors per subject */
+.maths .btn-qcm{background:var(--maths-color);color:#fff}
+.maths .btn-ouvert{background:var(--maths-light);color:var(--maths-dark);border:2px solid var(--maths-color)}
+.maths .btn-cours{background:#EEF4F9;color:var(--maths-dark)}
+.histoire .btn-qcm,.histoire-cm1 .btn-qcm{background:var(--histoire-color);color:#fff}
+.histoire .btn-ouvert,.histoire-cm1 .btn-ouvert{background:var(--histoire-light);color:var(--histoire-dark);border:2px solid var(--histoire-color)}
+.histoire .btn-cours,.histoire-cm1 .btn-cours{background:#FDF3EE;color:var(--histoire-dark)}
+.francais .btn-qcm,.francais-cm1 .btn-qcm{background:var(--francais-color);color:#fff}
+.francais .btn-ouvert,.francais-cm1 .btn-ouvert{background:var(--francais-light);color:var(--francais-dark);border:2px solid var(--francais-color)}
+.francais .btn-cours,.francais-cm1 .btn-cours{background:#F9EEF5;color:var(--francais-dark)}
+.geo .btn-qcm,.geo-cm1 .btn-qcm{background:var(--geo-color);color:#fff}
+.geo .btn-ouvert,.geo-cm1 .btn-ouvert{background:var(--geo-light);color:var(--geo-dark);border:2px solid var(--geo-color)}
+.geo .btn-cours,.geo-cm1 .btn-cours{background:#EEF7FD;color:var(--geo-dark)}
+.sciences .btn-qcm,.sciences-cm1 .btn-qcm{background:var(--sciences-color);color:#fff}
+.sciences .btn-ouvert,.sciences-cm1 .btn-ouvert{background:var(--sciences-light);color:var(--sciences-dark);border:2px solid var(--sciences-color)}
+.sciences .btn-cours,.sciences-cm1 .btn-cours{background:#FEF9EC;color:var(--sciences-dark)}
+.emc .btn-qcm,.emc-cm1 .btn-qcm{background:var(--emc-color);color:#fff}
+.emc .btn-ouvert,.emc-cm1 .btn-ouvert{background:var(--emc-light);color:var(--emc-dark);border:2px solid var(--emc-color)}
+.emc .btn-cours,.emc-cm1 .btn-cours{background:#F2EBF8;color:var(--emc-dark)}
+
+/* ── COURS ── */
+#cours{max-width:760px;margin:0 auto}
+.cours-header{padding:14px 16px 12px;display:flex;align-items:center;gap:10px;background:#fff;border-bottom:2px solid var(--bg);position:sticky;top:58px;z-index:100}
+.btn-back{background:none;border:2px solid #E0E0EF;font-size:1.1rem;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;color:var(--text)}
+.btn-back:hover{background:var(--bg)}
+.cours-title{font-family:'Fredoka One',cursive;font-size:1.15rem}
+.cours-body{padding:14px 14px 50px}
+.theme-section{margin-bottom:20px}
+.theme-title{font-family:'Fredoka One',cursive;font-size:0.93rem;padding:7px 12px;border-radius:9px;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.theme-title::before{font-size:0.7rem;font-weight:900;flex-shrink:0}
+/* Shape markers per subject */
+.maths-theme{background:var(--maths-light);color:var(--maths-dark);border-left:4px solid var(--maths-color)}.maths-theme::before{content:"■";color:var(--maths-color)}
+.histoire-theme{background:var(--histoire-light);color:var(--histoire-dark);border-left:4px solid var(--histoire-color)}.histoire-theme::before{content:"●";color:var(--histoire-color)}
+.cm1-theme{background:var(--cm1-light);color:var(--cm1-dark);border-left:4px solid var(--cm1-color)}.cm1-theme::before{content:"◆";color:var(--cm1-color)}
+.francais-theme{background:var(--francais-light);color:var(--francais-dark);border-left:4px solid var(--francais-color)}.francais-theme::before{content:"▲";color:var(--francais-color)}
+.geo-theme{background:var(--geo-light);color:var(--geo-dark);border-left:4px solid var(--geo-color)}.geo-theme::before{content:"◉";color:var(--geo-color)}
+.sciences-theme{background:var(--sciences-light);color:var(--sciences-dark);border-left:4px solid var(--sciences-color)}.sciences-theme::before{content:"★";color:var(--sciences-color)}
+.emc-theme{background:var(--emc-light);color:var(--emc-dark);border-left:4px solid var(--emc-color)}.emc-theme::before{content:"⬟";color:var(--emc-color)}
+
+.cours-content{background:#fff;border-radius:13px;padding:14px 16px;box-shadow:var(--shadow);line-height:1.75;font-size:0.88rem}
+.cours-content h4{font-weight:800;margin:10px 0 5px;color:var(--text)}.cours-content h4:first-child{margin-top:0}
+.cours-content p{color:#444;margin-bottom:7px}
+.cours-content ul{padding-left:17px;color:#444}.cours-content li{margin-bottom:4px}
+.cours-content .exemple{background:#EEF4FF;border-left:3px solid var(--maths-color);padding:8px 12px;border-radius:0 9px 9px 0;margin:8px 0;font-style:italic;font-size:0.85rem;color:#333}
+.cours-content .regle{background:#FFF3E0;border-left:3px solid var(--partial);padding:8px 12px;border-radius:0 9px 9px 0;margin:8px 0;font-weight:700;font-size:0.85rem}
+.cours-content table{width:100%;border-collapse:collapse;margin:8px 0;font-size:0.83rem}
+.cours-content th{background:#F0F0F7;padding:6px 8px;text-align:left;font-weight:800;border:1px solid #DDD}
+.cours-content td{padding:5px 8px;border:1px solid #EEE}
+.cours-content tr:nth-child(even) td{background:#FAFAFA}
+
+/* ── QUIZ ── */
+#quiz{max-width:760px;margin:0 auto}
+.quiz-header{padding:14px 16px 10px;background:#fff;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--bg)}
+.quiz-meta{flex:1}.quiz-meta h2{font-family:'Fredoka One',cursive;font-size:1.08rem}
+.quiz-progress-text{font-size:0.74rem;color:var(--text-light);font-weight:700;margin-top:2px}
+.progress-bar-wrap{height:6px;background:#E0E0EF;margin:0 16px 2px;border-radius:50px}
+.progress-bar-fill{height:100%;border-radius:50px;transition:width .4s ease}
+.difficulty-row{display:flex;align-items:center;gap:5px;padding:3px 16px 8px;font-size:0.7rem;font-weight:800;color:var(--text-light)}
+.diff-pip{width:8px;height:8px;border-radius:2px;border:1.5px solid currentColor;opacity:.25;transition:all .3s}
+.diff-pip.active{opacity:1;background:currentColor}
+.quiz-body{padding:10px 14px 50px}
+.question-card{background:#fff;border-radius:var(--radius);padding:18px 16px;box-shadow:var(--shadow);margin-bottom:12px}
+.question-theme-tag{font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;opacity:.5}
+.question-text{font-size:0.98rem;font-weight:700;line-height:1.5;margin-bottom:15px}
+.choices{display:flex;flex-direction:column;gap:7px}
+.choice-btn{background:#F5F5FA;border:2.5px solid #DDDDE8;border-radius:10px;padding:11px 13px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;text-align:left;cursor:pointer;transition:all .18s;color:var(--text);display:flex;align-items:center;gap:9px}
+.choice-letter{width:22px;height:22px;border-radius:5px;background:#DDDDE8;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:900;flex-shrink:0;transition:all .18s}
+.choice-btn.correct{border-color:var(--success);background:var(--success-bg);color:var(--success-text)}
+.choice-btn.correct .choice-letter{background:var(--success);color:#fff}
+.choice-btn.wrong{border-color:var(--error);background:var(--error-bg);color:var(--error-text)}
+.choice-btn.wrong .choice-letter{background:var(--error);color:#fff}
+.choice-btn:disabled{cursor:default}
+.open-answer{width:100%;min-height:100px;padding:10px 12px;border:2.5px solid #DDDDE8;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:600;resize:none;outline:none;transition:border .2s;color:var(--text);background:#FAFAFA}
+.open-answer:focus{border-color:var(--maths-color);background:#fff}
+.btn-submit{width:100%;padding:12px;margin-top:8px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;transition:all .2s}
+.btn-submit:disabled{opacity:.5;cursor:default}
+.feedback-block{border-radius:10px;padding:12px 14px;margin-top:10px;display:none;line-height:1.6;font-size:0.86rem;border-left:4px solid #DDD}
+.feedback-block.show{display:block}
+.feedback-block.good{background:var(--success-bg);border-left-color:var(--success);color:var(--success-text)}
+.feedback-block.bad{background:var(--error-bg);border-left-color:var(--error);color:var(--error-text)}
+.feedback-block.partial{background:var(--partial-bg);border-left-color:var(--partial);color:var(--partial-text)}
+.feedback-label{font-weight:800;font-size:0.8rem;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.fb-shape{width:13px;height:13px;display:inline-block;flex-shrink:0}
+.good .fb-shape{background:var(--success);clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%)}
+.bad .fb-shape{background:var(--error);clip-path:polygon(20% 0%,0% 20%,30% 50%,0% 80%,20% 100%,50% 70%,80% 100%,100% 80%,70% 50%,100% 20%,80% 0%,50% 30%)}
+.partial .fb-shape{background:var(--partial);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.btn-next{width:100%;padding:12px;margin-top:8px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;color:#fff;display:none;transition:all .2s}
+.btn-next.show{display:block}
+.loading-block{text-align:center;padding:36px 20px;display:none}.loading-block.show{display:block}
+.spinner{width:40px;height:40px;border-radius:50%;border:5px solid #E0E0EF;border-top-color:var(--maths-color);animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-weight:700;color:var(--text-light);font-size:0.88rem}
+
+/* ── RESULTS ── */
+#results{max-width:760px;margin:0 auto}
+.results-header{padding:14px 16px 12px;background:#fff;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--bg)}
+.results-body{padding:14px 14px 50px}
+.score-card{background:#fff;border-radius:var(--radius);padding:24px 18px;box-shadow:var(--shadow);text-align:center;margin-bottom:14px;border-top:5px solid var(--maths-color)}
+.score-emoji{font-size:3rem;margin-bottom:5px}
+.score-number{font-family:'Fredoka One',cursive;font-size:2.7rem}
+.score-label{color:var(--text-light);font-weight:700;font-size:0.85rem;margin-top:3px}
+.score-msg{font-weight:700;font-size:0.9rem;margin-top:8px}
+.results-review{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.result-item{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border-left:4px solid #DDD}
+.result-item.correct-item{border-left-color:var(--success)}.result-item.wrong-item{border-left-color:var(--error)}.result-item.partial-item{border-left-color:var(--partial)}
+.result-q{font-weight:700;font-size:0.84rem;margin-bottom:3px}
+.result-answer{font-size:0.78rem;color:var(--text-light);font-weight:600}
+.result-correct{color:var(--success-text);font-weight:800}.result-wrong{color:var(--error-text);font-weight:800}.result-partial{color:var(--partial-text);font-weight:800}
+.btn-primary{width:100%;padding:14px;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;color:#fff;margin-bottom:8px;transition:all .2s}
+.btn-secondary{width:100%;padding:12px;border:2.5px solid #DDDDE8;border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;color:var(--text);transition:all .2s}
+.btn-secondary:hover{border-color:var(--maths-color);color:var(--maths-color)}
+
+/* ── HISTORY ── */
+#history{max-width:760px;margin:0 auto}
+.history-header{padding:14px 16px 12px;background:#fff;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--bg)}
+.history-body{padding:14px 14px 50px}
+.history-empty{text-align:center;padding:50px 20px;color:var(--text-light)}
+.history-empty .big-icon{font-size:2.6rem;margin-bottom:10px}
+.history-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.stat-card{background:#fff;border-radius:12px;padding:13px 12px;box-shadow:var(--shadow);text-align:center}
+.stat-num{font-family:'Fredoka One',cursive;font-size:1.8rem}
+.stat-label{font-size:0.74rem;font-weight:700;color:var(--text-light);margin-top:2px}
+.history-list{display:flex;flex-direction:column;gap:8px}
+.history-item{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px}
+.history-badge{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;position:relative}
+.mini-badge{position:absolute;bottom:-4px;right:-4px;font-size:0.5rem;font-weight:900;padding:1px 4px;border-radius:4px;color:#fff;border:1.5px solid #fff}
+.history-info{flex:1}.history-info h4{font-weight:800;font-size:0.86rem}.history-info p{font-size:0.74rem;color:var(--text-light);font-weight:600;margin-top:2px}
+.history-score{font-family:'Fredoka One',cursive;font-size:1.2rem}
+.score-good{color:var(--success)}.score-mid{color:var(--partial)}.score-bad{color:var(--error)}
+.btn-clear{width:100%;padding:11px;border:2px solid var(--error-bg);border-radius:10px;background:#fff;color:var(--error);font-family:'Nunito',sans-serif;font-size:0.84rem;font-weight:700;cursor:pointer;margin-top:12px;transition:all .2s}
+.btn-clear:hover{background:var(--error-bg)}
+.section-title{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:10px;color:var(--text-light);display:flex;align-items:center;gap:7px}
+.section-title::after{content:'';flex:1;height:1px;background:#E0E0EF}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <span class="logo">📚</span>
+  <div>
+    <div style="font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--text)">Mes Révisions</div>
+    <div class="header-sub">CM1 · CM2 · Toutes matières</div>
+  </div>
+  <div class="header-right">
+    <button class="btn-history" onclick="showScreen('history')">▦ Progrès</button>
+    <button class="btn-gear" id="gearBtn" onclick="toggleApiDrawer()" title="Paramètres API">⚙️</button>
+  </div>
+</header>
+
+<!-- API DRAWER (hidden by default) -->
+<div class="api-drawer" id="apiDrawer">
+  <div class="api-drawer-inner">
+    🔑 Clé API Anthropic :
+    <input type="password" class="api-key-input" id="apiKeyInput" placeholder="sk-ant-..." oninput="saveApiKey()">
+    <span id="keyStatus"></span>
+    <span class="key-hint">· Nécessaire uniquement pour QCM et Questions ouvertes</span>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div id="home-inner" style="padding:18px 14px;max-width:760px;margin:0 auto">
+    <div class="welcome">
+      <h1>Bonjour !<br>Prêt à réviser ? 🚀</h1>
+      <p>Choisis une matière · Lis le cours · Lance un quiz</p>
+    </div>
+    <div class="subject-cards" id="subject-cards"></div>
+  </div>
+</div>
+
+<!-- COURS -->
+<div id="cours" class="screen">
+  <div class="cours-header">
+    <button class="btn-back" onclick="showScreen('home')">←</button>
+    <div class="cours-title" id="cours-title"></div>
+  </div>
+  <div class="cours-body" id="cours-body"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="quiz-header">
+    <button class="btn-back" onclick="confirmQuit()">←</button>
+    <div class="quiz-meta">
+      <h2 id="quiz-title"></h2>
+      <div class="quiz-progress-text" id="quiz-progress-text">Question 1 / 5</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
+  <div class="difficulty-row">
+    Difficulté :
+    <span class="diff-pip" id="dp1"></span><span class="diff-pip" id="dp2"></span>
+    <span class="diff-pip" id="dp3"></span><span class="diff-pip" id="dp4"></span>
+    <span class="diff-pip" id="dp5"></span>
+  </div>
+  <div class="quiz-body">
+    <div class="loading-block" id="loading-block"><div class="spinner"></div><div class="loading-text">Génération des questions…</div></div>
+    <div id="question-area"></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results" class="screen">
+  <div class="results-header">
+    <button class="btn-back" onclick="showScreen('home')">←</button>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.1rem" id="results-title"></div>
+  </div>
+  <div class="results-body" id="results-body"></div>
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="screen">
+  <div class="history-header">
+    <button class="btn-back" onclick="showScreen('home')">←</button>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.1rem">▦ Mes Progrès</div>
+  </div>
+  <div class="history-body" id="history-body"></div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// COURS DATA
+// ════════════════════════════════════════════════════════════════
+const COURS = {
+
+// ── MATHS CM2 ──────────────────────────────────────────────────
+maths:{
+  label:"Mathématiques CM2",shortLabel:"Maths",icon:"🔢",level:"CM2",color:"maths",
+  cardClass:"maths",themeClass:"maths-theme",badgeClass:"badge-cm2-m",
+  desc:"Nombres · Calcul · Géométrie · Mesures",
+  themes:[
+    {id:"nombres",title:"Les grands nombres",content:`
+      <h4>Les classes de nombres</h4>
+      <p>En CM2, on travaille avec des nombres jusqu'aux <strong>milliards</strong>. Chaque classe contient trois rangs : unités, dizaines, centaines.</p>
+      <table><tr><th>Classe</th><th>Rangs</th><th>Exemple</th></tr>
+        <tr><td>Milliards</td><td>u. de milliards, d. de milliards, c. de milliards</td><td>2 000 000 000</td></tr>
+        <tr><td>Millions</td><td>u. de millions, d. de millions, c. de millions</td><td>3 000 000</td></tr>
+        <tr><td>Milliers</td><td>u. de mille, d. de mille, c. de mille</td><td>4 000</td></tr>
+        <tr><td>Unités</td><td>unités, dizaines, centaines</td><td>567</td></tr>
+      </table>
+      <h4>Lire et écrire un grand nombre</h4>
+      <p>On sépare les classes par une <strong>espace</strong> (jamais un point). On lit de gauche à droite, classe par classe.</p>
+      <div class="exemple">3 456 789 → trois millions quatre cent cinquante-six mille sept cent quatre-vingt-neuf</div>
+      <h4>Valeur positionnelle</h4>
+      <p>La valeur d'un chiffre dépend de sa <strong>position</strong> dans le nombre. Le même chiffre peut valoir 5, 50, 500, 5 000…</p>
+      <div class="exemple">Dans 3 <u>5</u>26 : le 5 est au rang des centaines → il vaut 500.</div>
+      <h4>Comparer et ranger des nombres</h4>
+      <p>On compare d'abord le nombre de chiffres, puis chiffre par chiffre de gauche à droite.</p>
+      <div class="exemple">458 320 &lt; 1 200 000 (moins de chiffres) · 327 450 &gt; 327 200 (même préfixe, comparer le 4 vs 2)</div>
+      <div class="regle">🔑 Encadrer un nombre : trouver le multiple de 1 000 (ou 10 000) immédiatement inférieur et supérieur. Ex : 14 000 &lt; 14 637 &lt; 15 000</div>`
+    },
+    {id:"fractions",title:"Fractions & nombres décimaux",content:`
+      <h4>Qu'est-ce qu'une fraction ?</h4>
+      <p>Une fraction <strong>a/b</strong> représente <em>a</em> parts d'un tout divisé en <em>b</em> parts égales. Le nombre du haut est le <strong>numérateur</strong>, le nombre du bas est le <strong>dénominateur</strong>.</p>
+      <div class="exemple">3/4 = on prend 3 parts sur 4 → les ¾ d'une pizza</div>
+      <h4>Fractions équivalentes</h4>
+      <p>On peut multiplier (ou diviser) le numérateur et le dénominateur par le même nombre sans changer la valeur.</p>
+      <div class="exemple">1/2 = 2/4 = 3/6 = 50/100 — toutes représentent la même quantité.</div>
+      <h4>Fractions et nombres décimaux</h4>
+      <p>Une fraction avec 10, 100 ou 1 000 au dénominateur se convertit directement en décimal.</p>
+      <table><tr><th>Fraction</th><th>Décimal</th><th>Se lit</th></tr>
+        <tr><td>7/10</td><td>0,7</td><td>zéro virgule sept</td></tr>
+        <tr><td>25/100</td><td>0,25</td><td>zéro virgule vingt-cinq</td></tr>
+        <tr><td>375/1000</td><td>0,375</td><td>zéro virgule trois cent soixante-quinze</td></tr>
+      </table>
+      <h4>Comparer des fractions</h4>
+      <ul><li>Même dénominateur → comparer les numérateurs : 3/7 &lt; 5/7</li>
+          <li>Même numérateur → la plus grande fraction a le plus petit dénominateur : 1/3 &gt; 1/5</li>
+          <li>Sinon → réduire au même dénominateur ou convertir en décimal.</li></ul>
+      <div class="regle">🔑 Fraction = division : 3/4 = 3 ÷ 4 = 0,75. La barre de fraction est un signe de division.</div>`
+    },
+    {id:"operations",title:"Opérations",content:`
+      <h4>Addition et soustraction posées</h4>
+      <p>On aligne les chiffres par rangs (unités sous unités, dizaines sous dizaines…). On commence par la droite. Pour la soustraction, on effectue des retenues si nécessaire.</p>
+      <h4>Multiplication posée</h4>
+      <p>On multiplie chaque chiffre du multiplicateur par tous les chiffres du multiplicande, en décalant d'un rang vers la gauche à chaque nouvelle ligne, puis on additionne.</p>
+      <div class="exemple">347 × 25 : d'abord 347×5=1735, puis 347×20=6940, total = 8 675</div>
+      <div class="regle">🔑 Tables de multiplication jusqu'à 9×9 : indispensables par cœur !</div>
+      <h4>Division posée (avec reste)</h4>
+      <p>On cherche combien de fois le diviseur « entre » dans le dividende, chiffre par chiffre de gauche à droite. Le reste est toujours inférieur au diviseur.</p>
+      <div class="exemple">527 ÷ 4 = 131 reste 3 → vérification : 131 × 4 + 3 = 524 + 3 = 527 ✓</div>
+      <h4>Priorités de calcul</h4>
+      <ul>
+        <li>1. Les <strong>parenthèses</strong> en premier</li>
+        <li>2. Puis <strong>× et ÷</strong> de gauche à droite</li>
+        <li>3. Enfin <strong>+ et −</strong> de gauche à droite</li>
+      </ul>
+      <div class="exemple">3 + 2 × 4 = 3 + 8 = <strong>11</strong> (et non 20) · (3+2) × 4 = 5 × 4 = <strong>20</strong></div>
+      <h4>Calcul mental — quelques astuces</h4>
+      <ul>
+        <li>×9 : multiplier par 10 et soustraire le nombre. Ex : 7×9 = 70−7 = 63</li>
+        <li>×11 : répéter le chiffre et additionner au milieu. Ex : 13×11 = 143</li>
+        <li>÷5 : diviser par 10 puis multiplier par 2. Ex : 340÷5 = 34×2 = 68</li>
+      </ul>`
+    },
+    {id:"geometrie",title:"Géométrie",content:`
+      <h4>Les angles</h4>
+      <p>Un angle est l'écartement entre deux demi-droites de même origine. On mesure les angles en <strong>degrés (°)</strong> avec un rapporteur.</p>
+      <ul>
+        <li><strong>Angle droit</strong> : 90° (symbole ∟)</li>
+        <li><strong>Angle aigu</strong> : entre 0° et 90°</li>
+        <li><strong>Angle obtus</strong> : entre 90° et 180°</li>
+      </ul>
+      <h4>Les figures planes</h4>
+      <ul>
+        <li><strong>Triangle</strong> : somme des angles = 180°. Équilatéral (3 côtés et angles égaux), isocèle (2 égaux), scalène (tous différents), rectangle (un angle droit).</li>
+        <li><strong>Quadrilatères</strong> : carré (4 côtés égaux, 4 angles droits), rectangle (4 angles droits), losange (4 côtés égaux), parallélogramme (côtés opposés parallèles), trapèze (1 paire de côtés parallèles).</li>
+        <li><strong>Cercle</strong> : rayon (r) du centre au bord, diamètre d = 2r. Périmètre ≈ 2 × 3,14 × r.</li>
+      </ul>
+      <h4>Aires (surfaces)</h4>
+      <table><tr><th>Figure</th><th>Formule</th></tr>
+        <tr><td>Rectangle</td><td>Longueur × largeur</td></tr>
+        <tr><td>Carré</td><td>côté × côté = côté²</td></tr>
+        <tr><td>Triangle</td><td>(base × hauteur) ÷ 2</td></tr>
+      </table>
+      <div class="regle">🔑 L'aire s'exprime en unités carrées : mm², cm², m², km². 1 m² = 10 000 cm².</div>
+      <h4>Les solides (3D)</h4>
+      <ul>
+        <li><strong>Cube</strong> : 6 faces carrées, 12 arêtes, 8 sommets.</li>
+        <li><strong>Pavé droit</strong> : 6 faces rectangulaires.</li>
+        <li><strong>Prisme</strong> : 2 bases identiques et parallèles.</li>
+        <li><strong>Pyramide</strong> : 1 base polygonale, apex (sommet).</li>
+      </ul>`
+    },
+    {id:"mesures",title:"Mesures & résolution de problèmes",content:`
+      <h4>Longueurs</h4>
+      <p>km → hm → dam → m → dm → cm → mm. À chaque flèche : ×10 vers la droite, ÷10 vers la gauche.</p>
+      <div class="exemple">3,5 km = 3 500 m = 350 000 cm · 75 mm = 7,5 cm = 0,075 m</div>
+      <h4>Masses</h4>
+      <p>t → kg → g → mg. À chaque flèche : ×1 000.</p>
+      <div class="exemple">2,4 kg = 2 400 g · 500 g = 0,5 kg</div>
+      <h4>Contenances</h4>
+      <p>kL → L → dL → cL → mL. À chaque flèche : ×10.</p>
+      <h4>Durées</h4>
+      <ul>
+        <li>1 heure = 60 minutes = 3 600 secondes</li>
+        <li>1 jour = 24 heures · 1 semaine = 7 jours · 1 an = 365 jours (366 en année bissextile)</li>
+      </ul>
+      <div class="exemple">2h 35 min + 1h 50 min = 3h 85 min = 4h 25 min (car 85 min = 1h 25 min)</div>
+      <h4>Résolution de problèmes — méthode</h4>
+      <ul>
+        <li>1. Lire attentivement et identifier ce qu'on cherche.</li>
+        <li>2. Relever les données utiles (et ignorer les données parasites).</li>
+        <li>3. Choisir l'opération : + pour regrouper, − pour trouver un écart, × pour répéter, ÷ pour partager.</li>
+        <li>4. Calculer en posant si nécessaire.</li>
+        <li>5. Vérifier la cohérence du résultat et préciser l'unité.</li>
+      </ul>
+      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse finale. Une distance en km, une masse en kg, une durée en h et min.</div>`
+    }
+  ]
+},
+
+// ── HISTOIRE CM2 ───────────────────────────────────────────────
+histoire:{
+  label:"Histoire CM2",shortLabel:"Histoire",icon:"🏛️",level:"CM2",color:"histoire",
+  cardClass:"histoire",themeClass:"histoire-theme",badgeClass:"badge-cm2-h",
+  desc:"De la Révolution française à nos jours",
+  themes:[
+    {id:"revolution",title:"La Révolution française (1789)",content:`
+      <h4>La société d'Ancien Régime</h4>
+      <p>Avant 1789, la France est une <strong>monarchie absolue</strong>. La société est divisée en <strong>trois ordres</strong> :</p>
+      <ul>
+        <li>Le <strong>Clergé</strong> (1er ordre) : hommes d'Église, exemptés d'impôts, gèrent écoles et hôpitaux.</li>
+        <li>La <strong>Noblesse</strong> (2e ordre) : privilèges, peu d'impôts, hauts postes militaires.</li>
+        <li>Le <strong>Tiers-État</strong> (3e ordre) : 98 % de la population (paysans, bourgeois, artisans), paient presque tous les impôts mais n'ont pas voix au chapitre.</li>
+      </ul>
+      <h4>Les causes de la Révolution</h4>
+      <ul>
+        <li>Crise financière profonde du royaume de Louis XVI.</li>
+        <li>Mauvaises récoltes → famine et hausse du pain.</li>
+        <li>Idées des Lumières (Voltaire, Rousseau) : liberté, égalité, droits naturels.</li>
+        <li>Refus du Tiers-État d'être minoritaire aux États généraux.</li>
+      </ul>
+      <h4>Les grands événements de 1789</h4>
+      <ul>
+        <li><strong>5 mai 1789</strong> : Réunion des États généraux à Versailles.</li>
+        <li><strong>17 juin</strong> : Le Tiers-État se proclame Assemblée nationale.</li>
+        <li><strong>14 juillet</strong> : Prise de la Bastille par le peuple parisien → symbole de la Révolution.</li>
+        <li><strong>4 août</strong> : Abolition des privilèges de la noblesse.</li>
+        <li><strong>26 août</strong> : Déclaration des droits de l'Homme et du Citoyen (DDHC).</li>
+        <li><strong>6 octobre</strong> : La famille royale est ramenée à Paris.</li>
+      </ul>
+      <div class="regle">🔑 La DDHC proclame : « Les hommes naissent et demeurent libres et égaux en droits. » Elle est encore un texte fondateur de la République française.</div>`
+    },
+    {id:"napoleon",title:"Napoléon Bonaparte et l'Empire",content:`
+      <h4>Qui est Napoléon ?</h4>
+      <p>Napoléon Bonaparte naît en Corse en 1769. Officier brillant, il se distingue lors des guerres révolutionnaires (campagne d'Italie 1796, Égypte 1798).</p>
+      <h4>Du Consulat à l'Empire</h4>
+      <ul>
+        <li><strong>9 novembre 1799</strong> : Coup d'État du 18 Brumaire → Napoléon devient Premier Consul.</li>
+        <li><strong>2 décembre 1804</strong> : Sacre d'Empereur des Français à Notre-Dame de Paris devant le pape Pie VII.</li>
+        <li>Il construit un vaste empire européen par ses victoires militaires (Austerlitz 1805, Iéna 1806).</li>
+      </ul>
+      <h4>Les grandes réformes napoléoniennes</h4>
+      <ul>
+        <li><strong>Code civil</strong> (1804) : loi commune à tous les Français, encore en vigueur aujourd'hui.</li>
+        <li>Création des <strong>lycées</strong> et du <strong>baccalauréat</strong>.</li>
+        <li>Création de la <strong>Banque de France</strong> et du franc germinal.</li>
+        <li>La <strong>Légion d'honneur</strong> pour récompenser les mérites civils et militaires.</li>
+        <li>Préfets : représentants de l'État dans chaque département.</li>
+      </ul>
+      <h4>La chute de l'Empire</h4>
+      <ul>
+        <li>Désastre de la campagne de Russie (1812) : 500 000 soldats morts ou prisonniers.</li>
+        <li>Coalition européenne contre Napoléon → défaite de Leipzig (1813).</li>
+        <li><strong>18 juin 1815</strong> : Défaite de Waterloo (Belgique).</li>
+        <li>Exil à Sainte-Hélène (Atlantique Sud), mort le 5 mai 1821.</li>
+      </ul>
+      <div class="regle">🔑 L'héritage napoléonien est immense : Code civil, lycées, préfets, Légion d'honneur — toutes ces institutions existent encore.</div>`
+    },
+    {id:"republiques",title:"Les Républiques françaises",content:`
+      <h4>Tableau des Républiques</h4>
+      <table><tr><th>République</th><th>Dates</th><th>Faits marquants</th></tr>
+        <tr><td>I<sup>re</sup></td><td>1792–1799</td><td>Naissance après la Révolution ; Terreur de Robespierre ; fin avec Napoléon.</td></tr>
+        <tr><td>II<sup>e</sup></td><td>1848–1851</td><td>Abolition définitive de l'esclavage ; suffrage universel masculin ; coup d'État de Louis-Napoléon Bonaparte.</td></tr>
+        <tr><td>III<sup>e</sup></td><td>1870–1940</td><td>Lois Jules Ferry (école laïque, gratuite, obligatoire 1881–82) ; Marseillaise et 14 juillet officialisés ; séparation Église-État 1905.</td></tr>
+        <tr><td>IV<sup>e</sup></td><td>1946–1958</td><td>Reconstruction post-guerre ; Sécurité sociale ; instabilité gouvernementale.</td></tr>
+        <tr><td>V<sup>e</sup></td><td>1958–</td><td>De Gaulle ; régime présidentiel fort ; Constitution de 1958 encore en vigueur.</td></tr>
+      </table>
+      <div class="regle">🔑 La III<sup>e</sup> République installe durablement les valeurs républicaines : Liberté-Égalité-Fraternité, la Marseillaise, le 14 juillet fête nationale, l'école pour tous.</div>`
+    },
+    {id:"guerres",title:"Les deux guerres mondiales",content:`
+      <h4>La Première Guerre mondiale (1914–1918)</h4>
+      <ul>
+        <li><strong>28 juin 1914</strong> : Assassinat de l'archiduc François-Ferdinand à Sarajevo → déclenchement du conflit.</li>
+        <li>France, Russie, Royaume-Uni (Alliés) contre Allemagne, Autriche-Hongrie (Empires centraux).</li>
+        <li>Guerre des tranchées sur le front Ouest : conditions épouvantables, millions de morts.</li>
+        <li>Batailles de la Marne, de Verdun (1916 : 700 000 morts), de la Somme.</li>
+        <li><strong>11 novembre 1918</strong> : Armistice → 10 millions de soldats morts en Europe.</li>
+        <li>Traité de Versailles (1919) : l'Allemagne reconnaît sa responsabilité et paie des réparations.</li>
+      </ul>
+      <h4>La Seconde Guerre mondiale (1939–1945)</h4>
+      <ul>
+        <li>Hitler (régime nazi) envahit la Pologne le 1er septembre 1939.</li>
+        <li><strong>Juin 1940</strong> : Blitzkrieg — la France est envahie en 6 semaines. Armistice signé.</li>
+        <li>Régime de <strong>Vichy</strong> (Pétain) collabore avec l'Allemagne nazie.</li>
+        <li>Général <strong>de Gaulle</strong> : <em>Appel du 18 juin 1940</em> depuis Londres → France Libre.</li>
+        <li>La <strong>Résistance</strong> intérieure combat l'occupation.</li>
+        <li><strong>6 juin 1944</strong> : Débarquement allié en Normandie (D-Day) → libération progressive.</li>
+        <li><strong>8 mai 1945</strong> : Capitulation de l'Allemagne nazie.</li>
+      </ul>
+      <div class="regle">🔑 La Shoah : les nazis ont organisé l'extermination systématique de 6 millions de Juifs. C'est un crime contre l'humanité. Le devoir de mémoire est fondamental.</div>`
+    },
+    {id:"france1945",title:"La France depuis 1945",content:`
+      <h4>La reconstruction (1945–1950)</h4>
+      <ul>
+        <li>Aide du <strong>Plan Marshall</strong> américain (1948) pour reconstruire l'Europe.</li>
+        <li>Création de la <strong>Sécurité sociale</strong> (1945) : couverture maladie, retraite.</li>
+        <li>Le droit de vote accordé aux femmes en 1944.</li>
+      </ul>
+      <h4>Les Trente Glorieuses (1945–1975)</h4>
+      <ul>
+        <li>Croissance économique forte : industrialisation, plein emploi, hausse des salaires.</li>
+        <li>Développement de l'automobile, de la télévision, des congés payés.</li>
+        <li>Exode rural : les campagnes se vident au profit des villes.</li>
+      </ul>
+      <h4>La décolonisation</h4>
+      <ul>
+        <li>Guerre d'Indochine (1946–1954) : défaite française à Diên Biên Phu.</li>
+        <li>Guerre d'Algérie (1954–1962) : très difficile, fin avec les Accords d'Évian.</li>
+        <li>Vague d'indépendances africaines en <strong>1960</strong>.</li>
+      </ul>
+      <h4>La construction européenne</h4>
+      <ul>
+        <li><strong>1957</strong> : Traité de Rome → Communauté économique européenne (CEE) à 6 pays.</li>
+        <li><strong>1993</strong> : Traité de Maastricht → Union européenne.</li>
+        <li><strong>2002</strong> : L'euro remplace les monnaies nationales dans 12 pays.</li>
+        <li>Aujourd'hui : 27 États membres, Parlement européen, Cour de justice.</li>
+      </ul>
+      <div class="regle">🔑 La construction européenne vise à garantir la paix et la prospérité après deux guerres mondiales dévastatrices.</div>`
+    }
+  ]
+},
+
+// ── HISTOIRE CM1 ───────────────────────────────────────────────
+'histoire-cm1':{
+  label:"Histoire CM1",shortLabel:"Histoire",icon:"⚔️",level:"CM1",color:"histoire",
+  cardClass:"histoire-cm1",themeClass:"cm1-theme",badgeClass:"badge-cm1",
+  desc:"De la Préhistoire au Moyen Âge",
+  themes:[
+    {id:"prehistoire",title:"La Préhistoire",content:`
+      <h4>Quand commence la Préhistoire ?</h4>
+      <p>La Préhistoire commence avec l'apparition des premiers hommes (il y a environ <strong>3 millions d'années</strong>) et se termine avec l'invention de l'écriture (<strong>vers 3 300 av. J.-C.</strong>). Elle représente 99 % de l'histoire humaine.</p>
+      <h4>Le Paléolithique — âge de la pierre taillée</h4>
+      <ul>
+        <li>Hommes <strong>nomades</strong> : ils se déplacent en suivant les troupeaux et les saisons.</li>
+        <li>Chasseurs-cueilleurs : chasse au mammouth, au renne, cueillette de baies et plantes.</li>
+        <li>Outils taillés dans le silex (couteaux, pointes de flèche, racloirs).</li>
+        <li>Maîtrise du feu : cuisson, chaleur, protection.</li>
+        <li>Art rupestre (peintures sur les parois des grottes) : animaux, mains, symboles.</li>
+      </ul>
+      <div class="exemple">Grotte de Lascaux (Dordogne) : 1 500 peintures vieilles de ≈ 17 000 ans, découvertes en 1940.</div>
+      <h4>Le Néolithique — la révolution agricole</h4>
+      <ul>
+        <li>Les hommes deviennent <strong>sédentaires</strong> : ils s'installent dans des villages permanents.</li>
+        <li>Agriculture : culture du blé, de l'orge, lentilles.</li>
+        <li>Élevage : moutons, chèvres, bœufs, porcs.</li>
+        <li>Poterie pour stocker la nourriture.</li>
+        <li>Mégalithes : dolmens (tombes collectives), menhirs, alignements (Carnac, Bretagne).</li>
+      </ul>
+      <div class="regle">🔑 Le Néolithique est une révolution : passer de cueillir à cultiver change tout — alimentation plus stable, organisation sociale, début des villages.</div>`
+    },
+    {id:"gaulois",title:"Les Gaulois & la conquête romaine",content:`
+      <h4>Qui sont les Gaulois ?</h4>
+      <p>Les Gaulois sont des peuples <strong>celtes</strong> installés en Gaule à partir du VIII<sup>e</sup> siècle av. J.-C. Ils parlent une langue gauloise et sont organisés en <strong>tribus</strong> (les Arvernes, les Éduens, les Parisii…).</p>
+      <h4>La société gauloise</h4>
+      <ul>
+        <li><strong>Les druides</strong> : prêtres, juges, médecins, gardiens du savoir (transmis oralement).</li>
+        <li><strong>Les guerriers</strong> : noblesse militaire, chevaux, épées de fer.</li>
+        <li><strong>Le peuple</strong> : agriculteurs, artisans, commerçants.</li>
+      </ul>
+      <p>Les Gaulois sont d'excellents metallurgistes (fer, bronze) et cultivent blé, avoine, vigne. Ils commercent avec Rome et la Grèce.</p>
+      <h4>La conquête romaine (58–51 av. J.-C.)</h4>
+      <ul>
+        <li><strong>Jules César</strong>, général romain, conquiert la Gaule en 7 ans.</li>
+        <li>Résistance unifiée de <strong>Vercingétorix</strong>, chef arverne.</li>
+        <li><strong>52 av. J.-C.</strong> : Siège d'Alésia. Vercingétorix se rend à César. La Gaule est romaine.</li>
+      </ul>
+      <h4>La Gaule romaine — la romanisation</h4>
+      <ul>
+        <li>Villes nouvelles avec forum (place publique), thermes (bains), amphithéâtres, temples.</li>
+        <li>Réseau de routes pavées reliant toutes les villes à Rome.</li>
+        <li>Le <strong>latin</strong> se diffuse → ancêtre du français.</li>
+        <li>La religion gauloise se mélange à la religion romaine (<em>interprétatio romana</em>).</li>
+      </ul>
+      <div class="regle">🔑 Les Gaulois ne disparaissent pas : ils adoptent progressivement la culture romaine tout en gardant leurs traditions → naissance de la civilisation gallo-romaine.</div>`
+    },
+    {id:"moyen-age-debut",title:"Le début du Moyen Âge",content:`
+      <h4>La chute de l'Empire romain d'Occident</h4>
+      <ul>
+        <li><strong>476 ap. J.-C.</strong> : Le dernier empereur romain d'Occident est déposé → début du Moyen Âge.</li>
+        <li>Des peuples germaniques (appelés « Barbares » par les Romains) s'installent en Gaule : Francs, Wisigoths, Burgondes.</li>
+      </ul>
+      <h4>Clovis et le royaume franc</h4>
+      <ul>
+        <li><strong>481</strong> : Clovis (15 ans) devient roi des Francs.</li>
+        <li>Il conquiert progressivement la Gaule en battant les autres peuples.</li>
+        <li><strong>496</strong> : Clovis se convertit au christianisme catholique (baptême à Reims par saint Rémi).</li>
+        <li>Alliance précieuse avec l'Église → légitimité, soutien des évêques.</li>
+        <li>Clovis fonde la <strong>dynastie mérovingienne</strong>.</li>
+      </ul>
+      <h4>Charlemagne (768–814)</h4>
+      <ul>
+        <li>Roi des Francs puis roi des Lombards.</li>
+        <li><strong>25 décembre 800</strong> : Couronné <em>Empereur d'Occident</em> par le pape Léon III à Rome.</li>
+        <li>Il développe les <em>écoles palatines</em> et les écoles dans les monastères.</li>
+        <li>Fait copier des manuscrits pour préserver le savoir antique.</li>
+        <li>Son empire se divise à sa mort (843, traité de Verdun) → naissance de la France et de l'Allemagne.</li>
+      </ul>
+      <div class="regle">🔑 Le Moyen Âge dure du V<sup>e</sup> au XV<sup>e</sup> siècle (476 → 1492). Clovis et Charlemagne posent les bases de ce qui deviendra la France.</div>`
+    },
+    {id:"feodalite",title:"La société féodale et l'Église",content:`
+      <h4>La pyramide féodale</h4>
+      <p>La société médiévale est organisée en trois ordres :</p>
+      <ul>
+        <li><strong>Ceux qui prient</strong> (oratores) : le clergé — pape, évêques, prêtres, moines.</li>
+        <li><strong>Ceux qui combattent</strong> (bellatores) : la noblesse — rois, seigneurs, chevaliers.</li>
+        <li><strong>Ceux qui travaillent</strong> (laboratores) : le peuple — paysans (environ 90 % de la population).</li>
+      </ul>
+      <h4>Le système féodal</h4>
+      <ul>
+        <li>Le roi concède des terres (<strong>fiefs</strong>) à des seigneurs en échange de leur <strong>hommage</strong> et de leur service militaire.</li>
+        <li>Le seigneur qui reçoit un fief devient <strong>vassal</strong> de son seigneur.</li>
+        <li>Les paysans (serfs ou vilains) cultivent la terre du seigneur, paient des taxes et des corvées.</li>
+        <li>Le <strong>château fort</strong> protège la population locale en cas d'attaque.</li>
+      </ul>
+      <h4>Le rôle de l'Église</h4>
+      <ul>
+        <li>Omniprésente : elle construit les cathédrales (gothiques : Notre-Dame de Paris), les monastères.</li>
+        <li>Elle tient les registres (naissances, mariages, morts) et enseigne (écoles monastiques).</li>
+        <li>Les moines copient les manuscrits et préservent le savoir.</li>
+        <li>Les <strong>Croisades</strong> (1095–1291) : expéditions armées en Terre Sainte pour reprendre Jérusalem.</li>
+      </ul>
+      <div class="regle">🔑 La féodalité est un système de liens personnels fondé sur la fidélité et le service. Chaque seigneur est vassal d'un plus puissant, jusqu'au roi.</div>`
+    },
+    {id:"fin-moyen-age",title:"La fin du Moyen Âge",content:`
+      <h4>La Guerre de Cent Ans (1337–1453)</h4>
+      <ul>
+        <li>Conflit entre la France et l'Angleterre pour la couronne de France.</li>
+        <li>Défaites françaises : Crécy (1346), Azincourt (1415) → Paris occupé par les Anglais.</li>
+        <li>Le roi de France n'a plus de territoire ou presque.</li>
+      </ul>
+      <h4>Jeanne d'Arc (1412–1431)</h4>
+      <ul>
+        <li>Jeune paysanne lorraine qui entend des voix lui disant de délivrer la France.</li>
+        <li>Elle convainc le dauphin Charles de lui confier une armée.</li>
+        <li><strong>1429</strong> : Elle délivre Orléans assiégée par les Anglais (victoire décisive).</li>
+        <li>Charles VII est sacré roi à Reims (juillet 1429).</li>
+        <li>Capturée par les Bourguignons, vendue aux Anglais, brûlée vive à Rouen en 1431.</li>
+        <li>Réhabilitée en 1456, canonisée en 1920 — sainte patronne de France.</li>
+      </ul>
+      <h4>La fin de la guerre et les Temps Modernes</h4>
+      <ul>
+        <li>Les Anglais sont finalement chassés de France (sauf Calais) en 1453.</li>
+        <li>Développement de l'imprimerie par Gutenberg (vers 1450) → diffusion du savoir.</li>
+        <li><strong>1492</strong> : Christophe Colomb découvre l'Amérique → fin du Moyen Âge, début des Temps Modernes.</li>
+      </ul>
+      <div class="regle">🔑 Jeanne d'Arc est un symbole national de courage, de foi et d'amour de la patrie. La Guerre de Cent Ans forge le sentiment national français.</div>`
+    }
+  ]
+},
+
+// ── FRANÇAIS CM2 ───────────────────────────────────────────────
+francais:{
+  label:"Français CM2",shortLabel:"Français",icon:"✍️",level:"CM2",color:"francais",
+  cardClass:"francais",themeClass:"francais-theme",badgeClass:"badge-cm2-f",
+  desc:"Grammaire · Conjugaison · Orthographe · Vocabulaire",
+  themes:[
+    {id:"grammaire",title:"Grammaire",content:`
+      <h4>Les classes de mots</h4>
+      <table><tr><th>Classe</th><th>Rôle</th><th>Exemples</th></tr>
+        <tr><td>Nom</td><td>désigne un être, une chose</td><td>chien, liberté, Paris</td></tr>
+        <tr><td>Déterminant</td><td>précède le nom</td><td>le, un, mon, ce, trois</td></tr>
+        <tr><td>Adjectif</td><td>qualifie le nom</td><td>grand, rouge, rapide</td></tr>
+        <tr><td>Verbe</td><td>exprime une action ou un état</td><td>courir, être, aimer</td></tr>
+        <tr><td>Pronom</td><td>remplace un nom</td><td>il, elle, nous, qui, celui</td></tr>
+        <tr><td>Adverbe</td><td>modifie verbe, adj. ou adverbe</td><td>vite, très, jamais, ici</td></tr>
+        <tr><td>Préposition</td><td>relie des mots</td><td>de, à, dans, avec, pour</td></tr>
+        <tr><td>Conjonction</td><td>relie propositions</td><td>et, mais, car, parce que</td></tr>
+      </table>
+      <h4>La phrase — sujet, verbe, compléments</h4>
+      <ul>
+        <li>Le <strong>sujet</strong> (GN ou pronom) fait l'action → il commande l'accord du verbe.</li>
+        <li>Le <strong>verbe</strong> est le noyau de la phrase.</li>
+        <li><strong>COD</strong> (complément d'objet direct) : répond à « Verbe quoi / qui ? » sans préposition.</li>
+        <li><strong>COI</strong> (complément d'objet indirect) : répond à « Verbe à quoi / de quoi ? » avec préposition.</li>
+        <li><strong>CC</strong> (complément circonstanciel) : précise lieu, temps, manière, cause.</li>
+      </ul>
+      <div class="exemple">Le chat (sujet) mange (verbe) une souris (COD) rapidement (CC de manière) dans la cuisine (CC de lieu).</div>
+      <h4>Types et formes de phrases</h4>
+      <ul>
+        <li>Types : déclarative, interrogative, impérative, exclamative.</li>
+        <li>Formes : affirmative ↔ négative ; active ↔ passive.</li>
+      </ul>
+      <div class="regle">🔑 Pour identifier le sujet : poser « Qui est-ce qui + verbe ? » Pour trouver le COD : « Verbe + qui/quoi ? »</div>`
+    },
+    {id:"conjugaison",title:"Conjugaison",content:`
+      <h4>Les temps principaux à maîtriser en CM2</h4>
+      <table><tr><th>Temps</th><th>Usage</th><th>Exemple (aller)</th></tr>
+        <tr><td>Présent</td><td>maintenant, habitude, vérité générale</td><td>je vais</td></tr>
+        <tr><td>Imparfait</td><td>description passée, action en cours dans le passé</td><td>j'allais</td></tr>
+        <tr><td>Passé simple</td><td>action passée précise (récits écrits)</td><td>j'allai</td></tr>
+        <tr><td>Futur simple</td><td>action à venir</td><td>j'irai</td></tr>
+        <tr><td>Passé composé</td><td>action passée (oral et écrit courant)</td><td>je suis allé(e)</td></tr>
+        <tr><td>Plus-que-parfait</td><td>action antérieure à une autre dans le passé</td><td>j'étais allé(e)</td></tr>
+        <tr><td>Conditionnel présent</td><td>hypothèse, politesse</td><td>j'irais</td></tr>
+      </table>
+      <h4>Les groupes de verbes</h4>
+      <ul>
+        <li><strong>1er groupe</strong> : infinitif en -er (sauf aller). Modèle : aimer.</li>
+        <li><strong>2e groupe</strong> : infinitif en -ir, participe présent en -issant. Modèle : finir.</li>
+        <li><strong>3e groupe</strong> : tous les autres (venir, prendre, voir, aller…). Terminaisons variables.</li>
+      </ul>
+      <h4>Verbes irréguliers incontournables</h4>
+      <p>Être, avoir, aller, faire, venir, prendre, pouvoir, vouloir, savoir, voir, dire, mettre — à connaître à tous les temps.</p>
+      <div class="regle">🔑 Accord sujet-verbe : le verbe s'accorde toujours avec son sujet, même si un complément s'interpose. Ex : « Les enfants de la classe partent. » → partent s'accorde avec enfants.</div>`
+    },
+    {id:"orthographe",title:"Orthographe",content:`
+      <h4>Accord dans le groupe nominal</h4>
+      <p>Le nom donne son genre et son nombre au déterminant et à l'adjectif.</p>
+      <div class="exemple">une belle maison rouge → des belles maisons rouges</div>
+      <h4>Accord du participe passé</h4>
+      <ul>
+        <li>Avec <strong>être</strong> : s'accorde avec le sujet. Ex : Elle est partie. Ils sont partis.</li>
+        <li>Avec <strong>avoir</strong> : s'accorde avec le COD si celui-ci est placé <em>avant</em> le verbe. Ex : La chanson que j'ai entendue. Mais : J'ai entendu une chanson.</li>
+      </ul>
+      <h4>Homophones grammaticaux</h4>
+      <table><tr><th>Homophones</th><th>Distinction</th><th>Astuce</th></tr>
+        <tr><td>a / à</td><td>a = verbe avoir · à = préposition</td><td>Remplacer par « avait » → si possible, c'est a</td></tr>
+        <tr><td>on / ont</td><td>on = pronom · ont = verbe avoir</td><td>Remplacer par « ils ont » → si possible, c'est ont</td></tr>
+        <tr><td>son / sont</td><td>son = déterminant · sont = verbe être</td><td>Remplacer par « étaient » → si possible, c'est sont</td></tr>
+        <tr><td>ce / se</td><td>ce = déterminant/pronom · se = pronom réfléchi</td><td>Devant un verbe réfléchi → se</td></tr>
+        <tr><td>mes/mais</td><td>mes = déterminant possessif · mais = conjonction</td><td>Remplacer par « cependant » → mais</td></tr>
+      </table>
+      <h4>Règles de base</h4>
+      <ul>
+        <li>Noms féminins en [é] : -ée (sauf clé, dictée…)</li>
+        <li>Adjectifs en [eur] : -eur masculin → -eure féminin (meilleur → meilleure)</li>
+        <li>Pluriel : en général +s, sauf -eau/-au → -eaux, -al → -aux, -ail → -aux ou -ails</li>
+      </ul>
+      <div class="regle">🔑 Stratégie : lire à voix haute, identifier la nature des mots (nom ? verbe ? adjectif ?), appliquer les règles d'accord.</div>`
+    },
+    {id:"vocabulaire",title:"Vocabulaire",content:`
+      <h4>Formation des mots</h4>
+      <ul>
+        <li><strong>Préfixe</strong> (avant le radical) : in- (impossible), re- (refaire), anti- (antibiotique), pré- (préhistoire).</li>
+        <li><strong>Suffixe</strong> (après le radical) : -eur (chanteur), -tion (construction), -ment (rapidement), -able (mangeable).</li>
+        <li><strong>Radical</strong> : la partie centrale qui porte le sens. Ex : port- → porter, porteur, transport.</li>
+      </ul>
+      <h4>Sens des mots</h4>
+      <ul>
+        <li><strong>Synonymes</strong> : mots de sens proche. Joyeux → heureux, gai, content.</li>
+        <li><strong>Antonymes</strong> : mots de sens contraire. Grand ↔ petit, rapide ↔ lent.</li>
+        <li><strong>Homonymes</strong> : même son mais sens différent. Verre (objet) / vert (couleur) / ver (animal).</li>
+        <li><strong>Sens propre / figuré</strong> : « Il a la tête dans les nuages » → sens figuré = il est distrait.</li>
+      </ul>
+      <h4>Familles de mots</h4>
+      <p>Des mots de la même famille partagent le même radical.</p>
+      <div class="exemple">Famille de TERRE : terrain, enterrer, atterrir, déterrer, terrasse, territoire, souterrain.</div>
+      <div class="regle">🔑 Connaître les principaux préfixes et suffixes latins/grecs permet de deviner le sens d'un mot inconnu. Ex : télé- = à distance (téléphone, télescope).</div>`
+    }
+  ]
+},
+
+// ── FRANÇAIS CM1 ───────────────────────────────────────────────
+'francais-cm1':{
+  label:"Français CM1",shortLabel:"Français",icon:"📝",level:"CM1",color:"francais",
+  cardClass:"francais-cm1",themeClass:"francais-theme",badgeClass:"badge-cm1",
+  desc:"Grammaire · Conjugaison · Orthographe",
+  themes:[
+    {id:"gram-cm1",title:"Grammaire de base",content:`
+      <h4>La phrase</h4>
+      <p>Une phrase commence par une majuscule et se termine par un point (. ? ! …). Elle contient toujours un verbe conjugué.</p>
+      <h4>Sujet et verbe</h4>
+      <ul>
+        <li>Le <strong>sujet</strong> fait l'action. On le trouve en posant « Qui est-ce qui... ? »</li>
+        <li>Le <strong>verbe</strong> exprime l'action ou l'état. Il s'accorde avec le sujet.</li>
+      </ul>
+      <div class="exemple">Les oiseaux chantent → Qui est-ce qui chante ? Les oiseaux = sujet.</div>
+      <h4>Compléments du verbe</h4>
+      <ul>
+        <li><strong>COD</strong> : répond à « Verbe quoi ? » sans préposition. Ex : Je mange une pomme. → une pomme.</li>
+        <li><strong>Compléments circonstanciels</strong> : de lieu (où ?), de temps (quand ?), de manière (comment ?).</li>
+      </ul>
+      <h4>Nature des mots</h4>
+      <ul>
+        <li><strong>Nom</strong> : désigne une personne, un animal, une chose, une idée.</li>
+        <li><strong>Déterminant</strong> : article (le, la, les, un, une, des), possessif (mon, ma…), démonstratif (ce, cette…)</li>
+        <li><strong>Adjectif</strong> : donne une information sur le nom (couleur, forme, qualité).</li>
+        <li><strong>Verbe</strong> : action ou état. S'accorde avec le sujet.</li>
+        <li><strong>Pronom</strong> : remplace un nom pour éviter la répétition.</li>
+      </ul>
+      <div class="regle">🔑 Le groupe nominal minimal = déterminant + nom. Ex : le chien, une belle maison, mes amis.</div>`
+    },
+    {id:"conj-cm1",title:"Conjugaison CM1",content:`
+      <h4>Les temps étudiés en CM1</h4>
+      <ul>
+        <li><strong>Présent</strong> : ce qui se passe maintenant ou toujours.</li>
+        <li><strong>Imparfait</strong> : description dans le passé, action qui durait.</li>
+        <li><strong>Futur simple</strong> : ce qui va se passer.</li>
+        <li><strong>Passé composé</strong> : action passée terminée (à l'oral et à l'écrit courant).</li>
+      </ul>
+      <h4>Terminaisons du présent — 1er groupe (-er)</h4>
+      <div class="exemple">je chante · tu chantes · il/elle chante · nous chantons · vous chantez · ils/elles chantent</div>
+      <h4>Terminaisons de l'imparfait</h4>
+      <div class="exemple">je chantais · tu chantais · il chantait · nous chantions · vous chantiez · ils chantaient</div>
+      <h4>Terminaisons du futur — 1er groupe</h4>
+      <div class="exemple">je chanterai · tu chanteras · il chantera · nous chanterons · vous chanterez · ils chanteront</div>
+      <h4>Verbes être et avoir (à apprendre par cœur)</h4>
+      <p>Être et avoir servent aussi d'<strong>auxiliaires</strong> pour former le passé composé.</p>
+      <div class="exemple">Passé composé : j'ai chanté (avoir + participe passé) · je suis parti(e) (être + participe passé)</div>
+      <div class="regle">🔑 Avec être, le participe passé s'accorde avec le sujet : Elles sont parties (féminin pluriel).</div>`
+    },
+    {id:"ortho-cm1",title:"Orthographe CM1",content:`
+      <h4>Les accords dans le groupe nominal</h4>
+      <p>Le déterminant et l'adjectif s'accordent en genre (masculin/féminin) et en nombre (singulier/pluriel) avec le nom.</p>
+      <div class="exemple">un grand chien blanc → des grands chiens blancs</div>
+      <h4>Formation du féminin</h4>
+      <ul>
+        <li>Règle générale : ajouter -e. Ex : grand → grande, petit → petite.</li>
+        <li>-eux → -euse : heureux → heureuse.</li>
+        <li>-er → -ère : léger → légère.</li>
+        <li>Doublements : bon → bonne, gros → grosse, bas → basse.</li>
+      </ul>
+      <h4>Formation du pluriel</h4>
+      <ul>
+        <li>Règle générale : ajouter -s. Ex : chat → chats.</li>
+        <li>-eau, -au → -eaux, -aux : gâteau → gâteaux, noyau → noyaux.</li>
+        <li>-al → -aux : cheval → chevaux (sauf bal → bals, festival → festivals).</li>
+        <li>Noms en -s, -x, -z : invariables. Ex : bois, voix, nez.</li>
+      </ul>
+      <h4>Homophones simples</h4>
+      <ul>
+        <li><strong>et / est</strong> : et = « et puis » · est = verbe être (remplacer par « était »)</li>
+        <li><strong>ou / où</strong> : où = lieu (remplacer par « là où »)</li>
+        <li><strong>a / à</strong> : a = verbe avoir (remplacer par « avait »)</li>
+      </ul>
+      <div class="regle">🔑 Avant d'écrire un mot, se demander : c'est un nom ? un adjectif ? un verbe ? Cela détermine l'accord à appliquer.</div>`
+    }
+  ]
+},
+
+// ── GÉOGRAPHIE CM2 ─────────────────────────────────────────────
+geo:{
+  label:"Géographie CM2",shortLabel:"Géographie",icon:"🌍",level:"CM2",color:"geo",
+  cardClass:"geo",themeClass:"geo-theme",badgeClass:"badge-cm2-g",
+  desc:"France · Europe · Monde · Développement durable",
+  themes:[
+    {id:"france-geo",title:"La France — territoire et population",content:`
+      <h4>Le territoire français</h4>
+      <ul>
+        <li>La France métropolitaine est en Europe occidentale. Elle est bordée par la mer du Nord, la Manche, l'Atlantique et la Méditerranée.</li>
+        <li>Frontières terrestres : Belgique, Luxembourg, Allemagne, Suisse, Italie, Monaco, Espagne, Andorre.</li>
+        <li>Superficie : 551 000 km² → 3e pays d'Europe (après Russie et Ukraine).</li>
+        <li>France d'Outre-Mer (DOM-TOM) : Guadeloupe, Martinique, Guyane, Réunion, Mayotte, Polynésie, Nouvelle-Calédonie…</li>
+      </ul>
+      <h4>Le relief</h4>
+      <ul>
+        <li>Massifs montagneux : <strong>Alpes</strong> (mont Blanc : 4 808 m, point culminant de France et d'Europe occidentale), <strong>Pyrénées</strong>, Massif Central, Vosges, Jura, Ardennes.</li>
+        <li>Grandes plaines et bassins : Bassin parisien, Bassin aquitain, plaine d'Alsace.</li>
+        <li>Grands fleuves : <strong>Loire</strong> (le plus long : 1 012 km), Seine, Rhône, Garonne, Rhin.</li>
+      </ul>
+      <h4>La population</h4>
+      <ul>
+        <li>≈ 68 millions d'habitants (2024) → 2e pays le plus peuplé d'UE.</li>
+        <li>Inégalement répartie : forte densité en Île-de-France, littoraux, vallées ; faible dans le Massif Central.</li>
+        <li>Paris : capitale, ≈ 2,1 millions d'habitants (agglomération : 12 millions).</li>
+      </ul>
+      <div class="regle">🔑 La France a la plus grande superficie maritime du monde grâce à ses territoires d'outre-mer (ZEE de 11 millions de km²).</div>`
+    },
+    {id:"europe",title:"L'Europe et l'Union européenne",content:`
+      <h4>Le continent européen</h4>
+      <ul>
+        <li>L'Europe s'étend de l'Atlantique à l'Oural (Russie). Superficie : 10,5 millions de km².</li>
+        <li>≈ 750 millions d'habitants. Très urbanisée.</li>
+        <li>Grands ensembles : Europe du Nord (Scandinavie), de l'Ouest, du Sud (péninsules méditerranéennes), de l'Est.</li>
+      </ul>
+      <h4>L'Union européenne (UE)</h4>
+      <ul>
+        <li><strong>27 États membres</strong> (après le Brexit du Royaume-Uni en 2020).</li>
+        <li>Siège du Parlement : Strasbourg · Siège de la Commission : Bruxelles · Cour de justice : Luxembourg.</li>
+        <li>Monnaie commune : <strong>l'euro</strong> (utilisé dans 20 pays de l'UE).</li>
+        <li>Espace Schengen : libre circulation des personnes entre 27 pays.</li>
+      </ul>
+      <h4>Diversité et points communs</h4>
+      <ul>
+        <li>Diversité des langues (24 langues officielles), religions, cultures, cuisines.</li>
+        <li>Points communs : démocratie, droits humains, économie de marché, paix depuis 1945.</li>
+      </ul>
+      <div class="regle">🔑 L'UE est née pour garantir la paix après les deux guerres mondiales. Elle repose sur des valeurs communes : liberté, solidarité, respect des droits humains.</div>`
+    },
+    {id:"monde",title:"Le monde — continents et océans",content:`
+      <h4>Les continents</h4>
+      <table><tr><th>Continent</th><th>Superficie</th><th>Population</th></tr>
+        <tr><td>Asie</td><td>44 millions km²</td><td>4,7 milliards</td></tr>
+        <tr><td>Afrique</td><td>30 millions km²</td><td>1,4 milliard</td></tr>
+        <tr><td>Amérique du Nord</td><td>24 millions km²</td><td>590 millions</td></tr>
+        <tr><td>Amérique du Sud</td><td>18 millions km²</td><td>440 millions</td></tr>
+        <tr><td>Antarctique</td><td>14 millions km²</td><td>0 (chercheurs)</td></tr>
+        <tr><td>Europe</td><td>10 millions km²</td><td>750 millions</td></tr>
+        <tr><td>Océanie</td><td>9 millions km²</td><td>44 millions</td></tr>
+      </table>
+      <h4>Les océans</h4>
+      <p>Pacifique (le plus grand), Atlantique, Indien, Arctique, Antarctique.</p>
+      <h4>Pays les plus peuplés</h4>
+      <p>Inde et Chine (≈ 1,4 milliard chacun), États-Unis (335 millions), Indonésie, Pakistan…</p>
+      <div class="regle">🔑 Les richesses sont inégalement réparties dans le monde. Les pays du Nord sont en général plus riches que les pays du Sud, mais cette situation évolue.</div>`
+    },
+    {id:"dev-durable",title:"Développement durable",content:`
+      <h4>Qu'est-ce que le développement durable ?</h4>
+      <p>Un mode de développement qui répond aux besoins d'aujourd'hui <strong>sans compromettre</strong> la capacité des générations futures à répondre aux leurs. Il repose sur trois piliers :</p>
+      <ul>
+        <li><strong>Environnement</strong> : protéger la nature, réduire la pollution.</li>
+        <li><strong>Économie</strong> : assurer la prospérité et l'emploi.</li>
+        <li><strong>Social</strong> : garantir l'équité et la solidarité entre les peuples.</li>
+      </ul>
+      <h4>Les grands défis</h4>
+      <ul>
+        <li><strong>Changement climatique</strong> : hausse des températures due aux gaz à effet de serre (CO₂). Conséquences : montée des mers, sécheresses, tempêtes.</li>
+        <li><strong>Biodiversité</strong> : disparition d'espèces animales et végétales à un rythme sans précédent.</li>
+        <li><strong>Eau potable</strong> : 2 milliards de personnes manquent d'eau propre.</li>
+        <li><strong>Déchets plastiques</strong> : pollution des océans.</li>
+      </ul>
+      <h4>Les actions possibles</h4>
+      <ul>
+        <li>Économies d'énergie, énergies renouvelables (solaire, éolien).</li>
+        <li>Réduire-Réutiliser-Recycler.</li>
+        <li>Mobilités douces (vélo, transports en commun).</li>
+        <li>Alimentation locale et de saison.</li>
+      </ul>
+      <div class="regle">🔑 Les ODD (Objectifs de Développement Durable) de l'ONU (2015) fixent 17 objectifs à atteindre d'ici 2030 pour un monde plus juste et durable.</div>`
+    }
+  ]
+},
+
+// ── GÉOGRAPHIE CM1 ─────────────────────────────────────────────
+'geo-cm1':{
+  label:"Géographie CM1",shortLabel:"Géographie",icon:"🗺️",level:"CM1",color:"geo",
+  cardClass:"geo-cm1",themeClass:"geo-theme",badgeClass:"badge-cm1",
+  desc:"Lire des cartes · Paysages · France",
+  themes:[
+    {id:"cartes",title:"Lire une carte",content:`
+      <h4>Les éléments d'une carte</h4>
+      <ul>
+        <li><strong>Titre</strong> : indique ce que représente la carte.</li>
+        <li><strong>Légende</strong> : explique les symboles et les couleurs utilisés.</li>
+        <li><strong>Échelle</strong> : rapport entre la distance sur la carte et la distance réelle.</li>
+        <li><strong>Orientation</strong> : le nord est généralement en haut (flèche ou rose des vents).</li>
+      </ul>
+      <h4>Les coordonnées géographiques</h4>
+      <ul>
+        <li><strong>Latitude</strong> : distance par rapport à l'équateur (nord ou sud), en degrés.</li>
+        <li><strong>Longitude</strong> : distance par rapport au méridien de Greenwich (est ou ouest), en degrés.</li>
+        <li>L'équateur partage la Terre en hémisphère Nord et hémisphère Sud.</li>
+      </ul>
+      <h4>Différents types de cartes</h4>
+      <ul>
+        <li>Carte physique : montre le relief, les fleuves, les mers.</li>
+        <li>Carte politique : montre les frontières et les capitales.</li>
+        <li>Carte thématique : représente un thème précis (population, climat, végétation).</li>
+        <li>Plan : représentation à grande échelle d'une ville ou d'un quartier.</li>
+      </ul>
+      <div class="regle">🔑 TITL : Titre · Image (la carte) · Titre de la légende · Légende. Ces 4 éléments sont indispensables sur toute carte.</div>`
+    },
+    {id:"paysages",title:"Les grands paysages",content:`
+      <h4>Les paysages en France</h4>
+      <ul>
+        <li><strong>Paysage de montagne</strong> : altitude élevée, neige, forêts de sapins, prairies d'altitude. Ex : Alpes, Pyrénées.</li>
+        <li><strong>Paysage de plaine</strong> : terrain plat, agriculture intensive (céréales). Ex : Beauce, Bassin parisien.</li>
+        <li><strong>Paysage littoral</strong> : côtes rocheuses (Bretagne) ou sableuses (Landes), ports de pêche.</li>
+        <li><strong>Paysage méditerranéen</strong> : garrigue, oliviers, vignes, villes blanches, chaleur sèche l'été.</li>
+        <li><strong>Paysage urbain</strong> : ville, immeubles, transports, services.</li>
+      </ul>
+      <h4>Les zones climatiques du monde</h4>
+      <ul>
+        <li><strong>Équatorial</strong> : chaud et humide toute l'année → forêt tropicale humide (Amazonie, Congo).</li>
+        <li><strong>Tropical</strong> : saison sèche + saison des pluies → savane.</li>
+        <li><strong>Désertique</strong> : très peu de pluies → désert (Sahara, Gobi).</li>
+        <li><strong>Tempéré</strong> : 4 saisons → Europe de l'Ouest, France.</li>
+        <li><strong>Polaire</strong> : très froid toute l'année → toundra, glace.</li>
+      </ul>
+      <div class="regle">🔑 Le paysage est le résultat de facteurs naturels (relief, climat) ET humains (agriculture, urbanisation).</div>`
+    },
+    {id:"france-cm1",title:"La France — repères essentiels",content:`
+      <h4>Localiser la France</h4>
+      <ul>
+        <li>Pays d'Europe occidentale, en forme d'hexagone.</li>
+        <li>Frontières : Belgique, Luxembourg, Allemagne, Suisse, Italie, Espagne au sud.</li>
+        <li>Mers et océans : mer du Nord, Manche, Atlantique, Méditerranée.</li>
+      </ul>
+      <h4>Repères de relief</h4>
+      <ul>
+        <li>Les Alpes à l'est (mont Blanc : 4 808 m).</li>
+        <li>Les Pyrénées au sud-ouest.</li>
+        <li>Le Massif Central au centre.</li>
+        <li>Le Bassin parisien : grande plaine au nord.</li>
+      </ul>
+      <h4>Les grands fleuves</h4>
+      <ul>
+        <li><strong>La Loire</strong> : le plus long (1 012 km), naît dans le Massif Central, se jette dans l'Atlantique.</li>
+        <li><strong>La Seine</strong> : traverse Paris, se jette dans la Manche.</li>
+        <li><strong>Le Rhône</strong> : traverse Lyon et Avignon, se jette dans la Méditerranée.</li>
+        <li><strong>La Garonne</strong> : traverse Toulouse et Bordeaux.</li>
+      </ul>
+      <h4>Capitales et grandes villes</h4>
+      <p>Paris (capitale), Marseille, Lyon, Toulouse, Nice, Nantes, Strasbourg, Bordeaux, Lille, Rennes.</p>
+      <div class="regle">🔑 La France est divisée en 18 régions (13 en métropole + 5 d'outre-mer), 101 départements.</div>`
+    }
+  ]
+},
+
+// ── SCIENCES CM2 ───────────────────────────────────────────────
+sciences:{
+  label:"Sciences CM2",shortLabel:"Sciences",icon:"🔬",level:"CM2",color:"sciences",
+  cardClass:"sciences",themeClass:"sciences-theme",badgeClass:"badge-cm2-s",
+  desc:"Corps humain · Matière · Vivant · Électricité",
+  themes:[
+    {id:"corps",title:"Le corps humain",content:`
+      <h4>Les grands systèmes du corps</h4>
+      <table><tr><th>Système</th><th>Organes principaux</th><th>Rôle</th></tr>
+        <tr><td>Digestif</td><td>Bouche, estomac, intestins</td><td>Digérer les aliments, absorber les nutriments</td></tr>
+        <tr><td>Respiratoire</td><td>Nez, trachée, poumons</td><td>Apporter l'oxygène au sang, rejeter le CO₂</td></tr>
+        <tr><td>Circulatoire</td><td>Cœur, artères, veines</td><td>Transporter le sang dans tout le corps</td></tr>
+        <tr><td>Nerveux</td><td>Cerveau, moelle épinière, nerfs</td><td>Contrôler les mouvements et les sens</td></tr>
+        <tr><td>Osseux / musculaire</td><td>Os (squelette), muscles</td><td>Soutenir, protéger, permettre les mouvements</td></tr>
+      </table>
+      <h4>La digestion</h4>
+      <p>Bouche (mastication + salive) → œsophage → estomac (suc gastrique) → intestin grêle (absorption) → gros intestin (eau) → rectum → anus. Durée totale : 24 à 72 heures.</p>
+      <h4>La respiration</h4>
+      <p>Lors de l'inspiration, l'air entre par les narines, descend dans la trachée, puis dans les bronches et les alvéoles pulmonaires où les échanges gazeux ont lieu : l'oxygène passe dans le sang et le CO₂ en sort.</p>
+      <h4>La circulation sanguine</h4>
+      <p>Le cœur est une pompe musculaire qui bat environ 70 fois par minute au repos. Les artères transportent le sang riche en oxygène ; les veines ramènent le sang chargé de CO₂ vers le cœur.</p>
+      <div class="regle">🔑 Prendre soin de son corps : activité physique régulière, alimentation équilibrée (fruits, légumes, protéines, céréales), sommeil suffisant, pas de tabac ni alcool.</div>`
+    },
+    {id:"matiere",title:"La matière",content:`
+      <h4>Les états de la matière</h4>
+      <ul>
+        <li><strong>Solide</strong> : forme propre, incompressible. Ex : glace, bois, fer.</li>
+        <li><strong>Liquide</strong> : épouse la forme du récipient, coule, incompressible. Ex : eau, huile, mercure.</li>
+        <li><strong>Gazeux</strong> : occupe tout l'espace disponible, compressible. Ex : vapeur d'eau, air.</li>
+      </ul>
+      <h4>Les changements d'état de l'eau</h4>
+      <table><tr><th>Changement</th><th>Sens</th><th>Température (eau)</th></tr>
+        <tr><td>Fusion</td><td>Solide → Liquide</td><td>0°C</td></tr>
+        <tr><td>Solidification</td><td>Liquide → Solide</td><td>0°C</td></tr>
+        <tr><td>Vaporisation</td><td>Liquide → Gaz</td><td>100°C</td></tr>
+        <tr><td>Condensation</td><td>Gaz → Liquide</td><td>inférieure à 100°C</td></tr>
+        <tr><td>Sublimation</td><td>Solide → Gaz</td><td>(neige carbonique)</td></tr>
+      </table>
+      <h4>Mélanges et solutions</h4>
+      <ul>
+        <li><strong>Mélange homogène</strong> (solution) : on ne distingue pas les composants. Ex : eau sucrée, eau salée.</li>
+        <li><strong>Mélange hétérogène</strong> : on voit les composants. Ex : eau + huile, eau + sable.</li>
+        <li><strong>Dissolution</strong> : le soluté (sel, sucre) se dissout dans le solvant (eau). Au-delà d'une certaine quantité, le soluté ne se dissout plus : solution saturée.</li>
+      </ul>
+      <div class="regle">🔑 La masse se conserve lors d'un changement d'état ou d'un mélange : si on mélange 200 g de sel à 800 g d'eau, on obtient 1 000 g de solution salée.</div>`
+    },
+    {id:"vivant",title:"Le monde du vivant",content:`
+      <h4>Caractéristiques du vivant</h4>
+      <p>Tout être vivant : naît, se nourrit, respire, grandit, se reproduit, meurt. Ces critères permettent de distinguer le vivant du non-vivant.</p>
+      <h4>La classification du vivant</h4>
+      <ul>
+        <li>Règne <strong>animal</strong> : vertébrés (poissons, amphibiens, reptiles, oiseaux, mammifères) et invertébrés (insectes, araignées, vers, mollusques…).</li>
+        <li>Règne <strong>végétal</strong> : algues, mousses, fougères, plantes à fleurs.</li>
+        <li>Règne des <strong>champignons</strong> : ni animal ni végétal.</li>
+        <li><strong>Micro-organismes</strong> : bactéries, virus (invisibles à l'œil nu).</li>
+      </ul>
+      <h4>La reproduction des végétaux</h4>
+      <ul>
+        <li>Les fleurs contiennent les organes reproducteurs. La <strong>pollinisation</strong> (par insectes, vent) transporte le pollen.</li>
+        <li>La <strong>fécondation</strong> produit une graine dans un fruit.</li>
+        <li>La graine germe si les conditions sont favorables (eau, chaleur, lumière).</li>
+      </ul>
+      <h4>Les chaînes alimentaires</h4>
+      <p>Producteurs (végétaux) → Consommateurs primaires (herbivores) → Consommateurs secondaires (carnivores) → Décomposeurs (bactéries, champignons).</p>
+      <div class="exemple">Herbe → criquet → grenouille → héron → renard → décomposeurs</div>
+      <div class="regle">🔑 Un écosystème est un ensemble d'êtres vivants interagissant dans un milieu donné. Sa biodiversité le rend résilient.</div>`
+    },
+    {id:"electricite",title:"Électricité et énergie",content:`
+      <h4>Le circuit électrique simple</h4>
+      <ul>
+        <li>Un circuit doit être <strong>fermé</strong> pour que le courant circule.</li>
+        <li>Éléments : générateur (pile, batterie) → fils conducteurs → récepteur (lampe, moteur) → interrupteur.</li>
+        <li><strong>Court-circuit</strong> : le courant passe sans récepteur → danger (surchauffe, incendie).</li>
+      </ul>
+      <h4>Conducteurs et isolants</h4>
+      <ul>
+        <li><strong>Conducteurs</strong> : laissent passer le courant. Ex : métaux (cuivre, fer, aluminium), eau salée.</li>
+        <li><strong>Isolants</strong> : ne laissent pas passer le courant. Ex : plastique, bois sec, caoutchouc, verre.</li>
+      </ul>
+      <h4>Les sources d'énergie</h4>
+      <table><tr><th>Type</th><th>Sources</th><th>Avantages / Inconvénients</th></tr>
+        <tr><td>Énergies fossiles</td><td>pétrole, charbon, gaz</td><td>Abondantes mais polluantes et non renouvelables</td></tr>
+        <tr><td>Énergies renouvelables</td><td>soleil, vent, eau, bois</td><td>Propres et inépuisables, mais intermittentes</td></tr>
+        <tr><td>Nucléaire</td><td>uranium</td><td>Peu de CO₂, mais déchets radioactifs</td></tr>
+      </table>
+      <div class="regle">🔑 En France, ≈ 70 % de l'électricité est d'origine nucléaire. La transition énergétique vise à développer les renouvelables pour lutter contre le réchauffement climatique.</div>`
+    }
+  ]
+},
+
+// ── SCIENCES CM1 ───────────────────────────────────────────────
+'sciences-cm1':{
+  label:"Sciences CM1",shortLabel:"Sciences",icon:"🌱",level:"CM1",color:"sciences",
+  cardClass:"sciences-cm1",themeClass:"sciences-theme",badgeClass:"badge-cm1",
+  desc:"Vivant · Matière · Corps · Lumière",
+  themes:[
+    {id:"vivant-cm1",title:"Le monde vivant — bases",content:`
+      <h4>Qu'est-ce que le vivant ?</h4>
+      <p>Un être vivant naît, se nourrit, respire, grandit, se reproduit et meurt. Une pierre ne fait rien de tout ça → elle n'est pas vivante.</p>
+      <h4>Les grandes catégories</h4>
+      <ul>
+        <li><strong>Animaux</strong> : se déplacent, se nourrissent d'autres êtres vivants.</li>
+        <li><strong>Végétaux</strong> : fabriquent leur nourriture grâce à la lumière (photosynthèse).</li>
+        <li><strong>Champignons</strong> : ni animaux ni végétaux, se nourrissent de matière organique.</li>
+      </ul>
+      <h4>La reproduction animale</h4>
+      <ul>
+        <li>Reproduction <strong>ovipare</strong> : l'animal pond des œufs (poule, tortue, grenouille, poisson).</li>
+        <li>Reproduction <strong>vivipare</strong> : la mère porte le petit dans son ventre (chat, chien, humain, baleine).</li>
+      </ul>
+      <h4>La croissance d'une plante</h4>
+      <ul>
+        <li>La graine germe si elle a de l'eau, de la chaleur et de l'air.</li>
+        <li>La plante grandit grâce à la lumière, l'eau, les sels minéraux du sol et le CO₂ de l'air.</li>
+        <li>La photosynthèse : lumière + eau + CO₂ → sucre (nourriture) + oxygène.</li>
+      </ul>
+      <div class="regle">🔑 Les plantes sont indispensables : elles produisent l'oxygène que nous respirons et constituent la base de presque toutes les chaînes alimentaires.</div>`
+    },
+    {id:"matiere-cm1",title:"La matière — premiers concepts",content:`
+      <h4>Les trois états de la matière</h4>
+      <ul>
+        <li><strong>Solide</strong> : forme fixe, on peut le toucher. Ex : glace, bois, métal.</li>
+        <li><strong>Liquide</strong> : coule, prend la forme de son récipient. Ex : eau, jus, sirop.</li>
+        <li><strong>Gaz</strong> : invisible, occupe tout l'espace. Ex : air, vapeur d'eau.</li>
+      </ul>
+      <h4>L'eau, une substance particulière</h4>
+      <ul>
+        <li>L'eau se transforme selon la température :</li>
+        <li>Glace (solide) → fond à 0°C → eau liquide → s'évapore à 100°C → vapeur (gaz).</li>
+        <li>La vapeur peut se transformer en gouttelettes d'eau (condensation) sur une vitre froide.</li>
+      </ul>
+      <h4>Mélanges simples</h4>
+      <ul>
+        <li>Le sucre se dissout dans l'eau → solution sucrée (mélange homogène).</li>
+        <li>L'huile ne se mélange pas à l'eau → mélange hétérogène.</li>
+        <li>Le sable peut être filtré → séparation par filtration.</li>
+      </ul>
+      <div class="regle">🔑 Quand on pèse un mélange, la masse totale est égale à la somme des masses des éléments. La matière ne disparaît pas, elle se transforme.</div>`
+    },
+    {id:"corps-cm1",title:"Mon corps et ma santé",content:`
+      <h4>Les cinq sens</h4>
+      <table><tr><th>Sens</th><th>Organe</th><th>Ce qu'il perçoit</th></tr>
+        <tr><td>Vue</td><td>Yeux</td><td>Lumière, couleurs, formes</td></tr>
+        <tr><td>Ouïe</td><td>Oreilles</td><td>Sons, bruits</td></tr>
+        <tr><td>Odorat</td><td>Nez</td><td>Odeurs</td></tr>
+        <tr><td>Goût</td><td>Langue</td><td>Saveurs (sucré, salé, acide, amer, umami)</td></tr>
+        <tr><td>Toucher</td><td>Peau</td><td>Chaud, froid, douleur, texture</td></tr>
+      </table>
+      <h4>Le squelette et les muscles</h4>
+      <ul>
+        <li>Le squelette (206 os chez l'adulte) soutient le corps et protège les organes vitaux.</li>
+        <li>Les muscles sont attachés aux os par des tendons. Ils se contractent pour produire les mouvements.</li>
+        <li>Les articulations permettent aux os de bouger : épaule, genou, coude, cheville…</li>
+      </ul>
+      <h4>Hygiène et santé</h4>
+      <ul>
+        <li>Se laver les mains régulièrement : première protection contre les microbes.</li>
+        <li>Bouger au moins 1h par jour (activité physique).</li>
+        <li>Dormir 10–11 heures par nuit à cet âge.</li>
+        <li>Manger équilibré : fruits, légumes, protéines, féculents, produits laitiers.</li>
+      </ul>
+      <div class="regle">🔑 Les microbes (bactéries, virus) sont partout. Se laver les mains à l'eau et au savon pendant 30 secondes est le geste le plus efficace pour éviter de tomber malade.</div>`
+    }
+  ]
+},
+
+// ── EMC CM2 ────────────────────────────────────────────────────
+emc:{
+  label:"EMC CM2",shortLabel:"EMC",icon:"🤝",level:"CM2",color:"emc",
+  cardClass:"emc",themeClass:"emc-theme",badgeClass:"badge-cm2-e",
+  desc:"Citoyenneté · Droits · Démocratie · Institutions",
+  themes:[
+    {id:"citoyennete",title:"La citoyenneté française",content:`
+      <h4>Qu'est-ce qu'un citoyen ?</h4>
+      <p>Un citoyen est une personne membre d'une communauté politique (la nation) qui a des <strong>droits</strong> et des <strong>devoirs</strong> vis-à-vis d'elle.</p>
+      <h4>La nationalité française</h4>
+      <ul>
+        <li>Par le <strong>droit du sang</strong> : au moins un parent est français.</li>
+        <li>Par le <strong>droit du sol</strong> : né en France de parents étrangers, sous conditions.</li>
+        <li>Par <strong>naturalisation</strong> : après 5 ans de résidence légale, connaissance du français, intégration.</li>
+      </ul>
+      <h4>Les droits du citoyen</h4>
+      <ul>
+        <li>Droit de vote (à partir de 18 ans).</li>
+        <li>Libertés fondamentales : liberté d'expression, de religion, de presse, de circuler.</li>
+        <li>Droit à l'éducation, à la santé, à la justice.</li>
+      </ul>
+      <h4>Les devoirs du citoyen</h4>
+      <ul>
+        <li>Respecter les lois.</li>
+        <li>Voter (devoir civique, pas légalement obligatoire en France).</li>
+        <li>Payer ses impôts (financement des services publics).</li>
+        <li>Respecter les autres et l'espace commun.</li>
+      </ul>
+      <div class="regle">🔑 En France, la citoyenneté est liée aux valeurs de la République : Liberté (droits individuels), Égalité (devant la loi), Fraternité (solidarité entre citoyens).</div>`
+    },
+    {id:"democratie",title:"La démocratie et les institutions",content:`
+      <h4>Qu'est-ce que la démocratie ?</h4>
+      <p>Du grec <em>demos</em> (peuple) + <em>kratos</em> (pouvoir) : le pouvoir appartient au peuple. Les citoyens élisent leurs représentants.</p>
+      <h4>Les institutions de la V<sup>e</sup> République</h4>
+      <table><tr><th>Institution</th><th>Membres / mode d'élection</th><th>Rôle</th></tr>
+        <tr><td>Président de la République</td><td>Élu au suffrage universel direct, 5 ans</td><td>Chef de l'État, dirige la politique étrangère et de défense</td></tr>
+        <tr><td>Premier ministre</td><td>Nommé par le Président</td><td>Dirige le gouvernement et la politique intérieure</td></tr>
+        <tr><td>Assemblée nationale</td><td>577 députés élus, 5 ans</td><td>Vote les lois, contrôle le gouvernement</td></tr>
+        <tr><td>Sénat</td><td>348 sénateurs élus par les élus locaux</td><td>Examine les lois, représente les collectivités</td></tr>
+        <tr><td>Conseil constitutionnel</td><td>9 membres nommés</td><td>Vérifie que les lois respectent la Constitution</td></tr>
+      </table>
+      <h4>Les élections en France</h4>
+      <ul>
+        <li>Présidentielle : tous les 5 ans (2 tours).</li>
+        <li>Législatives : tous les 5 ans, élection des députés.</li>
+        <li>Municipales : tous les 6 ans, élection du maire et du conseil municipal.</li>
+      </ul>
+      <div class="regle">🔑 La Constitution de 1958 est la loi fondamentale : toutes les autres lois doivent la respecter. Elle définit les règles du jeu politique.</div>`
+    },
+    {id:"droits-enfants",title:"Les droits de l'enfant",content:`
+      <h4>La Convention internationale des droits de l'enfant (CIDE)</h4>
+      <ul>
+        <li>Adoptée par l'ONU le <strong>20 novembre 1989</strong>. Ratifiée par 196 pays.</li>
+        <li>La France l'a ratifiée en 1990.</li>
+      </ul>
+      <h4>Les 4 grands principes</h4>
+      <ul>
+        <li><strong>Non-discrimination</strong> : tous les enfants ont les mêmes droits, sans distinction.</li>
+        <li><strong>Intérêt supérieur de l'enfant</strong> : toute décision doit d'abord penser à son bien.</li>
+        <li><strong>Droit à la vie, à la survie et au développement</strong>.</li>
+        <li><strong>Droit de participation</strong> : l'enfant a le droit d'exprimer son opinion.</li>
+      </ul>
+      <h4>Droits essentiels reconnus</h4>
+      <ul>
+        <li>Droit à l'éducation, à la santé, à la protection.</li>
+        <li>Droit à une famille et à un nom.</li>
+        <li>Droit de jouer et de se reposer.</li>
+        <li>Protection contre l'exploitation, les violences, la discrimination.</li>
+      </ul>
+      <div class="regle">🔑 Le 20 novembre est la Journée internationale des droits de l'enfant. L'UNICEF est l'organisation de l'ONU chargée de défendre ces droits dans le monde.</div>`
+    },
+    {id:"regles-vie",title:"Règles de vie et laïcité",content:`
+      <h4>Pourquoi des règles ?</h4>
+      <p>Les règles permettent de <strong>vivre ensemble</strong> en respectant les droits de chacun. Sans règles, chacun ferait ce qu'il veut et les plus forts pourraient écraser les plus faibles.</p>
+      <h4>Les règles à différentes échelles</h4>
+      <ul>
+        <li>À l'école : règlement intérieur (respect, ponctualité, comportement).</li>
+        <li>Dans la commune : règlement municipal (bruit, propreté, circulation).</li>
+        <li>Dans le pays : lois votées par le Parlement.</li>
+        <li>En Europe : règlements européens.</li>
+        <li>Dans le monde : droit international, traités.</li>
+      </ul>
+      <h4>La laïcité</h4>
+      <ul>
+        <li>Principe fondamental de la République française depuis la <strong>loi de 1905</strong> (séparation de l'Église et de l'État).</li>
+        <li>L'État est <strong>neutre</strong> : il ne favorise aucune religion.</li>
+        <li>Chacun est libre de croire ou de ne pas croire, en privé.</li>
+        <li>Les signes religieux ostensibles sont interdits à l'école publique (loi 2004).</li>
+      </ul>
+      <div class="regle">🔑 La laïcité n'est pas contre les religions. Elle garantit la liberté de conscience de tous en séparant les affaires publiques des affaires religieuses.</div>`
+    }
+  ]
+},
+
+// ── EMC CM1 ────────────────────────────────────────────────────
+'emc-cm1':{
+  label:"EMC CM1",shortLabel:"EMC",icon:"🌟",level:"CM1",color:"emc",
+  cardClass:"emc-cm1",themeClass:"emc-theme",badgeClass:"badge-cm1",
+  desc:"Vivre ensemble · Règles · Respect · Droits",
+  themes:[
+    {id:"vivre-ensemble",title:"Vivre ensemble",content:`
+      <h4>Pourquoi vivre ensemble ?</h4>
+      <p>Les humains sont des êtres sociaux : ils ont besoin des autres pour survivre, apprendre, s'épanouir. La vie en société implique de partager des espaces, des ressources et des règles.</p>
+      <h4>Les règles dans la classe</h4>
+      <ul>
+        <li>Lever la main pour parler → chacun est écouté et respecté.</li>
+        <li>Respecter le matériel commun → il appartient à tous.</li>
+        <li>Travailler en silence ou doucement → chacun peut se concentrer.</li>
+        <li>Être ponctuel → le travail de tous n'est pas perturbé.</li>
+      </ul>
+      <h4>Le respect de l'autre</h4>
+      <ul>
+        <li>Respecter la différence : chaque élève a ses propres capacités, son histoire, sa culture.</li>
+        <li>La moquerie et les insultes blessent et sont interdites.</li>
+        <li>L'empathie : se mettre à la place de l'autre pour comprendre ses sentiments.</li>
+      </ul>
+      <h4>Coopérer</h4>
+      <p>Travailler en groupe apprend à écouter, partager les tâches, accepter les idées des autres et construire quelque chose ensemble qu'on ne pourrait pas faire seul.</p>
+      <div class="regle">🔑 La devise de la République — Liberté, Égalité, Fraternité — s'applique aussi dans la classe : chacun est libre, chacun est traité de la même façon, et on s'entraide.</div>`
+    },
+    {id:"droits-devoirs",title:"Droits et devoirs",content:`
+      <h4>Ce qu'est un droit</h4>
+      <p>Un droit est ce qu'on est autorisé à faire ou à recevoir. En France, les droits fondamentaux sont garantis par la loi et la Constitution.</p>
+      <h4>Droits des enfants (principaux)</h4>
+      <ul>
+        <li>Droit à l'éducation (école obligatoire de 3 à 16 ans).</li>
+        <li>Droit à la santé et à la protection.</li>
+        <li>Droit d'avoir une famille et un nom.</li>
+        <li>Droit de jouer, de se reposer, d'avoir des loisirs.</li>
+        <li>Droit d'exprimer son opinion.</li>
+      </ul>
+      <h4>Ce qu'est un devoir</h4>
+      <p>Un devoir est une obligation morale ou légale. Les droits et les devoirs sont liés : si je veux que mes droits soient respectés, je dois aussi respecter ceux des autres.</p>
+      <h4>Devoirs à l'école</h4>
+      <ul>
+        <li>Venir à l'école (obligation légale).</li>
+        <li>Faire son travail.</li>
+        <li>Respecter les adultes et les camarades.</li>
+        <li>Prendre soin des locaux et du matériel.</li>
+      </ul>
+      <div class="regle">🔑 Sans devoirs, les droits ne peuvent pas exister. Si tout le monde réclame des droits sans respecter ses devoirs, la vie en société devient impossible.</div>`
+    },
+    {id:"egalite",title:"Égalité et discrimination",content:`
+      <h4>L'égalité en droit</h4>
+      <p>Tous les êtres humains ont la même valeur et les mêmes droits fondamentaux, quelle que soit leur origine, leur couleur de peau, leur religion, leur sexe ou leur handicap.</p>
+      <h4>La discrimination</h4>
+      <p>La discrimination, c'est traiter quelqu'un de façon différente et défavorable à cause de ce qu'il est (et non de ce qu'il fait). En France, la discrimination est <strong>interdite par la loi</strong>.</p>
+      <ul>
+        <li>Exemples : refuser de jouer avec quelqu'un à cause de sa couleur de peau, se moquer d'un handicap, exclure quelqu'un à cause de sa religion.</li>
+      </ul>
+      <h4>L'égalité filles-garçons</h4>
+      <ul>
+        <li>Filles et garçons ont les mêmes droits et les mêmes capacités.</li>
+        <li>Les stéréotypes (idées toutes faites) limitent les choix de chacun : « les filles aiment le rose », « les garçons ne pleurent pas ».</li>
+        <li>L'école mixte et laïque est un lieu d'égalité.</li>
+      </ul>
+      <div class="regle">🔑 La discrimination est illégale et contraire aux valeurs républicaines. Être différent n'est pas un défaut : c'est une richesse pour la société.</div>`
+    }
+  ]
+}
+
+}; // fin COURS
+
+// ════════════════════════════════════════════════════════════════
+// CONFIG AFFICHAGE DES CARTES (ordre + groupes)
+// ════════════════════════════════════════════════════════════════
+const HOME_GROUPS = [
+  {
+    title:"📐 Mathématiques",
+    subjects:['maths']
+  },
+  {
+    title:"🏛️ Histoire",
+    subjects:['histoire','histoire-cm1']
+  },
+  {
+    title:"✍️ Français",
+    subjects:['francais','francais-cm1']
+  },
+  {
+    title:"🌍 Géographie",
+    subjects:['geo','geo-cm1']
+  },
+  {
+    title:"🔬 Sciences",
+    subjects:['sciences','sciences-cm1']
+  },
+  {
+    title:"🤝 EMC",
+    subjects:['emc','emc-cm1']
+  }
+];
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+let currentSubject=null, currentMode=null;
+let questions=[], currentQ=0, sessionResults=[];
+let apiKey=localStorage.getItem('cm2_api_key')||'';
+let apiDrawerOpen=false;
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+function init(){
+  buildHomeCards();
+  if(apiKey){
+    document.getElementById('apiKeyInput').value='••••••••';
+    document.getElementById('keyStatus').innerHTML='<span class="key-ok">✓ Clé enregistrée</span>';
+    document.getElementById('gearBtn').classList.add('active');
+  }
+}
+
+function buildHomeCards(){
+  const container=document.getElementById('subject-cards');
+  container.innerHTML='';
+  HOME_GROUPS.forEach(group=>{
+    const gt=document.createElement('div');
+    gt.className='group-title'; gt.textContent=group.title;
+    container.appendChild(gt);
+    group.subjects.forEach(subId=>{
+      const data=COURS[subId];
+      const card=document.createElement('div');
+      card.className='subject-card '+data.cardClass;
+      // Theme chips HTML
+      const chips=data.themes.map(t=>`<span class="theme-chip">${t.title}</span>`).join('');
+      card.innerHTML=`
+        <div class="subject-card-header">
+          <div class="subject-icon-wrap">
+            <span class="subject-icon">${data.icon}</span>
+            <span class="level-badge ${data.badgeClass}">${data.level}</span>
+          </div>
+          <div class="subject-info">
+            <div class="subject-name">${data.shortLabel}</div>
+            <div class="subject-desc">${data.desc}</div>
+          </div>
+        </div>
+        <div class="level-strip"><span class="ldot"></span>${data.level} · Difficulté progressive</div>
+        <div class="subject-card-body">
+          <div class="themes-list">${chips}</div>
+          <div class="card-actions">
+            <button class="btn-action btn-qcm" onclick="startQuiz('${subId}','qcm')">🎯 QCM<span class="badge">N1</span></button>
+            <button class="btn-action btn-ouvert" onclick="startQuiz('${subId}','open')">✏️ Questions<span class="badge">N2</span></button>
+            <button class="btn-action btn-cours" onclick="showCours('${subId}')">📖 Cours</button>
+          </div>
+        </div>`;
+      container.appendChild(card);
+    });
+  });
+}
+
+function saveApiKey(){
+  const val=document.getElementById('apiKeyInput').value.trim();
+  if(val&&val!=='••••••••'){
+    apiKey=val;
+    localStorage.setItem('cm2_api_key',val);
+    document.getElementById('keyStatus').innerHTML='<span class="key-ok">✓</span>';
+    document.getElementById('gearBtn').classList.add('active');
+  }
+}
+
+function toggleApiDrawer(){
+  apiDrawerOpen=!apiDrawerOpen;
+  const drawer=document.getElementById('apiDrawer');
+  drawer.className='api-drawer'+(apiDrawerOpen?' open':'');
+  document.getElementById('gearBtn').classList.toggle('active',apiDrawerOpen||!!apiKey);
+}
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  if(name==='history') renderHistory();
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════════════
+// COURS
+// ════════════════════════════════════════════════════════════════
+function showCours(subId){
+  currentSubject=subId;
+  const data=COURS[subId];
+  const el=document.getElementById('cours-title');
+  el.textContent=data.icon+' '+data.label;
+  el.style.color=`var(--${data.color}-color)`;
+
+  document.getElementById('cours-body').innerHTML=data.themes.map(t=>`
+    <div class="theme-section">
+      <div class="theme-title ${data.themeClass}">${t.title}</div>
+      <div class="cours-content">${t.content}</div>
+    </div>`).join('');
+  showScreen('cours');
+}
+
+// ════════════════════════════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════════════════════════════
+function updateDifficultyPips(qIndex){
+  for(let i=1;i<=5;i++){
+    const pip=document.getElementById('dp'+i);
+    if(pip) pip.className='diff-pip'+(i<=qIndex+1?' active':'');
+  }
+}
+
+async function startQuiz(subId,mode){
+  if(!apiKey){
+    toggleApiDrawer();
+    alert('⚠️ Entrez votre clé API Anthropic (⚙️ en haut à droite) pour générer des questions !');
+    return;
+  }
+  currentSubject=subId; currentMode=mode;
+  questions=[]; currentQ=0; sessionResults=[];
+  const data=COURS[subId];
+
+  document.getElementById('quiz-title').textContent=data.icon+' '+(mode==='qcm'?'QCM':'Questions ouvertes');
+  document.getElementById('quiz-title').style.color=`var(--${data.color}-color)`;
+
+  const barMap={maths:'maths',histoire:'histoire','histoire-cm1':'cm1',francais:'francais','francais-cm1':'francais',geo:'geo','geo-cm1':'geo',sciences:'sciences','sciences-cm1':'sciences',emc:'emc','emc-cm1':'emc'};
+  const barColor=`var(--${data.color}-color)`;
+  document.getElementById('progress-bar').style.background=barColor;
+
+  showScreen('quiz');
+  showLoading(true);
+  document.getElementById('question-area').innerHTML='';
+
+  const courseText=data.themes.map(t=>`### ${t.title}\n${t.content.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()}`).join('\n\n');
+  const diffInstr=`DIFFICULTÉ PROGRESSIVE OBLIGATOIRE :
+- Q1 : très facile (fait simple, date, définition de base)
+- Q2 : facile (reconnaître un concept du cours)
+- Q3 : moyen (comprendre un lien entre deux notions)
+- Q4 : difficile (application, nuance, pourquoi/comment)
+- Q5 : très difficile (synthèse, analyse, mise en relation de plusieurs thèmes)
+L'élève est en ${data.level}, plutôt à l'aise : les questions 4 et 5 doivent vraiment le faire réfléchir.`;
+
+  const prompt=mode==='qcm'
+    ?`Tu es un professeur des écoles expert en ${data.level} (France).
+Cours de ${data.label} :
+${courseText}
+Génère 5 QCM (4 choix A–D, 1 seule bonne réponse).
+${diffInstr}
+JSON uniquement sans markdown :
+{"questions":[{"theme":"...","difficulty":1,"question":"...","choices":["A. ...","B. ...","C. ...","D. ..."],"correct":0,"explanation":"..."}]}`
+    :`Tu es un professeur des écoles expert en ${data.level} (France).
+Cours de ${data.label} :
+${courseText}
+Génère 5 questions ouvertes style contrôle de classe.
+${diffInstr}
+JSON uniquement sans markdown :
+{"questions":[{"theme":"...","difficulty":1,"question":"...","expected":"réponse complète","keywords":["mot1","mot2","mot3"]}]}`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+    });
+    const json=await resp.json();
+    if(json.error) throw new Error(json.error.message);
+    const parsed=JSON.parse(json.content[0].text.replace(/```json|```/g,'').trim());
+    questions=parsed.questions;
+    showLoading(false);
+    renderQuestion();
+  }catch(e){
+    showLoading(false);
+    document.getElementById('question-area').innerHTML=`
+      <div class="question-card" style="text-align:center;padding:24px">
+        <div style="font-size:2rem;margin-bottom:8px">😕</div>
+        <p style="font-weight:800;color:var(--error);margin-bottom:7px">Erreur : ${e.message}</p>
+        <p style="color:var(--text-light);font-size:0.84rem">Vérifiez votre clé API (⚙️) et votre connexion.</p>
+        <button onclick="showScreen('home')" style="margin-top:14px;padding:10px 20px;background:var(--maths-color);color:#fff;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:0.88rem">← Retour</button>
+      </div>`;
+  }
+}
+
+function showLoading(show){
+  document.getElementById('loading-block').className='loading-block'+(show?' show':'');
+}
+
+function updateProgress(){
+  const pct=(currentQ/questions.length)*100;
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('quiz-progress-text').textContent=`Question ${currentQ+1} / ${questions.length}`;
+  updateDifficultyPips(currentQ);
+}
+
+const LETTERS=['A','B','C','D'];
+
+function renderQuestion(){
+  if(currentQ>=questions.length){showResults();return;}
+  updateProgress();
+  const q=questions[currentQ];
+  const data=COURS[currentSubject];
+  const area=document.getElementById('question-area');
+  const btnColor=`background:var(--${data.color}-color)`;
+
+  if(currentMode==='qcm'){
+    area.innerHTML=`
+      <div class="question-card">
+        <div class="question-theme-tag">${q.theme}</div>
+        <div class="question-text">${q.question}</div>
+        <div class="choices">
+          ${q.choices.map((c,i)=>`
+            <button class="choice-btn" onclick="selectChoice(${i})" id="choice-${i}">
+              <span class="choice-letter">${LETTERS[i]}</span>
+              <span>${c.replace(/^[A-D]\.\s*/,'')}</span>
+            </button>`).join('')}
+        </div>
+        <div class="feedback-block" id="feedback"></div>
+        <button class="btn-next" id="btn-next" style="${btnColor}" onclick="nextQuestion()">
+          ${currentQ===questions.length-1?'Voir mes résultats 🎉':'Question suivante →'}
+        </button>
+      </div>`;
+  }else{
+    area.innerHTML=`
+      <div class="question-card">
+        <div class="question-theme-tag">${q.theme}</div>
+        <div class="question-text">${q.question}</div>
+        <textarea class="open-answer" id="open-ans" placeholder="Écris ta réponse ici…"></textarea>
+        <button class="btn-submit" id="btn-submit" style="${btnColor};color:#fff" onclick="submitOpen()">Valider ✓</button>
+        <div class="feedback-block" id="feedback"></div>
+        <button class="btn-next" id="btn-next" style="${btnColor}" onclick="nextQuestion()">
+          ${currentQ===questions.length-1?'Voir mes résultats 🎉':'Question suivante →'}
+        </button>
+      </div>`;
+  }
+}
+
+function selectChoice(idx){
+  const q=questions[currentQ];
+  document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);
+  const ok=idx===q.correct;
+  document.getElementById('choice-'+idx).className='choice-btn '+(ok?'correct':'wrong');
+  if(!ok) document.getElementById('choice-'+q.correct).className='choice-btn correct';
+  sessionResults.push({q:q.question,mode:'qcm',correct:ok,theme:q.theme,difficulty:q.difficulty||1,answer:q.choices[q.correct]});
+  const fb=document.getElementById('feedback');
+  fb.className='feedback-block show '+(ok?'good':'bad');
+  fb.innerHTML=`<div class="feedback-label"><span class="fb-shape"></span>${ok?'✓ Bravo !':'✗ Pas tout à fait…'}</div>${q.explanation}`;
+  const btn=document.getElementById('btn-next');
+  btn.className='btn-next show'; btn.style.background=`var(--${COURS[currentSubject].color}-color)`;
+}
+
+async function submitOpen(){
+  const ans=document.getElementById('open-ans').value.trim();
+  if(!ans) return;
+  const q=questions[currentQ];
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true; btn.textContent='⏳ Correction…';
+  document.getElementById('open-ans').disabled=true;
+
+  const corrPrompt=`Tu corriges la réponse d'un élève de ${COURS[currentSubject].level}.
+Question : ${q.question}
+Réponse attendue : ${q.expected}
+Mots-clés : ${q.keywords.join(', ')}
+Réponse élève : "${ans}"
+JSON uniquement : {"correct":true/false,"partial":true/false,"comment":"1-2 phrases encourageantes","expected":"${q.expected.replace(/"/g,'\\"').replace(/\n/g,' ')}"}`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:corrPrompt}]})
+    });
+    const json=await resp.json();
+    const result=JSON.parse(json.content[0].text.replace(/```json|```/g,'').trim());
+    sessionResults.push({q:q.question,mode:'open',correct:result.correct,partial:result.partial,theme:q.theme,difficulty:q.difficulty||1,answer:q.expected});
+    const fbClass=result.correct?'good':result.partial?'partial':'bad';
+    const fbLabel=result.correct?'✓ Excellent !':result.partial?'◑ Partiellement correct':'✗ À revoir';
+    const fb=document.getElementById('feedback');
+    fb.className='feedback-block show '+fbClass;
+    fb.innerHTML=`<div class="feedback-label"><span class="fb-shape"></span>${fbLabel}</div><p>${result.comment}</p>${!result.correct?`<p style="margin-top:6px"><strong>Réponse complète :</strong> ${result.expected}</p>`:''}`;
+    btn.style.display='none';
+    const nxt=document.getElementById('btn-next');
+    nxt.className='btn-next show'; nxt.style.background=`var(--${COURS[currentSubject].color}-color)`;
+  }catch(e){
+    btn.disabled=false; btn.textContent='⚠️ Réessayer';
+  }
+}
+
+function nextQuestion(){currentQ++;renderQuestion();window.scrollTo(0,0);}
+function confirmQuit(){
+  if(questions.length===0||currentQ===0){showScreen('home');return;}
+  if(confirm('Quitter le quiz ? Tes réponses ne seront pas enregistrées.')) showScreen('home');
+}
+
+// ════════════════════════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════════════════════════
+function showResults(){
+  const sub=COURS[currentSubject];
+  const correct=sessionResults.filter(r=>r.correct).length;
+  const partial=sessionResults.filter(r=>r.partial&&!r.correct).length;
+  const total=sessionResults.length;
+  const score=correct+Math.round(partial*0.5);
+  const pct=Math.round((score/total)*100);
+
+  const hist=JSON.parse(localStorage.getItem('cm2_history')||'[]');
+  hist.unshift({id:Date.now(),subject:currentSubject,mode:currentMode,date:new Date().toLocaleDateString('fr-FR'),score,total,pct});
+  localStorage.setItem('cm2_history',JSON.stringify(hist.slice(0,50)));
+
+  document.getElementById('results-title').textContent=sub.icon+' '+sub.label;
+  const emoji=pct>=80?'🌟':pct>=60?'👍':pct>=40?'💪':'📚';
+  const msg=pct>=80?'Excellent travail !':pct>=60?'Bon résultat, continue !':pct>=40?'Continue les efforts !':'Relis le cours et réessaie !';
+  const dl=d=>d<=2?'◽ Facile':d===3?'◽◽ Moyen':'◽◽◽ Difficile';
+  const sc=`var(--${sub.color}-color)`;
+
+  const review=sessionResults.map(r=>`
+    <div class="result-item ${r.correct?'correct-item':r.partial?'partial-item':'wrong-item'}">
+      <div style="font-size:0.66rem;font-weight:800;opacity:.4;margin-bottom:2px">${r.theme} · ${dl(r.difficulty||1)}</div>
+      <div class="result-q">${r.q}</div>
+      <div class="result-answer">
+        ${r.correct?'<span class="result-correct">■ Correct</span>':r.partial?'<span class="result-partial">◑ Partiel</span>':'<span class="result-wrong">✗ Incorrect</span>'}
+        ${!r.correct&&r.answer?` · <em>${r.answer.substring(0,80)}${r.answer.length>80?'…':''}</em>`:''}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('results-body').innerHTML=`
+    <div class="score-card" style="border-top-color:${sc}">
+      <div class="score-emoji">${emoji}</div>
+      <div class="score-number" style="color:${sc}">${score}/${total}</div>
+      <div class="score-label">${pct}% · ${currentMode==='qcm'?'QCM':'Questions ouvertes'} · ${sub.label}</div>
+      <div class="score-msg">${msg}</div>
+    </div>
+    <div class="section-title">Détail des réponses</div>
+    <div class="results-review">${review}</div>
+    <button class="btn-primary" style="background:${sc}" onclick="startQuiz('${currentSubject}','${currentMode}')">🔄 Rejouer</button>
+    <button class="btn-secondary" onclick="showScreen('home')">🏠 Accueil</button>`;
+  showScreen('results');
+}
+
+// ════════════════════════════════════════════════════════════════
+// HISTORY
+// ════════════════════════════════════════════════════════════════
+function renderHistory(){
+  const hist=JSON.parse(localStorage.getItem('cm2_history')||'[]');
+  const body=document.getElementById('history-body');
+  if(!hist.length){
+    body.innerHTML='<div class="history-empty"><div class="big-icon">🎯</div><p>Pas encore de sessions.<br>Lance un quiz pour commencer !</p></div>';
+    return;
+  }
+  const avg=Math.round(hist.reduce((s,h)=>s+h.pct,0)/hist.length);
+  const sc=p=>p>=80?'score-good':p>=50?'score-mid':'score-bad';
+
+  const list=hist.map(h=>{
+    const sub=COURS[h.subject]||{icon:'📚',shortLabel:h.subject,level:'',color:'maths'};
+    return `
+      <div class="history-item">
+        <div class="history-badge ${h.subject}" style="background:var(--${sub.color}-light);border:2px solid var(--${sub.color}-color)">
+          ${sub.icon}
+          <span class="mini-badge" style="background:var(--${sub.color}-color)">${sub.level}</span>
+        </div>
+        <div class="history-info">
+          <h4>${sub.shortLabel} ${sub.level} · ${h.mode==='qcm'?'QCM':'Questions ouvertes'}</h4>
+          <p>${h.date}</p>
+        </div>
+        <div class="history-score ${sc(h.pct)}">${h.score}/${h.total}</div>
+      </div>`;
+  }).join('');
+
+  body.innerHTML=`
+    <div class="history-stats">
+      <div class="stat-card"><div class="stat-num" style="color:var(--maths-color)">${hist.length}</div><div class="stat-label">Sessions</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--${avg>=70?'maths':'histoire'}-color)">${avg}%</div><div class="stat-label">Score moyen</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--maths-color)">${hist.filter(h=>h.subject==='maths').length}</div><div class="stat-label">Sessions Maths</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--histoire-color)">${hist.filter(h=>h.subject.startsWith('histoire')).length}</div><div class="stat-label">Sessions Histoire</div></div>
+    </div>
+    <div class="section-title">Historique</div>
+    <div class="history-list">${list}</div>
+    <button class="btn-clear" onclick="clearHistory()">🗑️ Effacer l'historique</button>`;
+}
+
+function clearHistory(){
+  if(confirm("Effacer tout l'historique ?")){localStorage.removeItem('cm2_history');renderHistory();}
+}
+
+init();
+</script>
+</body>
+</html>
