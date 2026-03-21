@@ -66,6 +66,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .subject-card-header{padding:14px 16px 12px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
 /* Diagonal stripe pattern per subject — daltonism shape encoding */
 .maths .subject-card-header{background:var(--maths-light);background-image:repeating-linear-gradient(45deg,rgba(0,114,178,.06) 0,rgba(0,114,178,.06) 2px,transparent 2px,transparent 9px)}
+.maths-cm1 .subject-card-header{background:var(--maths-light);background-image:repeating-linear-gradient(135deg,rgba(0,114,178,.06) 0,rgba(0,114,178,.06) 2px,transparent 2px,transparent 9px)}
 .histoire .subject-card-header{background:var(--histoire-light);background-image:repeating-linear-gradient(90deg,rgba(213,94,0,.06) 0,rgba(213,94,0,.06) 2px,transparent 2px,transparent 9px)}
 .histoire-cm1 .subject-card-header{background:var(--cm1-light);background-image:repeating-linear-gradient(135deg,rgba(0,158,115,.06) 0,rgba(0,158,115,.06) 2px,transparent 2px,transparent 9px)}
 .francais .subject-card-header{background:var(--francais-light);background-image:repeating-linear-gradient(60deg,rgba(204,121,167,.06) 0,rgba(204,121,167,.06) 2px,transparent 2px,transparent 9px)}
@@ -90,7 +91,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 .subject-info{flex:1}
 .subject-name{font-family:'Fredoka One',cursive;font-size:1.3rem}
-.maths .subject-name{color:var(--maths-color)}
+.maths .subject-name,.maths-cm1 .subject-name{color:var(--maths-color)}
 .histoire .subject-name,.histoire-cm1 .subject-name{color:var(--histoire-color)}
 .francais .subject-name,.francais-cm1 .subject-name{color:var(--francais-color)}
 .geo .subject-name,.geo-cm1 .subject-name{color:var(--geo-color)}
@@ -100,8 +101,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 .level-strip{display:flex;align-items:center;gap:6px;padding:4px 16px;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
 .ldot{width:6px;height:6px;border-radius:50%}
-.maths .level-strip{background:#EEF4FA;color:var(--maths-dark);border-top:1px solid #D0E6F5}
-.maths .ldot{background:var(--maths-color)}
+.maths .level-strip,.maths-cm1 .level-strip{background:#EEF4FA;color:var(--maths-dark);border-top:1px solid #D0E6F5}
+.maths .ldot,.maths-cm1 .ldot{background:var(--maths-color)}
 .histoire .level-strip{background:#FEF4EE;color:var(--histoire-dark);border-top:1px solid #F5D9C5}
 .histoire .ldot{background:var(--histoire-color)}
 .histoire-cm1 .level-strip{background:#EDF9F4;color:var(--cm1-dark);border-top:1px solid #C0E8D8}
@@ -182,9 +183,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .badge{font-size:0.6rem;background:rgba(255,255,255,.3);border-radius:50px;padding:1px 6px;font-weight:700}
 
 /* Button colors per subject */
-.maths .btn-qcm{background:var(--maths-color);color:#fff}
-.maths .btn-ouvert{background:var(--maths-light);color:var(--maths-dark);border:2px solid var(--maths-color)}
-.maths .btn-cours{background:#EEF4F9;color:var(--maths-dark)}
+.maths .btn-qcm,.maths-cm1 .btn-qcm{background:var(--maths-color);color:#fff}
+.maths .btn-ouvert,.maths-cm1 .btn-ouvert{background:var(--maths-light);color:var(--maths-dark);border:2px solid var(--maths-color)}
+.maths .btn-cours,.maths-cm1 .btn-cours{background:#EEF4F9;color:var(--maths-dark)}
 .histoire .btn-qcm,.histoire-cm1 .btn-qcm{background:var(--histoire-color);color:#fff}
 .histoire .btn-ouvert,.histoire-cm1 .btn-ouvert{background:var(--histoire-light);color:var(--histoire-dark);border:2px solid var(--histoire-color)}
 .histoire .btn-cours,.histoire-cm1 .btn-cours{background:#FDF3EE;color:var(--histoire-dark)}
@@ -444,7 +445,7 @@ maths:{
   themes:[
     {id:"nombres",title:"Les grands nombres",content:`
       <h4>Les classes de nombres</h4>
-      <p>En CM2, on travaille avec des nombres jusqu'aux <strong>milliards</strong>. Chaque classe contient trois rangs : unités, dizaines, centaines.</p>
+      <p>En CM2, on travaille avec des nombres jusqu'aux <strong>milliards</strong>. Chaque <strong>classe</strong> contient trois rangs : unités, dizaines, centaines.</p>
       <table><tr><th>Classe</th><th>Rangs</th><th>Exemple</th></tr>
         <tr><td>Milliards</td><td>u. de milliards, d. de milliards, c. de milliards</td><td>2 000 000 000</td></tr>
         <tr><td>Millions</td><td>u. de millions, d. de millions, c. de millions</td><td>3 000 000</td></tr>
@@ -452,15 +453,27 @@ maths:{
         <tr><td>Unités</td><td>unités, dizaines, centaines</td><td>567</td></tr>
       </table>
       <h4>Lire et écrire un grand nombre</h4>
-      <p>On sépare les classes par une <strong>espace</strong> (jamais un point). On lit de gauche à droite, classe par classe.</p>
+      <p>On sépare les classes par une <strong>espace</strong> (jamais un point ni une virgule). On lit de gauche à droite, classe par classe.</p>
       <div class="exemple">3 456 789 → trois millions quatre cent cinquante-six mille sept cent quatre-vingt-neuf</div>
+      <div class="exemple">2 045 000 000 → deux milliards quarante-cinq millions</div>
       <h4>Valeur positionnelle</h4>
-      <p>La valeur d'un chiffre dépend de sa <strong>position</strong> dans le nombre. Le même chiffre peut valoir 5, 50, 500, 5 000…</p>
-      <div class="exemple">Dans 3 <u>5</u>26 : le 5 est au rang des centaines → il vaut 500.</div>
+      <p>La valeur d'un chiffre dépend de sa <strong>position</strong>. Le même chiffre peut valoir 5, 50, 500, 5 000, 5 000 000…</p>
+      <div class="exemple">Dans 3 <u>5</u>26 : le 5 est au rang des centaines → il vaut <strong>500</strong>.<br>Dans <u>5</u> 000 000 : le 5 est au rang des millions → il vaut <strong>5 000 000</strong>.</div>
+      <h4>Décomposer un grand nombre</h4>
+      <div class="exemple">4 308 072 = 4 × 1 000 000 + 3 × 100 000 + 8 × 1 000 + 7 × 10 + 2</div>
       <h4>Comparer et ranger des nombres</h4>
-      <p>On compare d'abord le nombre de chiffres, puis chiffre par chiffre de gauche à droite.</p>
-      <div class="exemple">458 320 &lt; 1 200 000 (moins de chiffres) · 327 450 &gt; 327 200 (même préfixe, comparer le 4 vs 2)</div>
-      <div class="regle">🔑 Encadrer un nombre : trouver le multiple de 1 000 (ou 10 000) immédiatement inférieur et supérieur. Ex : 14 000 &lt; 14 637 &lt; 15 000</div>`
+      <p>On compare d'abord le <strong>nombre de chiffres</strong>, puis chiffre par chiffre de gauche à droite.</p>
+      <div class="exemple">458 320 &lt; 1 200 000 (moins de chiffres)<br>327 450 &gt; 327 200 (même début, comparer les centaines : 4 &gt; 2)</div>
+      <h4>Arrondir un grand nombre</h4>
+      <ul>
+        <li>Au <strong>millier</strong> : regarder les centaines (≥500 → on monte).</li>
+        <li>Au <strong>million</strong> : regarder les centaines de mille (≥500 000 → on monte).</li>
+      </ul>
+      <div class="exemple">3 672 800 arrondi au million → centaines de mille = 6 ≥ 5 → <strong>4 000 000</strong><br>3 472 800 arrondi au million → centaines de mille = 4 &lt; 5 → <strong>3 000 000</strong></div>
+      <h4>Encadrer et intercaler</h4>
+      <p>Encadrer au millier : trouver le millier immédiatement inférieur et supérieur.</p>
+      <div class="exemple">14 000 &lt; 14 637 &lt; 15 000 · 999 000 &lt; 999 999 &lt; 1 000 000</div>
+      <div class="regle">🔑 Un milliard = 1 000 millions = 1 000 000 000. La population mondiale est d'environ 8 milliards d'habitants. La France compte environ 68 millions d'habitants.</div>`
     },
     {id:"fractions",title:"Fractions & nombres décimaux",content:`
       <h4>Qu'est-ce qu'une fraction ?</h4>
@@ -469,96 +482,147 @@ maths:{
       <h4>Fractions équivalentes</h4>
       <p>On peut multiplier (ou diviser) le numérateur et le dénominateur par le même nombre sans changer la valeur.</p>
       <div class="exemple">1/2 = 2/4 = 3/6 = 50/100 — toutes représentent la même quantité.</div>
+      <h4>Simplifier une fraction</h4>
+      <p>Diviser numérateur et dénominateur par leur diviseur commun pour obtenir la fraction la plus simple.</p>
+      <div class="exemple">6/9 : les deux sont divisibles par 3 → 6÷3 / 9÷3 = <strong>2/3</strong><br>15/25 : divisibles par 5 → <strong>3/5</strong></div>
+      <h4>Additionner des fractions (même dénominateur)</h4>
+      <p>On additionne uniquement les numérateurs, le dénominateur ne change pas.</p>
+      <div class="exemple">2/7 + 3/7 = <strong>5/7</strong> · 5/8 + 7/8 = 12/8 = <strong>3/2</strong> (= 1 et 1/2)</div>
       <h4>Fractions et nombres décimaux</h4>
       <p>Une fraction avec 10, 100 ou 1 000 au dénominateur se convertit directement en décimal.</p>
       <table><tr><th>Fraction</th><th>Décimal</th><th>Se lit</th></tr>
         <tr><td>7/10</td><td>0,7</td><td>zéro virgule sept</td></tr>
         <tr><td>25/100</td><td>0,25</td><td>zéro virgule vingt-cinq</td></tr>
         <tr><td>375/1000</td><td>0,375</td><td>zéro virgule trois cent soixante-quinze</td></tr>
+        <tr><td>3/4</td><td>0,75</td><td>zéro virgule soixante-quinze</td></tr>
       </table>
+      <h4>Les nombres décimaux — structure</h4>
+      <p>Un nombre décimal a une <strong>partie entière</strong> (à gauche de la virgule) et une <strong>partie décimale</strong> (à droite).</p>
+      <div class="exemple">Dans 3,<u>7</u>4 : le 7 est au rang des <strong>dixièmes</strong> (vaut 0,7), le 4 est au rang des <strong>centièmes</strong> (vaut 0,04).</div>
+      <h4>Additionner et soustraire des décimaux</h4>
+      <p>On aligne les virgules, puis on opère comme avec des entiers.</p>
+      <div class="exemple">  3,75<br>+ 1,8<u>0</u><br>──────<br>  5,55</div>
       <h4>Comparer des fractions</h4>
-      <ul><li>Même dénominateur → comparer les numérateurs : 3/7 &lt; 5/7</li>
-          <li>Même numérateur → la plus grande fraction a le plus petit dénominateur : 1/3 &gt; 1/5</li>
-          <li>Sinon → réduire au même dénominateur ou convertir en décimal.</li></ul>
-      <div class="regle">🔑 Fraction = division : 3/4 = 3 ÷ 4 = 0,75. La barre de fraction est un signe de division.</div>`
+      <ul>
+        <li>Même dénominateur → comparer les numérateurs : 3/7 &lt; 5/7</li>
+        <li>Même numérateur → plus grand dénominateur = plus petite fraction : 1/3 &gt; 1/5</li>
+        <li>Sinon → convertir en décimal et comparer : 3/8 = 0,375 et 2/5 = 0,4 → 3/8 &lt; 2/5</li>
+      </ul>
+      <div class="regle">🔑 Fraction = division : 3/4 = 3 ÷ 4 = 0,75. À savoir par cœur : 1/2=0,5 · 1/4=0,25 · 3/4=0,75 · 1/5=0,2 · 1/10=0,1.</div>`
     },
     {id:"operations",title:"Opérations",content:`
       <h4>Addition et soustraction posées</h4>
-      <p>On aligne les chiffres par rangs (unités sous unités, dizaines sous dizaines…). On commence par la droite. Pour la soustraction, on effectue des retenues si nécessaire.</p>
-      <h4>Multiplication posée</h4>
-      <p>On multiplie chaque chiffre du multiplicateur par tous les chiffres du multiplicande, en décalant d'un rang vers la gauche à chaque nouvelle ligne, puis on additionne.</p>
-      <div class="exemple">347 × 25 : d'abord 347×5=1735, puis 347×20=6940, total = 8 675</div>
-      <div class="regle">🔑 Tables de multiplication jusqu'à 9×9 : indispensables par cœur !</div>
+      <p>On aligne les chiffres <strong>par rangs</strong> (unités sous unités, dizaines sous dizaines…). On commence <strong>par la droite</strong>. Retenues pour l'addition, emprunts pour la soustraction.</p>
+      <div class="exemple">    48 372          73 500<br>  + 15 649        −  8 746<br>  ───────         ───────<br>    64 021          64 754</div>
+      <h4>Multiplication posée (par 2 chiffres)</h4>
+      <p>On multiplie par chaque chiffre du multiplicateur, en décalant d'un rang vers la gauche à chaque nouvelle ligne, puis on additionne.</p>
+      <div class="exemple">347 × 25 :<br>  347 × 5 =  1 735<br>  347 × 20 = 6 940 (décaler d'un rang)<br>  ─────────────────<br>  Total  =   8 675</div>
+      <div class="regle">🔑 Tables de multiplication jusqu'à 9×9 : indispensables par cœur ! Vérifier une multiplication : diviser le résultat par l'un des facteurs.</div>
+      <h4>Division posée par 2 chiffres</h4>
+      <p>En CM2, on apprend à diviser par un diviseur à 2 chiffres. Méthode : trouver le plus grand multiple du diviseur inférieur à la partie considérée.</p>
+      <div class="exemple">784 ÷ 16 = ?<br>78 ÷ 16 → 16×4=64, 16×5=80 (trop grand) → quotient partiel : 4, reste 78−64=14<br>Descendre le 4 → 144 ÷ 16 = 9 exactement<br>Résultat : <strong>49</strong> · vérification : 49 × 16 = 784 ✓</div>
       <h4>Division posée (avec reste)</h4>
-      <p>On cherche combien de fois le diviseur « entre » dans le dividende, chiffre par chiffre de gauche à droite. Le reste est toujours inférieur au diviseur.</p>
-      <div class="exemple">527 ÷ 4 = 131 reste 3 → vérification : 131 × 4 + 3 = 524 + 3 = 527 ✓</div>
+      <div class="exemple">527 ÷ 4 = <strong>131 reste 3</strong> → vérification : 131 × 4 + 3 = 524 + 3 = 527 ✓</div>
+      <p>Le reste est toujours <strong>strictement inférieur</strong> au diviseur.</p>
+      <h4>Opérations sur les nombres décimaux</h4>
+      <ul>
+        <li><strong>Addition/soustraction</strong> : aligner les virgules, compléter avec des zéros si nécessaire.</li>
+        <li><strong>Multiplication</strong> : multiplier comme des entiers, puis placer la virgule (autant de décimales que dans les deux facteurs réunis).</li>
+      </ul>
+      <div class="exemple">3,4 × 2,5 : calculer 34 × 25 = 850, puis placer 2 décimales → <strong>8,50</strong></div>
       <h4>Priorités de calcul</h4>
       <ul>
-        <li>1. Les <strong>parenthèses</strong> en premier</li>
+        <li>1. Les <strong>parenthèses</strong> d'abord</li>
         <li>2. Puis <strong>× et ÷</strong> de gauche à droite</li>
         <li>3. Enfin <strong>+ et −</strong> de gauche à droite</li>
       </ul>
-      <div class="exemple">3 + 2 × 4 = 3 + 8 = <strong>11</strong> (et non 20) · (3+2) × 4 = 5 × 4 = <strong>20</strong></div>
-      <h4>Calcul mental — quelques astuces</h4>
+      <div class="exemple">3 + 2 × 4 = 3 + 8 = <strong>11</strong> (pas 20) · (3+2) × 4 = 5 × 4 = <strong>20</strong></div>
+      <h4>Calcul mental — astuces de CM2</h4>
       <ul>
-        <li>×9 : multiplier par 10 et soustraire le nombre. Ex : 7×9 = 70−7 = 63</li>
-        <li>×11 : répéter le chiffre et additionner au milieu. Ex : 13×11 = 143</li>
-        <li>÷5 : diviser par 10 puis multiplier par 2. Ex : 340÷5 = 34×2 = 68</li>
+        <li>×9 : ×10 puis −1×. Ex : 7×9 = 70−7 = <strong>63</strong></li>
+        <li>×11 : ×10 puis +1×. Ex : 8×11 = 80+8 = <strong>88</strong></li>
+        <li>÷5 : ÷10 puis ×2. Ex : 340÷5 = 34×2 = <strong>68</strong></li>
+        <li>×25 : ÷4 puis ×100. Ex : 48×25 = 12×100 = <strong>1 200</strong></li>
+        <li>Doubler/moitié : utile pour ×2, ÷2, ×4, ×0,5…</li>
       </ul>`
     },
     {id:"geometrie",title:"Géométrie",content:`
       <h4>Les angles</h4>
       <p>Un angle est l'écartement entre deux demi-droites de même origine. On mesure les angles en <strong>degrés (°)</strong> avec un rapporteur.</p>
       <ul>
-        <li><strong>Angle droit</strong> : 90° (symbole ∟)</li>
+        <li><strong>Angle droit</strong> : 90° exactement (symbole ∟ ou petit carré)</li>
         <li><strong>Angle aigu</strong> : entre 0° et 90°</li>
         <li><strong>Angle obtus</strong> : entre 90° et 180°</li>
+        <li><strong>Angle plat</strong> : 180° exactement</li>
+        <li><strong>Angle rentrant</strong> : entre 180° et 360°</li>
       </ul>
+      <p>La somme des angles d'un triangle est toujours <strong>180°</strong>. La somme des angles d'un quadrilatère est toujours <strong>360°</strong>.</p>
       <h4>Les figures planes</h4>
       <ul>
-        <li><strong>Triangle</strong> : somme des angles = 180°. Équilatéral (3 côtés et angles égaux), isocèle (2 égaux), scalène (tous différents), rectangle (un angle droit).</li>
-        <li><strong>Quadrilatères</strong> : carré (4 côtés égaux, 4 angles droits), rectangle (4 angles droits), losange (4 côtés égaux), parallélogramme (côtés opposés parallèles), trapèze (1 paire de côtés parallèles).</li>
-        <li><strong>Cercle</strong> : rayon (r) du centre au bord, diamètre d = 2r. Périmètre ≈ 2 × 3,14 × r.</li>
+        <li><strong>Triangles</strong> : Équilatéral (3 côtés égaux, 3 angles de 60°), isocèle (2 côtés égaux), scalène (tous différents), rectangle (un angle droit).</li>
+        <li><strong>Quadrilatères</strong> : carré (4 côtés égaux, 4 angles droits), rectangle (4 angles droits), losange (4 côtés égaux), parallélogramme (côtés opposés parallèles et égaux), trapèze (une seule paire de côtés parallèles).</li>
+        <li><strong>Cercle</strong> : rayon r du centre au bord, diamètre d = 2r. Périmètre = 2 × π × r ≈ 6,28 × r.</li>
       </ul>
+      <h4>Symétrie axiale</h4>
+      <p>Une figure est <strong>symétrique</strong> par rapport à un axe si les deux parties se superposent par pliage. Pour construire le symétrique d'un point : la perpendiculaire à l'axe doit être à égale distance des deux côtés.</p>
+      <h4>Repérage dans un quadrillage</h4>
+      <p>On repère un point par ses <strong>coordonnées (abscisse, ordonnée)</strong> : d'abord les colonnes (axe horizontal), puis les lignes (axe vertical).</p>
+      <div class="exemple">Le point A(3 ; 2) est à 3 cases vers la droite et 2 cases vers le haut depuis l'origine.</div>
       <h4>Aires (surfaces)</h4>
-      <table><tr><th>Figure</th><th>Formule</th></tr>
-        <tr><td>Rectangle</td><td>Longueur × largeur</td></tr>
-        <tr><td>Carré</td><td>côté × côté = côté²</td></tr>
-        <tr><td>Triangle</td><td>(base × hauteur) ÷ 2</td></tr>
+      <table><tr><th>Figure</th><th>Formule</th><th>Exemple</th></tr>
+        <tr><td>Rectangle</td><td>Longueur × largeur</td><td>8×5 = 40 cm²</td></tr>
+        <tr><td>Carré</td><td>côté²</td><td>6² = 36 cm²</td></tr>
+        <tr><td>Triangle</td><td>(base × hauteur) ÷ 2</td><td>(8×5)÷2 = 20 cm²</td></tr>
+        <tr><td>Disque</td><td>π × r² ≈ 3,14 × r²</td><td>r=4 → 50,24 cm²</td></tr>
       </table>
-      <div class="regle">🔑 L'aire s'exprime en unités carrées : mm², cm², m², km². 1 m² = 10 000 cm².</div>
+      <div class="regle">🔑 L'aire s'exprime en unités <em>carrées</em> : mm², cm², m², km². 1 m² = 10 000 cm² · 1 km² = 1 000 000 m². Ne pas confondre périmètre (longueur du tour) et aire (surface intérieure) !</div>
       <h4>Les solides (3D)</h4>
-      <ul>
-        <li><strong>Cube</strong> : 6 faces carrées, 12 arêtes, 8 sommets.</li>
-        <li><strong>Pavé droit</strong> : 6 faces rectangulaires.</li>
-        <li><strong>Prisme</strong> : 2 bases identiques et parallèles.</li>
-        <li><strong>Pyramide</strong> : 1 base polygonale, apex (sommet).</li>
-      </ul>`
+      <table><tr><th>Solide</th><th>Faces</th><th>Arêtes</th><th>Sommets</th></tr>
+        <tr><td>Cube</td><td>6 carrées</td><td>12</td><td>8</td></tr>
+        <tr><td>Pavé droit</td><td>6 rect.</td><td>12</td><td>8</td></tr>
+        <tr><td>Pyramide à base carrée</td><td>5</td><td>8</td><td>5</td></tr>
+        <tr><td>Prisme triangulaire</td><td>5</td><td>9</td><td>6</td></tr>
+      </table>
+      <p>Le <strong>patron</strong> d'un solide est le développement à plat de toutes ses faces. En le découpant et le pliant, on reconstitue le solide.</p>`
     },
     {id:"mesures",title:"Mesures & résolution de problèmes",content:`
       <h4>Longueurs</h4>
-      <p>km → hm → dam → m → dm → cm → mm. À chaque flèche : ×10 vers la droite, ÷10 vers la gauche.</p>
+      <p>km → hm → dam → m → dm → cm → mm. À chaque flèche vers la droite : ×10 ; vers la gauche : ÷10.</p>
       <div class="exemple">3,5 km = 3 500 m = 350 000 cm · 75 mm = 7,5 cm = 0,075 m</div>
+      <h4>Aires — conversions</h4>
+      <p>À chaque rang : ×100 (car 1 m = 100 cm, donc 1 m² = 100 × 100 = 10 000 cm²).</p>
+      <table><tr><th>km²</th><th>hm² (ha)</th><th>dam² (a)</th><th>m²</th><th>dm²</th><th>cm²</th><th>mm²</th></tr>
+        <tr><td colspan="7" style="text-align:center">×100 à chaque rang (pas ×10 !)</td></tr>
+      </table>
+      <div class="exemple">1 ha (hectare) = 10 000 m² · 1 km² = 100 ha = 1 000 000 m²</div>
       <h4>Masses</h4>
       <p>t → kg → g → mg. À chaque flèche : ×1 000.</p>
-      <div class="exemple">2,4 kg = 2 400 g · 500 g = 0,5 kg</div>
+      <div class="exemple">2,4 kg = 2 400 g · 500 g = 0,5 kg · 3,2 t = 3 200 kg</div>
       <h4>Contenances</h4>
-      <p>kL → L → dL → cL → mL. À chaque flèche : ×10.</p>
+      <p>kL → L → dL → cL → mL. Entre L et dL/cL/mL : ×10 à chaque rang.</p>
+      <div class="exemple">2,5 L = 25 dL = 250 cL = 2 500 mL</div>
       <h4>Durées</h4>
       <ul>
         <li>1 heure = 60 minutes = 3 600 secondes</li>
-        <li>1 jour = 24 heures · 1 semaine = 7 jours · 1 an = 365 jours (366 en année bissextile)</li>
+        <li>1 jour = 24 heures · 1 semaine = 7 jours · 1 an = 365 jours (366 si bissextile)</li>
       </ul>
-      <div class="exemple">2h 35 min + 1h 50 min = 3h 85 min = 4h 25 min (car 85 min = 1h 25 min)</div>
+      <div class="exemple">2h 35 min + 1h 50 min = 3h 85 min = <strong>4h 25 min</strong> (car 85 min = 1h 25 min)<br>Durée entre 8h 40 et 11h 15 : jusqu'à 9h → 20 min, puis 9h à 11h → 2h, puis 15 min → total <strong>2h 35 min</strong></div>
+      <h4>Vitesse, distance, durée</h4>
+      <p>En CM2, on découvre la relation fondamentale :</p>
+      <div class="exemple"><strong>Distance = Vitesse × Durée</strong><br>Un train roule à 200 km/h pendant 3h → Distance = 200 × 3 = <strong>600 km</strong></div>
+      <h4>Échelles</h4>
+      <p>Une échelle 1/50 000 signifie que 1 cm sur la carte = 50 000 cm = 500 m dans la réalité.</p>
+      <div class="exemple">Sur une carte à l'échelle 1/25 000, un segment de 4 cm représente 4 × 25 000 cm = 100 000 cm = <strong>1 km</strong> dans la réalité.</div>
       <h4>Résolution de problèmes — méthode</h4>
       <ul>
-        <li>1. Lire attentivement et identifier ce qu'on cherche.</li>
-        <li>2. Relever les données utiles (et ignorer les données parasites).</li>
-        <li>3. Choisir l'opération : + pour regrouper, − pour trouver un écart, × pour répéter, ÷ pour partager.</li>
-        <li>4. Calculer en posant si nécessaire.</li>
-        <li>5. Vérifier la cohérence du résultat et préciser l'unité.</li>
+        <li><strong>1.</strong> Lire attentivement et identifier ce qu'on cherche.</li>
+        <li><strong>2.</strong> Relever les données utiles (ignorer les données parasites).</li>
+        <li><strong>3.</strong> Choisir : + (regrouper) · − (écart) · × (répéter) · ÷ (partager/trouver un prix unitaire).</li>
+        <li><strong>4.</strong> Calculer proprement en posant l'opération.</li>
+        <li><strong>5.</strong> Vérifier la cohérence et écrire la réponse avec l'unité.</li>
       </ul>
-      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse finale. Une distance en km, une masse en kg, une durée en h et min.</div>`
+      <div class="exemple"><strong>Problème à plusieurs étapes :</strong> 4 livres coûtent 7,50 € chacun. On paye avec un billet de 50 €. Combien rend-on ?<br>Étape 1 : 4 × 7,50 = 30,00 €<br>Étape 2 : 50,00 − 30,00 = <strong>20,00 €</strong></div>
+      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse finale. Pour les problèmes à plusieurs étapes, bien identifier et numéroter chaque étape. Toujours se demander : « Mon résultat est-il raisonnable ? »</div>`
     }
   ],
   periods:[
@@ -567,6 +631,235 @@ maths:{
     {id:"p3",label:"Période 3",dates:"Jan–Fév",themeIds:["geometrie"]},
     {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["mesures"]},
     {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["nombres","fractions","operations","geometrie","mesures"]}
+  ]
+},
+
+// ── MATHS CM1 ──────────────────────────────────────────────────
+'maths-cm1':{
+  label:"Mathématiques CM1",shortLabel:"Maths",icon:"🔢",level:"CM1",color:"maths",
+  cardClass:"maths-cm1",themeClass:"maths-theme",badgeClass:"badge-cm1",
+  desc:"Nombres · Opérations · Géométrie · Mesures",
+  themes:[
+    {id:"nombres-cm1",title:"Les nombres jusqu'au million",content:`
+      <h4>Les classes de nombres</h4>
+      <p>En CM1, on travaille avec des nombres jusqu'au <strong>million</strong>. Chaque <strong>classe</strong> contient trois rangs : unités, dizaines, centaines.</p>
+      <table><tr><th>Classe</th><th>Rangs</th><th>Exemple</th></tr>
+        <tr><td>Millions</td><td>u. de millions, d. de millions, c. de millions</td><td>1 000 000</td></tr>
+        <tr><td>Milliers</td><td>u. de mille, d. de mille, c. de mille</td><td>47 000</td></tr>
+        <tr><td>Unités</td><td>unités, dizaines, centaines</td><td>382</td></tr>
+      </table>
+      <h4>Lire et écrire un nombre</h4>
+      <p>On regroupe les chiffres par <strong>tranches de 3</strong> en partant de la droite, séparées par une espace. On lit de gauche à droite, classe par classe.</p>
+      <div class="exemple">245 638 → deux cent quarante-cinq mille six cent trente-huit</div>
+      <div class="exemple">1 004 050 → un million quatre mille cinquante</div>
+      <h4>Valeur positionnelle</h4>
+      <p>La <strong>valeur</strong> d'un chiffre dépend de sa <strong>position</strong> dans le nombre.</p>
+      <div class="exemple">Dans 4 <u>7</u>2 : le 7 est au rang des dizaines → il vaut <strong>70</strong>.<br>Dans <u>4</u>72 : le 4 est au rang des centaines → il vaut <strong>400</strong>.</div>
+      <h4>Décomposer un nombre</h4>
+      <p>On peut écrire un nombre comme une somme de valeurs positionnelles.</p>
+      <div class="exemple">3 527 = 3 000 + 500 + 20 + 7 = 3 × 1 000 + 5 × 100 + 2 × 10 + 7 × 1</div>
+      <h4>Comparer et ranger</h4>
+      <p>On compare chiffre par chiffre <strong>de gauche à droite</strong>. Un nombre avec plus de chiffres est toujours le plus grand.</p>
+      <div class="exemple">83 420 &lt; 83 502 (les dizaines de mille et les mille sont égaux : comparer les centaines → 4 &lt; 5)</div>
+      <h4>Arrondir un nombre</h4>
+      <ul>
+        <li>Arrondir à la <strong>dizaine</strong> : regarder les unités → ≥ 5 : on monte, &lt; 5 : on reste.</li>
+        <li>Arrondir à la <strong>centaine</strong> : regarder les dizaines.</li>
+        <li>Arrondir au <strong>millier</strong> : regarder les centaines.</li>
+      </ul>
+      <div class="exemple">3 472 arrondi au millier → regarder les centaines : 4 &lt; 5 → <strong>3 000</strong><br>3 672 arrondi au millier → regarder les centaines : 6 ≥ 5 → <strong>4 000</strong></div>
+      <h4>Encadrer un nombre</h4>
+      <p>Encadrer au millier le plus proche = trouver le millier juste en dessous et le millier juste au-dessus.</p>
+      <div class="exemple">7 000 &lt; 7 384 &lt; 8 000</div>
+      <div class="regle">🔑 Pour bien lire un grand nombre : couper en tranches de 3 depuis la droite, puis lire chaque tranche suivie de son nom de classe (million, mille, puis rien pour les unités).</div>`
+    },
+    {id:"operations-cm1",title:"Les quatre opérations",content:`
+      <h4>Addition posée</h4>
+      <p>On aligne les chiffres par rangs. On additionne de droite à gauche. Quand la somme dépasse 9, on <strong>retient</strong> le chiffre des dizaines.</p>
+      <div class="exemple">  4 738<br>+ 2 895<br>──────<br>  7 633 (on a retenu 1 aux dizaines, 1 aux centaines)</div>
+      <h4>Soustraction posée</h4>
+      <p>On soustrait de droite à gauche. Si le chiffre du dessous est plus grand, on <strong>emprunte</strong> au rang suivant.</p>
+      <div class="exemple">  6 402<br>− 1 758<br>──────<br>  4 644</div>
+      <h4>Multiplication posée</h4>
+      <p>En CM1, on apprend à multiplier par un nombre à <strong>1 chiffre</strong>, puis par un nombre à <strong>2 chiffres</strong>.</p>
+      <div class="exemple"><strong>× 1 chiffre :</strong> 347 × 6 = 2 082<br><strong>× 2 chiffres :</strong> 34 × 23 → d'abord 34×3=102, puis 34×20=680, total = <strong>782</strong></div>
+      <div class="regle">🔑 Tables de multiplication de 1 à 9 : à connaître par cœur ! Ce sont les fondations de tout calcul.</div>
+      <h4>Tables de multiplication — quelques repères</h4>
+      <table><tr><th>×</th><th>3</th><th>4</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
+        <tr><td><strong>6</strong></td><td>18</td><td>24</td><td>36</td><td>42</td><td>48</td><td>54</td></tr>
+        <tr><td><strong>7</strong></td><td>21</td><td>28</td><td>42</td><td>49</td><td>56</td><td>63</td></tr>
+        <tr><td><strong>8</strong></td><td>24</td><td>32</td><td>48</td><td>56</td><td>64</td><td>72</td></tr>
+        <tr><td><strong>9</strong></td><td>27</td><td>36</td><td>54</td><td>63</td><td>72</td><td>81</td></tr>
+      </table>
+      <h4>Division euclidienne</h4>
+      <p>La division <strong>a ÷ b = q reste r</strong> permet de partager en parts égales. Le reste est toujours <strong>strictement inférieur</strong> au diviseur.</p>
+      <div class="exemple">74 ÷ 6 = 12 reste 2 → vérification : 12 × 6 + 2 = 72 + 2 = 74 ✓</div>
+      <ul>
+        <li><strong>a</strong> = dividende (ce qu'on partage)</li>
+        <li><strong>b</strong> = diviseur (le nombre de parts)</li>
+        <li><strong>q</strong> = quotient (combien dans chaque part)</li>
+        <li><strong>r</strong> = reste (ce qu'il reste)</li>
+      </ul>
+      <h4>Calcul mental — astuces</h4>
+      <ul>
+        <li>×2 : doubler. ×4 : doubler deux fois. ×8 : doubler trois fois.</li>
+        <li>×9 : multiplier par 10 et soustraire le nombre. Ex : 7×9 = 70−7 = <strong>63</strong></li>
+        <li>×5 : multiplier par 10 et diviser par 2. Ex : 14×5 = 140÷2 = <strong>70</strong></li>
+        <li>Complément à 100 : 100 − 37 → je cherche ce qui manque à 37 pour faire 100 : 63.</li>
+      </ul>
+      <div class="regle">🔑 Vérifier une division : quotient × diviseur + reste = dividende. Toujours vérifier son calcul !</div>`
+    },
+    {id:"fractions-cm1",title:"Fractions et premiers décimaux",content:`
+      <h4>Qu'est-ce qu'une fraction ?</h4>
+      <p>Une fraction représente une <strong>partie d'un tout</strong> découpé en parts égales.</p>
+      <ul>
+        <li>Le nombre du <strong>bas</strong> = <strong>dénominateur</strong> : le nombre total de parts.</li>
+        <li>Le nombre du <strong>haut</strong> = <strong>numérateur</strong> : le nombre de parts qu'on prend.</li>
+      </ul>
+      <div class="exemple">3/4 : le tout est divisé en 4 parts égales, on en prend 3.</div>
+      <h4>Les fractions usuelles</h4>
+      <table><tr><th>Fraction</th><th>Se lit</th><th>Exemple concret</th></tr>
+        <tr><td>1/2</td><td>un demi</td><td>La moitié d'une pizza</td></tr>
+        <tr><td>1/4</td><td>un quart</td><td>Une heure = 4 quarts d'heure</td></tr>
+        <tr><td>3/4</td><td>trois quarts</td><td>Trois parts d'un gâteau coupé en 4</td></tr>
+        <tr><td>1/3</td><td>un tiers</td><td>Un tiers d'une bouteille</td></tr>
+        <tr><td>2/3</td><td>deux tiers</td><td>Deux parts sur trois</td></tr>
+      </table>
+      <h4>Fraction d'une quantité</h4>
+      <p>Pour calculer 1/b d'une quantité, on <strong>divise par b</strong>. Pour a/b, on divise par b puis multiplie par a.</p>
+      <div class="exemple">1/4 de 20 = 20 ÷ 4 = <strong>5</strong><br>3/4 de 20 = (20 ÷ 4) × 3 = 5 × 3 = <strong>15</strong></div>
+      <h4>Fractions et nombres entiers</h4>
+      <p>Quand le numérateur est égal au dénominateur, la fraction vaut 1 entier. Quand le numérateur est plus grand, la fraction est supérieure à 1.</p>
+      <div class="exemple">4/4 = 1 · 8/4 = 2 · 6/4 = 1 et 2/4 = 1 et demi</div>
+      <h4>Introduction aux nombres décimaux</h4>
+      <p>Un nombre décimal a une partie entière et une partie décimale séparées par une <strong>virgule</strong>.</p>
+      <table><tr><th>Fraction</th><th>Décimal</th><th>Se lit</th></tr>
+        <tr><td>1/10</td><td>0,1</td><td>zéro virgule un (un dixième)</td></tr>
+        <tr><td>3/10</td><td>0,3</td><td>zéro virgule trois</td></tr>
+        <tr><td>1/100</td><td>0,01</td><td>zéro virgule zéro un (un centième)</td></tr>
+        <tr><td>25/100</td><td>0,25</td><td>zéro virgule vingt-cinq</td></tr>
+      </table>
+      <h4>Placer les décimaux sur une droite graduée</h4>
+      <p>Entre 0 et 1, on peut placer les dixièmes : 0,1 · 0,2 · 0,3 · … · 0,9. Entre 3 et 4 : 3,1 · 3,2 · … · 3,9.</p>
+      <h4>Comparer des décimaux</h4>
+      <ul>
+        <li>On compare d'abord la <strong>partie entière</strong> : 3,7 &gt; 2,9</li>
+        <li>Si elle est égale, on compare les <strong>dixièmes</strong> : 2,5 &lt; 2,8</li>
+        <li>Si égaux, on compare les <strong>centièmes</strong> : 2,53 &lt; 2,57</li>
+      </ul>
+      <div class="regle">🔑 0,5 = 1/2 · 0,25 = 1/4 · 0,75 = 3/4. Ces équivalences sont à connaître par cœur ! La virgule sépare les entiers (à gauche) des parties décimales (à droite).</div>`
+    },
+    {id:"geometrie-cm1",title:"Géométrie",content:`
+      <h4>Points, droites et segments</h4>
+      <ul>
+        <li>Un <strong>point</strong> est noté par une lettre majuscule : A, B, C…</li>
+        <li>Un <strong>segment</strong> [AB] a deux extrémités et une longueur mesurable.</li>
+        <li>Une <strong>droite</strong> n'a pas de début ni de fin (elle se prolonge indéfiniment).</li>
+        <li>Une <strong>demi-droite</strong> a un début (origine) mais pas de fin.</li>
+      </ul>
+      <h4>Droites particulières</h4>
+      <ul>
+        <li><strong>Droites perpendiculaires</strong> : qui se croisent en formant un angle droit (90°). On vérifie avec l'équerre.</li>
+        <li><strong>Droites parallèles</strong> : qui ne se croisent jamais, toujours à la même distance. On utilise l'équerre et la règle pour les tracer.</li>
+      </ul>
+      <h4>Les angles</h4>
+      <ul>
+        <li><strong>Angle droit</strong> : 90° exactement → se repère avec l'équerre (petit carré).</li>
+        <li><strong>Angle aigu</strong> : plus petit qu'un angle droit (entre 0° et 90°).</li>
+        <li><strong>Angle obtus</strong> : plus grand qu'un angle droit (entre 90° et 180°).</li>
+        <li><strong>Angle plat</strong> : 180° exactement.</li>
+      </ul>
+      <h4>Les figures planes</h4>
+      <ul>
+        <li><strong>Triangles</strong> : 3 côtés, 3 angles. La somme des angles = toujours 180°.
+          <ul>
+            <li>Équilatéral : 3 côtés égaux, 3 angles égaux de 60°.</li>
+            <li>Isocèle : 2 côtés égaux, 2 angles égaux.</li>
+            <li>Rectangle : possède un angle droit.</li>
+          </ul>
+        </li>
+        <li><strong>Quadrilatères</strong> : 4 côtés, 4 angles.
+          <ul>
+            <li>Carré : 4 côtés égaux, 4 angles droits.</li>
+            <li>Rectangle : 4 angles droits, côtés opposés égaux.</li>
+            <li>Losange : 4 côtés égaux, angles opposés égaux.</li>
+            <li>Parallélogramme : côtés opposés parallèles et égaux.</li>
+          </ul>
+        </li>
+        <li><strong>Cercle</strong> : le <em>rayon</em> (r) va du centre au bord ; le <em>diamètre</em> (d = 2r) traverse le cercle en passant par le centre.</li>
+      </ul>
+      <h4>Symétrie axiale</h4>
+      <p>Une figure est <strong>symétrique par rapport à un axe</strong> si, en la pliant le long de l'axe, les deux moitiés se superposent exactement.</p>
+      <ul>
+        <li>Le carré a 4 axes de symétrie, le rectangle en a 2, le cercle en a une infinité.</li>
+        <li>La lettre A a 1 axe de symétrie, H en a 2.</li>
+      </ul>
+      <h4>Le périmètre</h4>
+      <p>Le <strong>périmètre</strong> est la longueur du contour d'une figure. On l'obtient en additionnant tous les côtés.</p>
+      <table><tr><th>Figure</th><th>Formule</th><th>Exemple</th></tr>
+        <tr><td>Carré</td><td>4 × côté</td><td>côté=5 cm → P = 20 cm</td></tr>
+        <tr><td>Rectangle</td><td>2 × (longueur + largeur)</td><td>L=8, l=3 → P = 22 cm</td></tr>
+        <tr><td>Triangle</td><td>côté1 + côté2 + côté3</td><td>3+4+5 = 12 cm</td></tr>
+        <tr><td>Cercle</td><td>≈ 2 × 3,14 × r</td><td>r=5 → P ≈ 31,4 cm</td></tr>
+      </table>
+      <div class="regle">🔑 Pour tracer une figure géométrique précise : utiliser la règle pour mesurer, l'équerre pour les angles droits, le compas pour les cercles et les longueurs égales.</div>`
+    },
+    {id:"mesures-cm1",title:"Mesures et résolution de problèmes",content:`
+      <h4>Les longueurs</h4>
+      <p>L'unité de base est le <strong>mètre (m)</strong>. Les autres unités sont des multiples ou sous-multiples.</p>
+      <table><tr><th>km</th><th>hm</th><th>dam</th><th>m</th><th>dm</th><th>cm</th><th>mm</th></tr>
+        <tr><td>×1000</td><td>×10</td><td>×10</td><td>—</td><td>÷10</td><td>÷10</td><td>÷10</td></tr>
+      </table>
+      <div class="exemple">2 km = 2 000 m · 350 cm = 3,5 m = 3 m 50 cm · 45 mm = 4,5 cm</div>
+      <h4>Les masses</h4>
+      <p>L'unité de base est le <strong>kilogramme (kg)</strong>.</p>
+      <ul>
+        <li>1 tonne (t) = 1 000 kg</li>
+        <li>1 kg = 1 000 g</li>
+        <li>1 g = 1 000 mg</li>
+      </ul>
+      <div class="exemple">3,5 kg = 3 500 g · 750 g = 0,75 kg · 2 t = 2 000 kg</div>
+      <h4>Les capacités (contenances)</h4>
+      <p>L'unité de base est le <strong>litre (L)</strong>.</p>
+      <ul>
+        <li>1 L = 10 dL = 100 cL = 1 000 mL</li>
+      </ul>
+      <div class="exemple">1,5 L = 150 cL = 1 500 mL · 25 cL = 0,25 L</div>
+      <h4>Les durées</h4>
+      <ul>
+        <li>1 heure = <strong>60 minutes</strong> = 3 600 secondes</li>
+        <li>1 journée = <strong>24 heures</strong></li>
+        <li>1 semaine = <strong>7 jours</strong> (lundi au dimanche)</li>
+        <li>1 mois = 28, 29, 30 ou 31 jours selon les mois</li>
+        <li>1 an = <strong>365 jours</strong> (366 les années bissextiles, tous les 4 ans)</li>
+      </ul>
+      <div class="exemple">1h 45 min + 35 min = 1h 80 min = <strong>2h 20 min</strong> (car 80 min = 1h 20 min)</div>
+      <h4>Calculer avec les durées</h4>
+      <div class="exemple">Un film commence à 14h 35 et dure 1h 50 min. Il finit à :<br>14h 35 + 1h 50 = 15h 85 = <strong>16h 25</strong></div>
+      <h4>Lire l'heure</h4>
+      <ul>
+        <li>Montre analogique : aiguille courte = heures, aiguille longue = minutes.</li>
+        <li>Notation digitale : 14:30 = 14 h 30 = 2 h 30 de l'après-midi.</li>
+        <li>Convertir : 15h = 3h de l'après-midi · 20h = 8h du soir.</li>
+      </ul>
+      <h4>Résoudre un problème — méthode en 5 étapes</h4>
+      <ul>
+        <li><strong>1. Je lis</strong> : je lis attentivement tout l'énoncé.</li>
+        <li><strong>2. Je comprends</strong> : qu'est-ce qu'on me demande de trouver ?</li>
+        <li><strong>3. Je choisis</strong> : quelle opération ? + (regrouper) · − (écart) · × (répéter) · ÷ (partager)</li>
+        <li><strong>4. Je calcule</strong> : je pose mon opération et je calcule.</li>
+        <li><strong>5. Je vérifie et je rédige</strong> : est-ce que le résultat est cohérent ? J'écris ma réponse avec l'unité.</li>
+      </ul>
+      <div class="exemple"><strong>Problème :</strong> Une bibliothèque a 1 248 livres. Elle en achète 356 de plus. Combien en a-t-elle maintenant ?<br>Opération : 1 248 + 356 = 1 604<br><em>La bibliothèque a maintenant 1 604 livres.</em></div>
+      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse ! Une réponse sans unité est incomplète. Toujours vérifier si le résultat est logique (on ne peut pas avoir plus de livres après une soustraction).</div>`
+    }
+  ],
+  periods:[
+    {id:"p1",label:"Période 1",dates:"Sep–Oct",themeIds:["nombres-cm1"]},
+    {id:"p2",label:"Période 2",dates:"Nov–Déc",themeIds:["operations-cm1"]},
+    {id:"p3",label:"Période 3",dates:"Jan–Fév",themeIds:["fractions-cm1"]},
+    {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["geometrie-cm1"]},
+    {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["nombres-cm1","operations-cm1","fractions-cm1","geometrie-cm1","mesures-cm1"]}
   ]
 },
 
@@ -1744,7 +2037,7 @@ emc:{
 const HOME_GROUPS = [
   {
     title:"📐 Mathématiques",
-    subjects:['maths']
+    subjects:['maths','maths-cm1']
   },
   {
     title:"🏛️ Histoire",
