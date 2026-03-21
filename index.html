@@ -66,6 +66,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .subject-card-header{padding:14px 16px 12px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
 /* Diagonal stripe pattern per subject — daltonism shape encoding */
 .maths .subject-card-header{background:var(--maths-light);background-image:repeating-linear-gradient(45deg,rgba(0,114,178,.06) 0,rgba(0,114,178,.06) 2px,transparent 2px,transparent 9px)}
+.maths-cm1 .subject-card-header{background:var(--maths-light);background-image:repeating-linear-gradient(135deg,rgba(0,114,178,.06) 0,rgba(0,114,178,.06) 2px,transparent 2px,transparent 9px)}
 .histoire .subject-card-header{background:var(--histoire-light);background-image:repeating-linear-gradient(90deg,rgba(213,94,0,.06) 0,rgba(213,94,0,.06) 2px,transparent 2px,transparent 9px)}
 .histoire-cm1 .subject-card-header{background:var(--cm1-light);background-image:repeating-linear-gradient(135deg,rgba(0,158,115,.06) 0,rgba(0,158,115,.06) 2px,transparent 2px,transparent 9px)}
 .francais .subject-card-header{background:var(--francais-light);background-image:repeating-linear-gradient(60deg,rgba(204,121,167,.06) 0,rgba(204,121,167,.06) 2px,transparent 2px,transparent 9px)}
@@ -90,7 +91,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 .subject-info{flex:1}
 .subject-name{font-family:'Fredoka One',cursive;font-size:1.3rem}
-.maths .subject-name{color:var(--maths-color)}
+.maths .subject-name,.maths-cm1 .subject-name{color:var(--maths-color)}
 .histoire .subject-name,.histoire-cm1 .subject-name{color:var(--histoire-color)}
 .francais .subject-name,.francais-cm1 .subject-name{color:var(--francais-color)}
 .geo .subject-name,.geo-cm1 .subject-name{color:var(--geo-color)}
@@ -100,8 +101,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 .level-strip{display:flex;align-items:center;gap:6px;padding:4px 16px;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
 .ldot{width:6px;height:6px;border-radius:50%}
-.maths .level-strip{background:#EEF4FA;color:var(--maths-dark);border-top:1px solid #D0E6F5}
-.maths .ldot{background:var(--maths-color)}
+.maths .level-strip,.maths-cm1 .level-strip{background:#EEF4FA;color:var(--maths-dark);border-top:1px solid #D0E6F5}
+.maths .ldot,.maths-cm1 .ldot{background:var(--maths-color)}
 .histoire .level-strip{background:#FEF4EE;color:var(--histoire-dark);border-top:1px solid #F5D9C5}
 .histoire .ldot{background:var(--histoire-color)}
 .histoire-cm1 .level-strip{background:#EDF9F4;color:var(--cm1-dark);border-top:1px solid #C0E8D8}
@@ -182,9 +183,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .badge{font-size:0.6rem;background:rgba(255,255,255,.3);border-radius:50px;padding:1px 6px;font-weight:700}
 
 /* Button colors per subject */
-.maths .btn-qcm{background:var(--maths-color);color:#fff}
-.maths .btn-ouvert{background:var(--maths-light);color:var(--maths-dark);border:2px solid var(--maths-color)}
-.maths .btn-cours{background:#EEF4F9;color:var(--maths-dark)}
+.maths .btn-qcm,.maths-cm1 .btn-qcm{background:var(--maths-color);color:#fff}
+.maths .btn-ouvert,.maths-cm1 .btn-ouvert{background:var(--maths-light);color:var(--maths-dark);border:2px solid var(--maths-color)}
+.maths .btn-cours,.maths-cm1 .btn-cours{background:#EEF4F9;color:var(--maths-dark)}
 .histoire .btn-qcm,.histoire-cm1 .btn-qcm{background:var(--histoire-color);color:#fff}
 .histoire .btn-ouvert,.histoire-cm1 .btn-ouvert{background:var(--histoire-light);color:var(--histoire-dark);border:2px solid var(--histoire-color)}
 .histoire .btn-cours,.histoire-cm1 .btn-cours{background:#FDF3EE;color:var(--histoire-dark)}
@@ -444,7 +445,7 @@ maths:{
   themes:[
     {id:"nombres",title:"Les grands nombres",content:`
       <h4>Les classes de nombres</h4>
-      <p>En CM2, on travaille avec des nombres jusqu'aux <strong>milliards</strong>. Chaque classe contient trois rangs : unités, dizaines, centaines.</p>
+      <p>En CM2, on travaille avec des nombres jusqu'aux <strong>milliards</strong>. Chaque <strong>classe</strong> contient trois rangs : unités, dizaines, centaines.</p>
       <table><tr><th>Classe</th><th>Rangs</th><th>Exemple</th></tr>
         <tr><td>Milliards</td><td>u. de milliards, d. de milliards, c. de milliards</td><td>2 000 000 000</td></tr>
         <tr><td>Millions</td><td>u. de millions, d. de millions, c. de millions</td><td>3 000 000</td></tr>
@@ -452,15 +453,27 @@ maths:{
         <tr><td>Unités</td><td>unités, dizaines, centaines</td><td>567</td></tr>
       </table>
       <h4>Lire et écrire un grand nombre</h4>
-      <p>On sépare les classes par une <strong>espace</strong> (jamais un point). On lit de gauche à droite, classe par classe.</p>
+      <p>On sépare les classes par une <strong>espace</strong> (jamais un point ni une virgule). On lit de gauche à droite, classe par classe.</p>
       <div class="exemple">3 456 789 → trois millions quatre cent cinquante-six mille sept cent quatre-vingt-neuf</div>
+      <div class="exemple">2 045 000 000 → deux milliards quarante-cinq millions</div>
       <h4>Valeur positionnelle</h4>
-      <p>La valeur d'un chiffre dépend de sa <strong>position</strong> dans le nombre. Le même chiffre peut valoir 5, 50, 500, 5 000…</p>
-      <div class="exemple">Dans 3 <u>5</u>26 : le 5 est au rang des centaines → il vaut 500.</div>
+      <p>La valeur d'un chiffre dépend de sa <strong>position</strong>. Le même chiffre peut valoir 5, 50, 500, 5 000, 5 000 000…</p>
+      <div class="exemple">Dans 3 <u>5</u>26 : le 5 est au rang des centaines → il vaut <strong>500</strong>.<br>Dans <u>5</u> 000 000 : le 5 est au rang des millions → il vaut <strong>5 000 000</strong>.</div>
+      <h4>Décomposer un grand nombre</h4>
+      <div class="exemple">4 308 072 = 4 × 1 000 000 + 3 × 100 000 + 8 × 1 000 + 7 × 10 + 2</div>
       <h4>Comparer et ranger des nombres</h4>
-      <p>On compare d'abord le nombre de chiffres, puis chiffre par chiffre de gauche à droite.</p>
-      <div class="exemple">458 320 &lt; 1 200 000 (moins de chiffres) · 327 450 &gt; 327 200 (même préfixe, comparer le 4 vs 2)</div>
-      <div class="regle">🔑 Encadrer un nombre : trouver le multiple de 1 000 (ou 10 000) immédiatement inférieur et supérieur. Ex : 14 000 &lt; 14 637 &lt; 15 000</div>`
+      <p>On compare d'abord le <strong>nombre de chiffres</strong>, puis chiffre par chiffre de gauche à droite.</p>
+      <div class="exemple">458 320 &lt; 1 200 000 (moins de chiffres)<br>327 450 &gt; 327 200 (même début, comparer les centaines : 4 &gt; 2)</div>
+      <h4>Arrondir un grand nombre</h4>
+      <ul>
+        <li>Au <strong>millier</strong> : regarder les centaines (≥500 → on monte).</li>
+        <li>Au <strong>million</strong> : regarder les centaines de mille (≥500 000 → on monte).</li>
+      </ul>
+      <div class="exemple">3 672 800 arrondi au million → centaines de mille = 6 ≥ 5 → <strong>4 000 000</strong><br>3 472 800 arrondi au million → centaines de mille = 4 &lt; 5 → <strong>3 000 000</strong></div>
+      <h4>Encadrer et intercaler</h4>
+      <p>Encadrer au millier : trouver le millier immédiatement inférieur et supérieur.</p>
+      <div class="exemple">14 000 &lt; 14 637 &lt; 15 000 · 999 000 &lt; 999 999 &lt; 1 000 000</div>
+      <div class="regle">🔑 Un milliard = 1 000 millions = 1 000 000 000. La population mondiale est d'environ 8 milliards d'habitants. La France compte environ 68 millions d'habitants.</div>`
     },
     {id:"fractions",title:"Fractions & nombres décimaux",content:`
       <h4>Qu'est-ce qu'une fraction ?</h4>
@@ -469,96 +482,147 @@ maths:{
       <h4>Fractions équivalentes</h4>
       <p>On peut multiplier (ou diviser) le numérateur et le dénominateur par le même nombre sans changer la valeur.</p>
       <div class="exemple">1/2 = 2/4 = 3/6 = 50/100 — toutes représentent la même quantité.</div>
+      <h4>Simplifier une fraction</h4>
+      <p>Diviser numérateur et dénominateur par leur diviseur commun pour obtenir la fraction la plus simple.</p>
+      <div class="exemple">6/9 : les deux sont divisibles par 3 → 6÷3 / 9÷3 = <strong>2/3</strong><br>15/25 : divisibles par 5 → <strong>3/5</strong></div>
+      <h4>Additionner des fractions (même dénominateur)</h4>
+      <p>On additionne uniquement les numérateurs, le dénominateur ne change pas.</p>
+      <div class="exemple">2/7 + 3/7 = <strong>5/7</strong> · 5/8 + 7/8 = 12/8 = <strong>3/2</strong> (= 1 et 1/2)</div>
       <h4>Fractions et nombres décimaux</h4>
       <p>Une fraction avec 10, 100 ou 1 000 au dénominateur se convertit directement en décimal.</p>
       <table><tr><th>Fraction</th><th>Décimal</th><th>Se lit</th></tr>
         <tr><td>7/10</td><td>0,7</td><td>zéro virgule sept</td></tr>
         <tr><td>25/100</td><td>0,25</td><td>zéro virgule vingt-cinq</td></tr>
         <tr><td>375/1000</td><td>0,375</td><td>zéro virgule trois cent soixante-quinze</td></tr>
+        <tr><td>3/4</td><td>0,75</td><td>zéro virgule soixante-quinze</td></tr>
       </table>
+      <h4>Les nombres décimaux — structure</h4>
+      <p>Un nombre décimal a une <strong>partie entière</strong> (à gauche de la virgule) et une <strong>partie décimale</strong> (à droite).</p>
+      <div class="exemple">Dans 3,<u>7</u>4 : le 7 est au rang des <strong>dixièmes</strong> (vaut 0,7), le 4 est au rang des <strong>centièmes</strong> (vaut 0,04).</div>
+      <h4>Additionner et soustraire des décimaux</h4>
+      <p>On aligne les virgules, puis on opère comme avec des entiers.</p>
+      <div class="exemple">  3,75<br>+ 1,8<u>0</u><br>──────<br>  5,55</div>
       <h4>Comparer des fractions</h4>
-      <ul><li>Même dénominateur → comparer les numérateurs : 3/7 &lt; 5/7</li>
-          <li>Même numérateur → la plus grande fraction a le plus petit dénominateur : 1/3 &gt; 1/5</li>
-          <li>Sinon → réduire au même dénominateur ou convertir en décimal.</li></ul>
-      <div class="regle">🔑 Fraction = division : 3/4 = 3 ÷ 4 = 0,75. La barre de fraction est un signe de division.</div>`
+      <ul>
+        <li>Même dénominateur → comparer les numérateurs : 3/7 &lt; 5/7</li>
+        <li>Même numérateur → plus grand dénominateur = plus petite fraction : 1/3 &gt; 1/5</li>
+        <li>Sinon → convertir en décimal et comparer : 3/8 = 0,375 et 2/5 = 0,4 → 3/8 &lt; 2/5</li>
+      </ul>
+      <div class="regle">🔑 Fraction = division : 3/4 = 3 ÷ 4 = 0,75. À savoir par cœur : 1/2=0,5 · 1/4=0,25 · 3/4=0,75 · 1/5=0,2 · 1/10=0,1.</div>`
     },
     {id:"operations",title:"Opérations",content:`
       <h4>Addition et soustraction posées</h4>
-      <p>On aligne les chiffres par rangs (unités sous unités, dizaines sous dizaines…). On commence par la droite. Pour la soustraction, on effectue des retenues si nécessaire.</p>
-      <h4>Multiplication posée</h4>
-      <p>On multiplie chaque chiffre du multiplicateur par tous les chiffres du multiplicande, en décalant d'un rang vers la gauche à chaque nouvelle ligne, puis on additionne.</p>
-      <div class="exemple">347 × 25 : d'abord 347×5=1735, puis 347×20=6940, total = 8 675</div>
-      <div class="regle">🔑 Tables de multiplication jusqu'à 9×9 : indispensables par cœur !</div>
+      <p>On aligne les chiffres <strong>par rangs</strong> (unités sous unités, dizaines sous dizaines…). On commence <strong>par la droite</strong>. Retenues pour l'addition, emprunts pour la soustraction.</p>
+      <div class="exemple">    48 372          73 500<br>  + 15 649        −  8 746<br>  ───────         ───────<br>    64 021          64 754</div>
+      <h4>Multiplication posée (par 2 chiffres)</h4>
+      <p>On multiplie par chaque chiffre du multiplicateur, en décalant d'un rang vers la gauche à chaque nouvelle ligne, puis on additionne.</p>
+      <div class="exemple">347 × 25 :<br>  347 × 5 =  1 735<br>  347 × 20 = 6 940 (décaler d'un rang)<br>  ─────────────────<br>  Total  =   8 675</div>
+      <div class="regle">🔑 Tables de multiplication jusqu'à 9×9 : indispensables par cœur ! Vérifier une multiplication : diviser le résultat par l'un des facteurs.</div>
+      <h4>Division posée par 2 chiffres</h4>
+      <p>En CM2, on apprend à diviser par un diviseur à 2 chiffres. Méthode : trouver le plus grand multiple du diviseur inférieur à la partie considérée.</p>
+      <div class="exemple">784 ÷ 16 = ?<br>78 ÷ 16 → 16×4=64, 16×5=80 (trop grand) → quotient partiel : 4, reste 78−64=14<br>Descendre le 4 → 144 ÷ 16 = 9 exactement<br>Résultat : <strong>49</strong> · vérification : 49 × 16 = 784 ✓</div>
       <h4>Division posée (avec reste)</h4>
-      <p>On cherche combien de fois le diviseur « entre » dans le dividende, chiffre par chiffre de gauche à droite. Le reste est toujours inférieur au diviseur.</p>
-      <div class="exemple">527 ÷ 4 = 131 reste 3 → vérification : 131 × 4 + 3 = 524 + 3 = 527 ✓</div>
+      <div class="exemple">527 ÷ 4 = <strong>131 reste 3</strong> → vérification : 131 × 4 + 3 = 524 + 3 = 527 ✓</div>
+      <p>Le reste est toujours <strong>strictement inférieur</strong> au diviseur.</p>
+      <h4>Opérations sur les nombres décimaux</h4>
+      <ul>
+        <li><strong>Addition/soustraction</strong> : aligner les virgules, compléter avec des zéros si nécessaire.</li>
+        <li><strong>Multiplication</strong> : multiplier comme des entiers, puis placer la virgule (autant de décimales que dans les deux facteurs réunis).</li>
+      </ul>
+      <div class="exemple">3,4 × 2,5 : calculer 34 × 25 = 850, puis placer 2 décimales → <strong>8,50</strong></div>
       <h4>Priorités de calcul</h4>
       <ul>
-        <li>1. Les <strong>parenthèses</strong> en premier</li>
+        <li>1. Les <strong>parenthèses</strong> d'abord</li>
         <li>2. Puis <strong>× et ÷</strong> de gauche à droite</li>
         <li>3. Enfin <strong>+ et −</strong> de gauche à droite</li>
       </ul>
-      <div class="exemple">3 + 2 × 4 = 3 + 8 = <strong>11</strong> (et non 20) · (3+2) × 4 = 5 × 4 = <strong>20</strong></div>
-      <h4>Calcul mental — quelques astuces</h4>
+      <div class="exemple">3 + 2 × 4 = 3 + 8 = <strong>11</strong> (pas 20) · (3+2) × 4 = 5 × 4 = <strong>20</strong></div>
+      <h4>Calcul mental — astuces de CM2</h4>
       <ul>
-        <li>×9 : multiplier par 10 et soustraire le nombre. Ex : 7×9 = 70−7 = 63</li>
-        <li>×11 : répéter le chiffre et additionner au milieu. Ex : 13×11 = 143</li>
-        <li>÷5 : diviser par 10 puis multiplier par 2. Ex : 340÷5 = 34×2 = 68</li>
+        <li>×9 : ×10 puis −1×. Ex : 7×9 = 70−7 = <strong>63</strong></li>
+        <li>×11 : ×10 puis +1×. Ex : 8×11 = 80+8 = <strong>88</strong></li>
+        <li>÷5 : ÷10 puis ×2. Ex : 340÷5 = 34×2 = <strong>68</strong></li>
+        <li>×25 : ÷4 puis ×100. Ex : 48×25 = 12×100 = <strong>1 200</strong></li>
+        <li>Doubler/moitié : utile pour ×2, ÷2, ×4, ×0,5…</li>
       </ul>`
     },
     {id:"geometrie",title:"Géométrie",content:`
       <h4>Les angles</h4>
       <p>Un angle est l'écartement entre deux demi-droites de même origine. On mesure les angles en <strong>degrés (°)</strong> avec un rapporteur.</p>
       <ul>
-        <li><strong>Angle droit</strong> : 90° (symbole ∟)</li>
+        <li><strong>Angle droit</strong> : 90° exactement (symbole ∟ ou petit carré)</li>
         <li><strong>Angle aigu</strong> : entre 0° et 90°</li>
         <li><strong>Angle obtus</strong> : entre 90° et 180°</li>
+        <li><strong>Angle plat</strong> : 180° exactement</li>
+        <li><strong>Angle rentrant</strong> : entre 180° et 360°</li>
       </ul>
+      <p>La somme des angles d'un triangle est toujours <strong>180°</strong>. La somme des angles d'un quadrilatère est toujours <strong>360°</strong>.</p>
       <h4>Les figures planes</h4>
       <ul>
-        <li><strong>Triangle</strong> : somme des angles = 180°. Équilatéral (3 côtés et angles égaux), isocèle (2 égaux), scalène (tous différents), rectangle (un angle droit).</li>
-        <li><strong>Quadrilatères</strong> : carré (4 côtés égaux, 4 angles droits), rectangle (4 angles droits), losange (4 côtés égaux), parallélogramme (côtés opposés parallèles), trapèze (1 paire de côtés parallèles).</li>
-        <li><strong>Cercle</strong> : rayon (r) du centre au bord, diamètre d = 2r. Périmètre ≈ 2 × 3,14 × r.</li>
+        <li><strong>Triangles</strong> : Équilatéral (3 côtés égaux, 3 angles de 60°), isocèle (2 côtés égaux), scalène (tous différents), rectangle (un angle droit).</li>
+        <li><strong>Quadrilatères</strong> : carré (4 côtés égaux, 4 angles droits), rectangle (4 angles droits), losange (4 côtés égaux), parallélogramme (côtés opposés parallèles et égaux), trapèze (une seule paire de côtés parallèles).</li>
+        <li><strong>Cercle</strong> : rayon r du centre au bord, diamètre d = 2r. Périmètre = 2 × π × r ≈ 6,28 × r.</li>
       </ul>
+      <h4>Symétrie axiale</h4>
+      <p>Une figure est <strong>symétrique</strong> par rapport à un axe si les deux parties se superposent par pliage. Pour construire le symétrique d'un point : la perpendiculaire à l'axe doit être à égale distance des deux côtés.</p>
+      <h4>Repérage dans un quadrillage</h4>
+      <p>On repère un point par ses <strong>coordonnées (abscisse, ordonnée)</strong> : d'abord les colonnes (axe horizontal), puis les lignes (axe vertical).</p>
+      <div class="exemple">Le point A(3 ; 2) est à 3 cases vers la droite et 2 cases vers le haut depuis l'origine.</div>
       <h4>Aires (surfaces)</h4>
-      <table><tr><th>Figure</th><th>Formule</th></tr>
-        <tr><td>Rectangle</td><td>Longueur × largeur</td></tr>
-        <tr><td>Carré</td><td>côté × côté = côté²</td></tr>
-        <tr><td>Triangle</td><td>(base × hauteur) ÷ 2</td></tr>
+      <table><tr><th>Figure</th><th>Formule</th><th>Exemple</th></tr>
+        <tr><td>Rectangle</td><td>Longueur × largeur</td><td>8×5 = 40 cm²</td></tr>
+        <tr><td>Carré</td><td>côté²</td><td>6² = 36 cm²</td></tr>
+        <tr><td>Triangle</td><td>(base × hauteur) ÷ 2</td><td>(8×5)÷2 = 20 cm²</td></tr>
+        <tr><td>Disque</td><td>π × r² ≈ 3,14 × r²</td><td>r=4 → 50,24 cm²</td></tr>
       </table>
-      <div class="regle">🔑 L'aire s'exprime en unités carrées : mm², cm², m², km². 1 m² = 10 000 cm².</div>
+      <div class="regle">🔑 L'aire s'exprime en unités <em>carrées</em> : mm², cm², m², km². 1 m² = 10 000 cm² · 1 km² = 1 000 000 m². Ne pas confondre périmètre (longueur du tour) et aire (surface intérieure) !</div>
       <h4>Les solides (3D)</h4>
-      <ul>
-        <li><strong>Cube</strong> : 6 faces carrées, 12 arêtes, 8 sommets.</li>
-        <li><strong>Pavé droit</strong> : 6 faces rectangulaires.</li>
-        <li><strong>Prisme</strong> : 2 bases identiques et parallèles.</li>
-        <li><strong>Pyramide</strong> : 1 base polygonale, apex (sommet).</li>
-      </ul>`
+      <table><tr><th>Solide</th><th>Faces</th><th>Arêtes</th><th>Sommets</th></tr>
+        <tr><td>Cube</td><td>6 carrées</td><td>12</td><td>8</td></tr>
+        <tr><td>Pavé droit</td><td>6 rect.</td><td>12</td><td>8</td></tr>
+        <tr><td>Pyramide à base carrée</td><td>5</td><td>8</td><td>5</td></tr>
+        <tr><td>Prisme triangulaire</td><td>5</td><td>9</td><td>6</td></tr>
+      </table>
+      <p>Le <strong>patron</strong> d'un solide est le développement à plat de toutes ses faces. En le découpant et le pliant, on reconstitue le solide.</p>`
     },
     {id:"mesures",title:"Mesures & résolution de problèmes",content:`
       <h4>Longueurs</h4>
-      <p>km → hm → dam → m → dm → cm → mm. À chaque flèche : ×10 vers la droite, ÷10 vers la gauche.</p>
+      <p>km → hm → dam → m → dm → cm → mm. À chaque flèche vers la droite : ×10 ; vers la gauche : ÷10.</p>
       <div class="exemple">3,5 km = 3 500 m = 350 000 cm · 75 mm = 7,5 cm = 0,075 m</div>
+      <h4>Aires — conversions</h4>
+      <p>À chaque rang : ×100 (car 1 m = 100 cm, donc 1 m² = 100 × 100 = 10 000 cm²).</p>
+      <table><tr><th>km²</th><th>hm² (ha)</th><th>dam² (a)</th><th>m²</th><th>dm²</th><th>cm²</th><th>mm²</th></tr>
+        <tr><td colspan="7" style="text-align:center">×100 à chaque rang (pas ×10 !)</td></tr>
+      </table>
+      <div class="exemple">1 ha (hectare) = 10 000 m² · 1 km² = 100 ha = 1 000 000 m²</div>
       <h4>Masses</h4>
       <p>t → kg → g → mg. À chaque flèche : ×1 000.</p>
-      <div class="exemple">2,4 kg = 2 400 g · 500 g = 0,5 kg</div>
+      <div class="exemple">2,4 kg = 2 400 g · 500 g = 0,5 kg · 3,2 t = 3 200 kg</div>
       <h4>Contenances</h4>
-      <p>kL → L → dL → cL → mL. À chaque flèche : ×10.</p>
+      <p>kL → L → dL → cL → mL. Entre L et dL/cL/mL : ×10 à chaque rang.</p>
+      <div class="exemple">2,5 L = 25 dL = 250 cL = 2 500 mL</div>
       <h4>Durées</h4>
       <ul>
         <li>1 heure = 60 minutes = 3 600 secondes</li>
-        <li>1 jour = 24 heures · 1 semaine = 7 jours · 1 an = 365 jours (366 en année bissextile)</li>
+        <li>1 jour = 24 heures · 1 semaine = 7 jours · 1 an = 365 jours (366 si bissextile)</li>
       </ul>
-      <div class="exemple">2h 35 min + 1h 50 min = 3h 85 min = 4h 25 min (car 85 min = 1h 25 min)</div>
+      <div class="exemple">2h 35 min + 1h 50 min = 3h 85 min = <strong>4h 25 min</strong> (car 85 min = 1h 25 min)<br>Durée entre 8h 40 et 11h 15 : jusqu'à 9h → 20 min, puis 9h à 11h → 2h, puis 15 min → total <strong>2h 35 min</strong></div>
+      <h4>Vitesse, distance, durée</h4>
+      <p>En CM2, on découvre la relation fondamentale :</p>
+      <div class="exemple"><strong>Distance = Vitesse × Durée</strong><br>Un train roule à 200 km/h pendant 3h → Distance = 200 × 3 = <strong>600 km</strong></div>
+      <h4>Échelles</h4>
+      <p>Une échelle 1/50 000 signifie que 1 cm sur la carte = 50 000 cm = 500 m dans la réalité.</p>
+      <div class="exemple">Sur une carte à l'échelle 1/25 000, un segment de 4 cm représente 4 × 25 000 cm = 100 000 cm = <strong>1 km</strong> dans la réalité.</div>
       <h4>Résolution de problèmes — méthode</h4>
       <ul>
-        <li>1. Lire attentivement et identifier ce qu'on cherche.</li>
-        <li>2. Relever les données utiles (et ignorer les données parasites).</li>
-        <li>3. Choisir l'opération : + pour regrouper, − pour trouver un écart, × pour répéter, ÷ pour partager.</li>
-        <li>4. Calculer en posant si nécessaire.</li>
-        <li>5. Vérifier la cohérence du résultat et préciser l'unité.</li>
+        <li><strong>1.</strong> Lire attentivement et identifier ce qu'on cherche.</li>
+        <li><strong>2.</strong> Relever les données utiles (ignorer les données parasites).</li>
+        <li><strong>3.</strong> Choisir : + (regrouper) · − (écart) · × (répéter) · ÷ (partager/trouver un prix unitaire).</li>
+        <li><strong>4.</strong> Calculer proprement en posant l'opération.</li>
+        <li><strong>5.</strong> Vérifier la cohérence et écrire la réponse avec l'unité.</li>
       </ul>
-      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse finale. Une distance en km, une masse en kg, une durée en h et min.</div>`
+      <div class="exemple"><strong>Problème à plusieurs étapes :</strong> 4 livres coûtent 7,50 € chacun. On paye avec un billet de 50 €. Combien rend-on ?<br>Étape 1 : 4 × 7,50 = 30,00 €<br>Étape 2 : 50,00 − 30,00 = <strong>20,00 €</strong></div>
+      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse finale. Pour les problèmes à plusieurs étapes, bien identifier et numéroter chaque étape. Toujours se demander : « Mon résultat est-il raisonnable ? »</div>`
     }
   ],
   periods:[
@@ -567,6 +631,235 @@ maths:{
     {id:"p3",label:"Période 3",dates:"Jan–Fév",themeIds:["geometrie"]},
     {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["mesures"]},
     {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["nombres","fractions","operations","geometrie","mesures"]}
+  ]
+},
+
+// ── MATHS CM1 ──────────────────────────────────────────────────
+'maths-cm1':{
+  label:"Mathématiques CM1",shortLabel:"Maths",icon:"🔢",level:"CM1",color:"maths",
+  cardClass:"maths-cm1",themeClass:"maths-theme",badgeClass:"badge-cm1",
+  desc:"Nombres · Opérations · Géométrie · Mesures",
+  themes:[
+    {id:"nombres-cm1",title:"Les nombres jusqu'au million",content:`
+      <h4>Les classes de nombres</h4>
+      <p>En CM1, on travaille avec des nombres jusqu'au <strong>million</strong>. Chaque <strong>classe</strong> contient trois rangs : unités, dizaines, centaines.</p>
+      <table><tr><th>Classe</th><th>Rangs</th><th>Exemple</th></tr>
+        <tr><td>Millions</td><td>u. de millions, d. de millions, c. de millions</td><td>1 000 000</td></tr>
+        <tr><td>Milliers</td><td>u. de mille, d. de mille, c. de mille</td><td>47 000</td></tr>
+        <tr><td>Unités</td><td>unités, dizaines, centaines</td><td>382</td></tr>
+      </table>
+      <h4>Lire et écrire un nombre</h4>
+      <p>On regroupe les chiffres par <strong>tranches de 3</strong> en partant de la droite, séparées par une espace. On lit de gauche à droite, classe par classe.</p>
+      <div class="exemple">245 638 → deux cent quarante-cinq mille six cent trente-huit</div>
+      <div class="exemple">1 004 050 → un million quatre mille cinquante</div>
+      <h4>Valeur positionnelle</h4>
+      <p>La <strong>valeur</strong> d'un chiffre dépend de sa <strong>position</strong> dans le nombre.</p>
+      <div class="exemple">Dans 4 <u>7</u>2 : le 7 est au rang des dizaines → il vaut <strong>70</strong>.<br>Dans <u>4</u>72 : le 4 est au rang des centaines → il vaut <strong>400</strong>.</div>
+      <h4>Décomposer un nombre</h4>
+      <p>On peut écrire un nombre comme une somme de valeurs positionnelles.</p>
+      <div class="exemple">3 527 = 3 000 + 500 + 20 + 7 = 3 × 1 000 + 5 × 100 + 2 × 10 + 7 × 1</div>
+      <h4>Comparer et ranger</h4>
+      <p>On compare chiffre par chiffre <strong>de gauche à droite</strong>. Un nombre avec plus de chiffres est toujours le plus grand.</p>
+      <div class="exemple">83 420 &lt; 83 502 (les dizaines de mille et les mille sont égaux : comparer les centaines → 4 &lt; 5)</div>
+      <h4>Arrondir un nombre</h4>
+      <ul>
+        <li>Arrondir à la <strong>dizaine</strong> : regarder les unités → ≥ 5 : on monte, &lt; 5 : on reste.</li>
+        <li>Arrondir à la <strong>centaine</strong> : regarder les dizaines.</li>
+        <li>Arrondir au <strong>millier</strong> : regarder les centaines.</li>
+      </ul>
+      <div class="exemple">3 472 arrondi au millier → regarder les centaines : 4 &lt; 5 → <strong>3 000</strong><br>3 672 arrondi au millier → regarder les centaines : 6 ≥ 5 → <strong>4 000</strong></div>
+      <h4>Encadrer un nombre</h4>
+      <p>Encadrer au millier le plus proche = trouver le millier juste en dessous et le millier juste au-dessus.</p>
+      <div class="exemple">7 000 &lt; 7 384 &lt; 8 000</div>
+      <div class="regle">🔑 Pour bien lire un grand nombre : couper en tranches de 3 depuis la droite, puis lire chaque tranche suivie de son nom de classe (million, mille, puis rien pour les unités).</div>`
+    },
+    {id:"operations-cm1",title:"Les quatre opérations",content:`
+      <h4>Addition posée</h4>
+      <p>On aligne les chiffres par rangs. On additionne de droite à gauche. Quand la somme dépasse 9, on <strong>retient</strong> le chiffre des dizaines.</p>
+      <div class="exemple">  4 738<br>+ 2 895<br>──────<br>  7 633 (on a retenu 1 aux dizaines, 1 aux centaines)</div>
+      <h4>Soustraction posée</h4>
+      <p>On soustrait de droite à gauche. Si le chiffre du dessous est plus grand, on <strong>emprunte</strong> au rang suivant.</p>
+      <div class="exemple">  6 402<br>− 1 758<br>──────<br>  4 644</div>
+      <h4>Multiplication posée</h4>
+      <p>En CM1, on apprend à multiplier par un nombre à <strong>1 chiffre</strong>, puis par un nombre à <strong>2 chiffres</strong>.</p>
+      <div class="exemple"><strong>× 1 chiffre :</strong> 347 × 6 = 2 082<br><strong>× 2 chiffres :</strong> 34 × 23 → d'abord 34×3=102, puis 34×20=680, total = <strong>782</strong></div>
+      <div class="regle">🔑 Tables de multiplication de 1 à 9 : à connaître par cœur ! Ce sont les fondations de tout calcul.</div>
+      <h4>Tables de multiplication — quelques repères</h4>
+      <table><tr><th>×</th><th>3</th><th>4</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
+        <tr><td><strong>6</strong></td><td>18</td><td>24</td><td>36</td><td>42</td><td>48</td><td>54</td></tr>
+        <tr><td><strong>7</strong></td><td>21</td><td>28</td><td>42</td><td>49</td><td>56</td><td>63</td></tr>
+        <tr><td><strong>8</strong></td><td>24</td><td>32</td><td>48</td><td>56</td><td>64</td><td>72</td></tr>
+        <tr><td><strong>9</strong></td><td>27</td><td>36</td><td>54</td><td>63</td><td>72</td><td>81</td></tr>
+      </table>
+      <h4>Division euclidienne</h4>
+      <p>La division <strong>a ÷ b = q reste r</strong> permet de partager en parts égales. Le reste est toujours <strong>strictement inférieur</strong> au diviseur.</p>
+      <div class="exemple">74 ÷ 6 = 12 reste 2 → vérification : 12 × 6 + 2 = 72 + 2 = 74 ✓</div>
+      <ul>
+        <li><strong>a</strong> = dividende (ce qu'on partage)</li>
+        <li><strong>b</strong> = diviseur (le nombre de parts)</li>
+        <li><strong>q</strong> = quotient (combien dans chaque part)</li>
+        <li><strong>r</strong> = reste (ce qu'il reste)</li>
+      </ul>
+      <h4>Calcul mental — astuces</h4>
+      <ul>
+        <li>×2 : doubler. ×4 : doubler deux fois. ×8 : doubler trois fois.</li>
+        <li>×9 : multiplier par 10 et soustraire le nombre. Ex : 7×9 = 70−7 = <strong>63</strong></li>
+        <li>×5 : multiplier par 10 et diviser par 2. Ex : 14×5 = 140÷2 = <strong>70</strong></li>
+        <li>Complément à 100 : 100 − 37 → je cherche ce qui manque à 37 pour faire 100 : 63.</li>
+      </ul>
+      <div class="regle">🔑 Vérifier une division : quotient × diviseur + reste = dividende. Toujours vérifier son calcul !</div>`
+    },
+    {id:"fractions-cm1",title:"Fractions et premiers décimaux",content:`
+      <h4>Qu'est-ce qu'une fraction ?</h4>
+      <p>Une fraction représente une <strong>partie d'un tout</strong> découpé en parts égales.</p>
+      <ul>
+        <li>Le nombre du <strong>bas</strong> = <strong>dénominateur</strong> : le nombre total de parts.</li>
+        <li>Le nombre du <strong>haut</strong> = <strong>numérateur</strong> : le nombre de parts qu'on prend.</li>
+      </ul>
+      <div class="exemple">3/4 : le tout est divisé en 4 parts égales, on en prend 3.</div>
+      <h4>Les fractions usuelles</h4>
+      <table><tr><th>Fraction</th><th>Se lit</th><th>Exemple concret</th></tr>
+        <tr><td>1/2</td><td>un demi</td><td>La moitié d'une pizza</td></tr>
+        <tr><td>1/4</td><td>un quart</td><td>Une heure = 4 quarts d'heure</td></tr>
+        <tr><td>3/4</td><td>trois quarts</td><td>Trois parts d'un gâteau coupé en 4</td></tr>
+        <tr><td>1/3</td><td>un tiers</td><td>Un tiers d'une bouteille</td></tr>
+        <tr><td>2/3</td><td>deux tiers</td><td>Deux parts sur trois</td></tr>
+      </table>
+      <h4>Fraction d'une quantité</h4>
+      <p>Pour calculer 1/b d'une quantité, on <strong>divise par b</strong>. Pour a/b, on divise par b puis multiplie par a.</p>
+      <div class="exemple">1/4 de 20 = 20 ÷ 4 = <strong>5</strong><br>3/4 de 20 = (20 ÷ 4) × 3 = 5 × 3 = <strong>15</strong></div>
+      <h4>Fractions et nombres entiers</h4>
+      <p>Quand le numérateur est égal au dénominateur, la fraction vaut 1 entier. Quand le numérateur est plus grand, la fraction est supérieure à 1.</p>
+      <div class="exemple">4/4 = 1 · 8/4 = 2 · 6/4 = 1 et 2/4 = 1 et demi</div>
+      <h4>Introduction aux nombres décimaux</h4>
+      <p>Un nombre décimal a une partie entière et une partie décimale séparées par une <strong>virgule</strong>.</p>
+      <table><tr><th>Fraction</th><th>Décimal</th><th>Se lit</th></tr>
+        <tr><td>1/10</td><td>0,1</td><td>zéro virgule un (un dixième)</td></tr>
+        <tr><td>3/10</td><td>0,3</td><td>zéro virgule trois</td></tr>
+        <tr><td>1/100</td><td>0,01</td><td>zéro virgule zéro un (un centième)</td></tr>
+        <tr><td>25/100</td><td>0,25</td><td>zéro virgule vingt-cinq</td></tr>
+      </table>
+      <h4>Placer les décimaux sur une droite graduée</h4>
+      <p>Entre 0 et 1, on peut placer les dixièmes : 0,1 · 0,2 · 0,3 · … · 0,9. Entre 3 et 4 : 3,1 · 3,2 · … · 3,9.</p>
+      <h4>Comparer des décimaux</h4>
+      <ul>
+        <li>On compare d'abord la <strong>partie entière</strong> : 3,7 &gt; 2,9</li>
+        <li>Si elle est égale, on compare les <strong>dixièmes</strong> : 2,5 &lt; 2,8</li>
+        <li>Si égaux, on compare les <strong>centièmes</strong> : 2,53 &lt; 2,57</li>
+      </ul>
+      <div class="regle">🔑 0,5 = 1/2 · 0,25 = 1/4 · 0,75 = 3/4. Ces équivalences sont à connaître par cœur ! La virgule sépare les entiers (à gauche) des parties décimales (à droite).</div>`
+    },
+    {id:"geometrie-cm1",title:"Géométrie",content:`
+      <h4>Points, droites et segments</h4>
+      <ul>
+        <li>Un <strong>point</strong> est noté par une lettre majuscule : A, B, C…</li>
+        <li>Un <strong>segment</strong> [AB] a deux extrémités et une longueur mesurable.</li>
+        <li>Une <strong>droite</strong> n'a pas de début ni de fin (elle se prolonge indéfiniment).</li>
+        <li>Une <strong>demi-droite</strong> a un début (origine) mais pas de fin.</li>
+      </ul>
+      <h4>Droites particulières</h4>
+      <ul>
+        <li><strong>Droites perpendiculaires</strong> : qui se croisent en formant un angle droit (90°). On vérifie avec l'équerre.</li>
+        <li><strong>Droites parallèles</strong> : qui ne se croisent jamais, toujours à la même distance. On utilise l'équerre et la règle pour les tracer.</li>
+      </ul>
+      <h4>Les angles</h4>
+      <ul>
+        <li><strong>Angle droit</strong> : 90° exactement → se repère avec l'équerre (petit carré).</li>
+        <li><strong>Angle aigu</strong> : plus petit qu'un angle droit (entre 0° et 90°).</li>
+        <li><strong>Angle obtus</strong> : plus grand qu'un angle droit (entre 90° et 180°).</li>
+        <li><strong>Angle plat</strong> : 180° exactement.</li>
+      </ul>
+      <h4>Les figures planes</h4>
+      <ul>
+        <li><strong>Triangles</strong> : 3 côtés, 3 angles. La somme des angles = toujours 180°.
+          <ul>
+            <li>Équilatéral : 3 côtés égaux, 3 angles égaux de 60°.</li>
+            <li>Isocèle : 2 côtés égaux, 2 angles égaux.</li>
+            <li>Rectangle : possède un angle droit.</li>
+          </ul>
+        </li>
+        <li><strong>Quadrilatères</strong> : 4 côtés, 4 angles.
+          <ul>
+            <li>Carré : 4 côtés égaux, 4 angles droits.</li>
+            <li>Rectangle : 4 angles droits, côtés opposés égaux.</li>
+            <li>Losange : 4 côtés égaux, angles opposés égaux.</li>
+            <li>Parallélogramme : côtés opposés parallèles et égaux.</li>
+          </ul>
+        </li>
+        <li><strong>Cercle</strong> : le <em>rayon</em> (r) va du centre au bord ; le <em>diamètre</em> (d = 2r) traverse le cercle en passant par le centre.</li>
+      </ul>
+      <h4>Symétrie axiale</h4>
+      <p>Une figure est <strong>symétrique par rapport à un axe</strong> si, en la pliant le long de l'axe, les deux moitiés se superposent exactement.</p>
+      <ul>
+        <li>Le carré a 4 axes de symétrie, le rectangle en a 2, le cercle en a une infinité.</li>
+        <li>La lettre A a 1 axe de symétrie, H en a 2.</li>
+      </ul>
+      <h4>Le périmètre</h4>
+      <p>Le <strong>périmètre</strong> est la longueur du contour d'une figure. On l'obtient en additionnant tous les côtés.</p>
+      <table><tr><th>Figure</th><th>Formule</th><th>Exemple</th></tr>
+        <tr><td>Carré</td><td>4 × côté</td><td>côté=5 cm → P = 20 cm</td></tr>
+        <tr><td>Rectangle</td><td>2 × (longueur + largeur)</td><td>L=8, l=3 → P = 22 cm</td></tr>
+        <tr><td>Triangle</td><td>côté1 + côté2 + côté3</td><td>3+4+5 = 12 cm</td></tr>
+        <tr><td>Cercle</td><td>≈ 2 × 3,14 × r</td><td>r=5 → P ≈ 31,4 cm</td></tr>
+      </table>
+      <div class="regle">🔑 Pour tracer une figure géométrique précise : utiliser la règle pour mesurer, l'équerre pour les angles droits, le compas pour les cercles et les longueurs égales.</div>`
+    },
+    {id:"mesures-cm1",title:"Mesures et résolution de problèmes",content:`
+      <h4>Les longueurs</h4>
+      <p>L'unité de base est le <strong>mètre (m)</strong>. Les autres unités sont des multiples ou sous-multiples.</p>
+      <table><tr><th>km</th><th>hm</th><th>dam</th><th>m</th><th>dm</th><th>cm</th><th>mm</th></tr>
+        <tr><td>×1000</td><td>×10</td><td>×10</td><td>—</td><td>÷10</td><td>÷10</td><td>÷10</td></tr>
+      </table>
+      <div class="exemple">2 km = 2 000 m · 350 cm = 3,5 m = 3 m 50 cm · 45 mm = 4,5 cm</div>
+      <h4>Les masses</h4>
+      <p>L'unité de base est le <strong>kilogramme (kg)</strong>.</p>
+      <ul>
+        <li>1 tonne (t) = 1 000 kg</li>
+        <li>1 kg = 1 000 g</li>
+        <li>1 g = 1 000 mg</li>
+      </ul>
+      <div class="exemple">3,5 kg = 3 500 g · 750 g = 0,75 kg · 2 t = 2 000 kg</div>
+      <h4>Les capacités (contenances)</h4>
+      <p>L'unité de base est le <strong>litre (L)</strong>.</p>
+      <ul>
+        <li>1 L = 10 dL = 100 cL = 1 000 mL</li>
+      </ul>
+      <div class="exemple">1,5 L = 150 cL = 1 500 mL · 25 cL = 0,25 L</div>
+      <h4>Les durées</h4>
+      <ul>
+        <li>1 heure = <strong>60 minutes</strong> = 3 600 secondes</li>
+        <li>1 journée = <strong>24 heures</strong></li>
+        <li>1 semaine = <strong>7 jours</strong> (lundi au dimanche)</li>
+        <li>1 mois = 28, 29, 30 ou 31 jours selon les mois</li>
+        <li>1 an = <strong>365 jours</strong> (366 les années bissextiles, tous les 4 ans)</li>
+      </ul>
+      <div class="exemple">1h 45 min + 35 min = 1h 80 min = <strong>2h 20 min</strong> (car 80 min = 1h 20 min)</div>
+      <h4>Calculer avec les durées</h4>
+      <div class="exemple">Un film commence à 14h 35 et dure 1h 50 min. Il finit à :<br>14h 35 + 1h 50 = 15h 85 = <strong>16h 25</strong></div>
+      <h4>Lire l'heure</h4>
+      <ul>
+        <li>Montre analogique : aiguille courte = heures, aiguille longue = minutes.</li>
+        <li>Notation digitale : 14:30 = 14 h 30 = 2 h 30 de l'après-midi.</li>
+        <li>Convertir : 15h = 3h de l'après-midi · 20h = 8h du soir.</li>
+      </ul>
+      <h4>Résoudre un problème — méthode en 5 étapes</h4>
+      <ul>
+        <li><strong>1. Je lis</strong> : je lis attentivement tout l'énoncé.</li>
+        <li><strong>2. Je comprends</strong> : qu'est-ce qu'on me demande de trouver ?</li>
+        <li><strong>3. Je choisis</strong> : quelle opération ? + (regrouper) · − (écart) · × (répéter) · ÷ (partager)</li>
+        <li><strong>4. Je calcule</strong> : je pose mon opération et je calcule.</li>
+        <li><strong>5. Je vérifie et je rédige</strong> : est-ce que le résultat est cohérent ? J'écris ma réponse avec l'unité.</li>
+      </ul>
+      <div class="exemple"><strong>Problème :</strong> Une bibliothèque a 1 248 livres. Elle en achète 356 de plus. Combien en a-t-elle maintenant ?<br>Opération : 1 248 + 356 = 1 604<br><em>La bibliothèque a maintenant 1 604 livres.</em></div>
+      <div class="regle">🔑 Ne jamais oublier l'unité dans la réponse ! Une réponse sans unité est incomplète. Toujours vérifier si le résultat est logique (on ne peut pas avoir plus de livres après une soustraction).</div>`
+    }
+  ],
+  periods:[
+    {id:"p1",label:"Période 1",dates:"Sep–Oct",themeIds:["nombres-cm1"]},
+    {id:"p2",label:"Période 2",dates:"Nov–Déc",themeIds:["operations-cm1"]},
+    {id:"p3",label:"Période 3",dates:"Jan–Fév",themeIds:["fractions-cm1"]},
+    {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["geometrie-cm1"]},
+    {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["nombres-cm1","operations-cm1","fractions-cm1","geometrie-cm1","mesures-cm1"]}
   ]
 },
 
@@ -878,121 +1171,181 @@ histoire:{
     {id:"prehistoire",title:"La Préhistoire",content:`
       <h4>Quand commence la Préhistoire ?</h4>
       <p>La Préhistoire commence avec l'apparition des premiers hommes (il y a environ <strong>3 millions d'années</strong>) et se termine avec l'invention de l'écriture (<strong>vers 3 300 av. J.-C.</strong>). Elle représente 99 % de l'histoire humaine.</p>
+      <h4>L'évolution humaine</h4>
+      <ul>
+        <li><strong>Homo habilis</strong> (il y a ≈ 2,5 millions d'années) : premiers outils taillés, debout.</li>
+        <li><strong>Homo erectus</strong> (il y a ≈ 1,8 million d'années) : maîtrise du feu, première sortie d'Afrique.</li>
+        <li><strong>Homo neanderthalensis</strong> (il y a ≈ 400 000 ans) : enterrait ses morts, vivait en Europe.</li>
+        <li><strong>Homo sapiens</strong> (il y a ≈ 300 000 ans) : notre ancêtre direct, langage élaboré, art.</li>
+      </ul>
       <h4>Le Paléolithique — âge de la pierre taillée</h4>
       <ul>
         <li>Hommes <strong>nomades</strong> : ils se déplacent en suivant les troupeaux et les saisons.</li>
-        <li>Chasseurs-cueilleurs : chasse au mammouth, au renne, cueillette de baies et plantes.</li>
-        <li>Outils taillés dans le silex (couteaux, pointes de flèche, racloirs).</li>
-        <li>Maîtrise du feu : cuisson, chaleur, protection.</li>
-        <li>Art rupestre (peintures sur les parois des grottes) : animaux, mains, symboles.</li>
+        <li>Chasseurs-cueilleurs : chasse au mammouth, au renne, au bison, cueillette de baies, racines, champignons.</li>
+        <li>Outils taillés dans le <strong>silex</strong> : couteaux, grattoirs, pointes de flèche, harpons en os.</li>
+        <li>Maîtrise du <strong>feu</strong> : cuisson des aliments, chaleur, protection contre les prédateurs, lumière.</li>
+        <li>Habitat : grottes, huttes de branches, tentes de peaux de bêtes.</li>
+        <li><strong>Art rupestre</strong> : peintures sur les parois des grottes représentant des animaux (bisons, chevaux, mammouths), des mains et des symboles.</li>
       </ul>
-      <div class="exemple">Grotte de Lascaux (Dordogne) : 1 500 peintures vieilles de ≈ 17 000 ans, découvertes en 1940.</div>
-      <h4>Le Néolithique — la révolution agricole</h4>
+      <div class="exemple">Grotte de Lascaux (Dordogne) : plus de 1 500 peintures et gravures, vieilles d'environ 17 000 ans, découvertes en 1940. Grotte Chauvet (Ardèche) : ≈ 36 000 ans — les plus anciennes connues en France.</div>
+      <h4>Le Néolithique — la révolution agricole (≈ 8 000 av. J.-C.)</h4>
       <ul>
         <li>Les hommes deviennent <strong>sédentaires</strong> : ils s'installent dans des villages permanents.</li>
-        <li>Agriculture : culture du blé, de l'orge, lentilles.</li>
-        <li>Élevage : moutons, chèvres, bœufs, porcs.</li>
-        <li>Poterie pour stocker la nourriture.</li>
-        <li>Mégalithes : dolmens (tombes collectives), menhirs, alignements (Carnac, Bretagne).</li>
+        <li><strong>Agriculture</strong> : culture du blé, de l'orge, des lentilles. On sème, on récolte, on stocke.</li>
+        <li><strong>Élevage</strong> : moutons, chèvres, bœufs, porcs. On ne chasse plus uniquement.</li>
+        <li><strong>Poterie</strong> : fabrication de récipients en argile cuite pour stocker la nourriture et l'eau.</li>
+        <li><strong>Tissage</strong> : on file la laine et le lin pour faire des vêtements.</li>
+        <li><strong>Mégalithes</strong> : constructions en grandes pierres — dolmens (tombes collectives), menhirs (pierres dressées), cromlechs (cercles de pierres comme Stonehenge). Alignements de Carnac (Bretagne) : 4 000 menhirs sur 4 km.</li>
       </ul>
-      <div class="regle">🔑 Le Néolithique est une révolution : passer de cueillir à cultiver change tout — alimentation plus stable, organisation sociale, début des villages.</div>`
+      <h4>L'Âge des métaux</h4>
+      <ul>
+        <li><strong>Âge du cuivre puis du bronze</strong> (≈ 3 000 av. J.-C.) : alliage cuivre + étain → outils et armes plus solides.</li>
+        <li><strong>Âge du fer</strong> (≈ 800 av. J.-C.) : le fer est plus solide et abondant. Haches, épées, charrues en fer.</li>
+        <li>Le commerce se développe : on échange du métal, de la céramique, du sel entre régions éloignées.</li>
+      </ul>
+      <div class="regle">🔑 Le Néolithique est une révolution : passer de cueillir à cultiver change tout — alimentation plus stable, villages permanents, division du travail, début des sociétés organisées. La Préhistoire n'a pas laissé d'écrits : on la connaît uniquement grâce aux objets et squelettes retrouvés par les archéologues.</div>`
     },
     {id:"gaulois",title:"Les Gaulois & la conquête romaine",content:`
       <h4>Qui sont les Gaulois ?</h4>
-      <p>Les Gaulois sont des peuples <strong>celtes</strong> installés en Gaule à partir du VIII<sup>e</sup> siècle av. J.-C. Ils parlent une langue gauloise et sont organisés en <strong>tribus</strong> (les Arvernes, les Éduens, les Parisii…).</p>
+      <p>Les Gaulois sont des peuples <strong>celtes</strong> installés en Gaule à partir du VIII<sup>e</sup> siècle av. J.-C. La Gaule correspond à peu près à la France, la Belgique et le nord de l'Italie actuels. Ils sont organisés en <strong>tribus rivales</strong> : les Arvernes (Auvergne), les Éduens (Bourgogne), les Parisii (région de Paris), les Vénètes (Bretagne)…</p>
       <h4>La société gauloise</h4>
       <ul>
-        <li><strong>Les druides</strong> : prêtres, juges, médecins, gardiens du savoir (transmis oralement).</li>
-        <li><strong>Les guerriers</strong> : noblesse militaire, chevaux, épées de fer.</li>
-        <li><strong>Le peuple</strong> : agriculteurs, artisans, commerçants.</li>
+        <li><strong>Les druides</strong> : caste des prêtres-savants. Ils connaissent la médecine, le droit, l'astronomie. Ils transmettent leur savoir oralement (pas par écrit). Ils forment des jeunes pendant jusqu'à 20 ans.</li>
+        <li><strong>Les guerriers</strong> : noblesse militaire avec chevaux, épées de fer, boucliers. Le courage au combat est la valeur suprême.</li>
+        <li><strong>Le peuple</strong> : agriculteurs, artisans (excellents forgerons, chaudronniers, orfèvres), marchands.</li>
       </ul>
-      <p>Les Gaulois sont d'excellents metallurgistes (fer, bronze) et cultivent blé, avoine, vigne. Ils commercent avec Rome et la Grèce.</p>
+      <h4>La vie quotidienne gauloise</h4>
+      <ul>
+        <li><strong>L'oppidum</strong> : ville fortifiée sur une hauteur (Gergovie, Bibracte). Centre commercial et artisanal.</li>
+        <li>Maisons rondes en bois et torchis, toits de chaume.</li>
+        <li>Nourriture : bouillie de céréales, viande de porc et de sanglier, poisson, cervoise (bière d'orge), miel.</li>
+        <li>Vêtements : braies (pantalons), tuniques de laine aux couleurs vives, torques (colliers d'or) pour les nobles.</li>
+        <li>Commerce actif avec les Grecs de Marseille (Massalia) et les Romains : vin, céramiques contre or, fourrures, esclaves.</li>
+      </ul>
       <h4>La conquête romaine (58–51 av. J.-C.)</h4>
       <ul>
-        <li><strong>Jules César</strong>, général romain, conquiert la Gaule en 7 ans.</li>
-        <li>Résistance unifiée de <strong>Vercingétorix</strong>, chef arverne.</li>
-        <li><strong>52 av. J.-C.</strong> : Siège d'Alésia. Vercingétorix se rend à César. La Gaule est romaine.</li>
+        <li><strong>Jules César</strong>, général romain ambitieux, conquiert la Gaule en 7 campagnes militaires. Il en fait le récit dans la <em>Guerre des Gaules</em>.</li>
+        <li>Les Gaulois résistent mais leurs tribus manquent d'unité.</li>
+        <li><strong>Vercingétorix</strong>, jeune chef arverne (≈ 25 ans), réussit à unifier les tribus gauloises et adopte la tactique de la <em>terre brûlée</em> : détruire les vivres pour affamer les Romains.</li>
+        <li>Victoire gauloise à <strong>Gergovie (52 av. J.-C.)</strong> → premier revers de César.</li>
+        <li><strong>Siège d'Alésia (52 av. J.-C.)</strong> : César construit une double enceinte de fortifications (contrevallation et circonvallation) autour d'Alésia, piégeant Vercingétorix. Après l'échec d'une armée de secours gauloise de 250 000 hommes, Vercingétorix se rend. Il sera exécuté à Rome 6 ans plus tard.</li>
+        <li>La Gaule devient la province romaine de <em>Gallia</em>.</li>
       </ul>
-      <h4>La Gaule romaine — la romanisation</h4>
+      <h4>La Gaule romaine — la romanisation (Ier–IVe siècle)</h4>
       <ul>
-        <li>Villes nouvelles avec forum (place publique), thermes (bains), amphithéâtres, temples.</li>
-        <li>Réseau de routes pavées reliant toutes les villes à Rome.</li>
-        <li>Le <strong>latin</strong> se diffuse → ancêtre du français.</li>
-        <li>La religion gauloise se mélange à la religion romaine (<em>interprétatio romana</em>).</li>
+        <li>Villes nouvelles avec <strong>forum</strong> (place publique), <strong>thermes</strong> (bains publics), amphithéâtres, temples, aqueducs.</li>
+        <li>Monuments encore visibles : Pont du Gard (aqueduc, 49 m de haut), arènes de Nîmes, théâtre d'Orange.</li>
+        <li>Réseau de <strong>routes pavées</strong> (plus de 80 000 km dans l'empire) facilitant le commerce et les déplacements militaires.</li>
+        <li>Le <strong>latin</strong> se diffuse peu à peu, mélangé au gaulois → donnera le français plusieurs siècles plus tard.</li>
+        <li>La religion gauloise se mélange à la religion romaine. Puis le <strong>christianisme</strong> se répand en Gaule dès le Ier siècle.</li>
+        <li>Développement de <em>Lugdunum</em> (Lyon), capitale des Gaules, et de <em>Lutetia</em> (Paris).</li>
       </ul>
-      <div class="regle">🔑 Les Gaulois ne disparaissent pas : ils adoptent progressivement la culture romaine tout en gardant leurs traditions → naissance de la civilisation gallo-romaine.</div>`
+      <div class="regle">🔑 Les Gaulois ne disparaissent pas : ils s'intègrent progressivement à la culture romaine → naissance de la civilisation gallo-romaine. Le français vient principalement du latin, héritage de cette romanisation.</div>`
     },
     {id:"moyen-age-debut",title:"Le début du Moyen Âge",content:`
-      <h4>La chute de l'Empire romain d'Occident</h4>
+      <h4>La chute de l'Empire romain d'Occident (476)</h4>
       <ul>
-        <li><strong>476 ap. J.-C.</strong> : Le dernier empereur romain d'Occident est déposé → début du Moyen Âge.</li>
-        <li>Des peuples germaniques (appelés « Barbares » par les Romains) s'installent en Gaule : Francs, Wisigoths, Burgondes.</li>
+        <li><strong>476 ap. J.-C.</strong> : Le dernier empereur romain d'Occident, Romulus Augustule, est déposé → début conventionnel du Moyen Âge.</li>
+        <li>L'empire est affaibli depuis des décennies par les crises économiques, les guerres civiles et les invasions.</li>
+        <li>Des peuples germaniques (appelés « <strong>Barbares</strong> » par les Romains, c'est-à-dire « étrangers ») s'installent en Gaule : <strong>Francs</strong> (nord), Wisigoths (sud-ouest), Burgondes (Bourgogne).</li>
+        <li>Les <strong>Vikings</strong> (Normands) mèneront des raids dévastateurs en France aux IX<sup>e</sup>–X<sup>e</sup> siècles, remontant les fleuves jusqu'à Paris.</li>
       </ul>
-      <h4>Clovis et le royaume franc</h4>
+      <h4>Clovis et le royaume franc (481–511)</h4>
       <ul>
-        <li><strong>481</strong> : Clovis (15 ans) devient roi des Francs.</li>
-        <li>Il conquiert progressivement la Gaule en battant les autres peuples.</li>
-        <li><strong>496</strong> : Clovis se convertit au christianisme catholique (baptême à Reims par saint Rémi).</li>
-        <li>Alliance précieuse avec l'Église → légitimité, soutien des évêques.</li>
-        <li>Clovis fonde la <strong>dynastie mérovingienne</strong>.</li>
+        <li><strong>481</strong> : Clovis devient roi des Francs à 15 ans. Il est déjà un guerrier redoutable.</li>
+        <li>Il unifie progressivement la Gaule en battant les Romains (Soissons, 486), les Alamans (Tolbiac, 496), les Wisigoths (Vouillé, 507).</li>
+        <li><strong>496 — Baptême de Clovis à Reims</strong> par saint Rémi : il se convertit au <strong>christianisme catholique</strong>, le seul des rois germaniques à choisir la foi de Rome (les autres sont ariens). Alliance précieuse avec l'Église.</li>
+        <li>Clovis fonde la <strong>dynastie mérovingienne</strong> (du nom de son ancêtre légendaire, Mérovée). Paris devient sa capitale.</li>
+        <li>Après lui, les Mérovingiens s'affaiblissent — les maires du palais prennent le pouvoir réel.</li>
+      </ul>
+      <h4>Les Carolingiens — Charles Martel et Pépin le Bref</h4>
+      <ul>
+        <li><strong>Charles Martel</strong> (715–741), maire du palais, arrête l'invasion arabe à la <strong>bataille de Poitiers (732)</strong>. Il est considéré comme le sauveur de l'Europe chrétienne.</li>
+        <li><strong>Pépin le Bref</strong> (751) : premier roi carolingien, sacré par le pape. Il offre des terres au pape → naissance des États pontificaux.</li>
       </ul>
       <h4>Charlemagne (768–814)</h4>
       <ul>
-        <li>Roi des Francs puis roi des Lombards.</li>
-        <li><strong>25 décembre 800</strong> : Couronné <em>Empereur d'Occident</em> par le pape Léon III à Rome.</li>
-        <li>Il développe les <em>écoles palatines</em> et les écoles dans les monastères.</li>
-        <li>Fait copier des manuscrits pour préserver le savoir antique.</li>
-        <li>Son empire se divise à sa mort (843, traité de Verdun) → naissance de la France et de l'Allemagne.</li>
+        <li>Fils de Pépin le Bref, il règne sur un immense empire couvrant la France, l'Allemagne, l'Italie du nord, une partie de l'Espagne.</li>
+        <li><strong>25 décembre 800</strong> : Couronné <em>Empereur d'Occident</em> par le pape Léon III à Rome dans la basilique Saint-Pierre.</li>
+        <li>Réformes importantes : monnaie unifiée (le denier d'argent), poids et mesures communs, cartulaires pour l'administration.</li>
+        <li><strong>Éducation</strong> : il crée l'<em>école palatine</em> (à la cour) et ordonne d'ouvrir des écoles dans chaque cathédrale et monastère. Il s'entoure d'intellectuels (Alcuin).</li>
+        <li>Il fait copier les manuscrits latins pour préserver le savoir antique : <em>la Renaissance carolingienne</em>.</li>
+        <li><strong>843 — Traité de Verdun</strong> : ses trois petits-fils se partagent l'empire → naissance de la <strong>Francie occidentale</strong> (future France) et de la <strong>Francie orientale</strong> (future Allemagne).</li>
       </ul>
-      <div class="regle">🔑 Le Moyen Âge dure du V<sup>e</sup> au XV<sup>e</sup> siècle (476 → 1492). Clovis et Charlemagne posent les bases de ce qui deviendra la France.</div>`
+      <div class="regle">🔑 Le Moyen Âge dure du V<sup>e</sup> au XV<sup>e</sup> siècle (476 → 1492). Clovis donne à la France sa première unité religieuse. Charlemagne jette les bases de l'éducation et de l'administration. Le partage de 843 crée les frontières de l'Europe médiévale.</div>`
     },
     {id:"feodalite",title:"La société féodale et l'Église",content:`
       <h4>La pyramide féodale</h4>
-      <p>La société médiévale est organisée en trois ordres :</p>
+      <p>La société médiévale est rigidement organisée en <strong>trois ordres</strong>, considérés comme voulus par Dieu :</p>
       <ul>
-        <li><strong>Ceux qui prient</strong> (oratores) : le clergé — pape, évêques, prêtres, moines.</li>
-        <li><strong>Ceux qui combattent</strong> (bellatores) : la noblesse — rois, seigneurs, chevaliers.</li>
-        <li><strong>Ceux qui travaillent</strong> (laboratores) : le peuple — paysans (environ 90 % de la population).</li>
+        <li><strong>Ceux qui prient</strong> (<em>oratores</em>) : le clergé — pape, évêques, prêtres, moines. Environ 1 % de la population, mais très puissants.</li>
+        <li><strong>Ceux qui combattent</strong> (<em>bellatores</em>) : la noblesse — rois, seigneurs, chevaliers. Environ 5 % de la population.</li>
+        <li><strong>Ceux qui travaillent</strong> (<em>laboratores</em>) : le peuple — paysans (environ <strong>90 % de la population</strong>), artisans, marchands.</li>
       </ul>
-      <h4>Le système féodal</h4>
+      <h4>Le système féodal — liens de vassalité</h4>
       <ul>
-        <li>Le roi concède des terres (<strong>fiefs</strong>) à des seigneurs en échange de leur <strong>hommage</strong> et de leur service militaire.</li>
-        <li>Le seigneur qui reçoit un fief devient <strong>vassal</strong> de son seigneur.</li>
-        <li>Les paysans (serfs ou vilains) cultivent la terre du seigneur, paient des taxes et des corvées.</li>
-        <li>Le <strong>château fort</strong> protège la population locale en cas d'attaque.</li>
+        <li>Le roi concède des terres (<strong>fiefs</strong>) à des seigneurs en échange de leur <strong>hommage</strong> (serment de fidélité) et de leur service militaire.</li>
+        <li>Le seigneur qui reçoit un fief devient <strong>vassal</strong> de son suzerain. Un même seigneur peut être suzerain pour certains et vassal pour d'autres.</li>
+        <li>Les paysans (<strong>serfs</strong> : attachés à la terre comme esclaves, ou <strong>vilains</strong> : libres mais soumis) cultivent la terre et doivent au seigneur les <strong>corvées</strong> (travail gratuit), des taxes (cens, champart, taille) et le <strong>ban</strong> (usage obligatoire du moulin, du four, du pressoir du seigneur).</li>
+      </ul>
+      <h4>Le château fort</h4>
+      <ul>
+        <li>Résidence du seigneur et lieu de refuge pour la population lors des attaques.</li>
+        <li>Évolue du donjon en bois (X<sup>e</sup> s.) au château de pierre avec douves, pont-levis, créneaux, meurtrières (XII<sup>e</sup>–XIV<sup>e</sup> s.).</li>
+        <li>La garnison de chevaliers défend le territoire. En échange, les paysans payent leur protection.</li>
+      </ul>
+      <h4>Le chevalier médiéval</h4>
+      <ul>
+        <li><strong>L'adoubement</strong> : cérémonie d'entrée dans la chevalerie (vers 20 ans). On reçoit l'épée, l'écu et les éperons d'or.</li>
+        <li>Armure complète : haubert de mailles puis armure de plaques d'acier (très lourde : 25–30 kg).</li>
+        <li><strong>Le code de chevalerie</strong> : bravoure, loyauté envers le suzerain, protection des faibles, respect de l'Église.</li>
+        <li>Les <strong>tournois</strong> : combats simulés pour s'entraîner et se faire remarquer.</li>
       </ul>
       <h4>Le rôle de l'Église</h4>
       <ul>
-        <li>Omniprésente : elle construit les cathédrales (gothiques : Notre-Dame de Paris), les monastères.</li>
-        <li>Elle tient les registres (naissances, mariages, morts) et enseigne (écoles monastiques).</li>
-        <li>Les moines copient les manuscrits et préservent le savoir.</li>
-        <li>Les <strong>Croisades</strong> (1095–1291) : expéditions armées en Terre Sainte pour reprendre Jérusalem.</li>
+        <li><strong>Omniprésente</strong> dans la vie quotidienne : baptême, mariage, mort, calendrier liturgique rythme l'année (Noël, Pâques, fêtes des saints).</li>
+        <li>Elle construit les <strong>cathédrales romanes</strong> (murs épais, petites fenêtres, voûtes en plein cintre) puis <strong>gothiques</strong> (arcs boutants, grandes rosaces, vitraux colorés — Notre-Dame de Paris, Chartres, Reims).</li>
+        <li>Elle tient les registres (naissances, mariages, décès), enseigne dans les écoles monastiques et universitaires.</li>
+        <li>Les <strong>moines</strong> dans les monastères copient les manuscrits antiques, soignent les malades (herboristerie), cultivent et fabriquent de la bière et du vin.</li>
+        <li>Les <strong>Croisades</strong> (1095–1291) : expéditions armées en Terre Sainte organisées par le pape pour reprendre Jérusalem aux musulmans. 7 croisades principales. Échanges commerciaux et culturels entre Orient et Occident.</li>
       </ul>
-      <div class="regle">🔑 La féodalité est un système de liens personnels fondé sur la fidélité et le service. Chaque seigneur est vassal d'un plus puissant, jusqu'au roi.</div>`
+      <div class="regle">🔑 La féodalité est un système de liens personnels fondé sur la fidélité, le service et la protection. Chaque seigneur est vassal d'un plus puissant, jusqu'au roi. L'Église est la seule institution présente dans tout l'Occident médiéval — elle dépasse les frontières des royaumes.</div>`
     },
     {id:"fin-moyen-age",title:"La fin du Moyen Âge",content:`
-      <h4>La Guerre de Cent Ans (1337–1453)</h4>
+      <h4>La Peste Noire (1347–1351)</h4>
       <ul>
-        <li>Conflit entre la France et l'Angleterre pour la couronne de France.</li>
-        <li>Défaites françaises : Crécy (1346), Azincourt (1415) → Paris occupé par les Anglais.</li>
-        <li>Le roi de France n'a plus de territoire ou presque.</li>
+        <li>La <strong>peste bubonique</strong> arrive d'Asie via les ports méditerranéens. Elle se transmet par les puces des rats.</li>
+        <li>En 4 ans, elle tue entre <strong>un tiers et la moitié</strong> de la population européenne (25 millions de morts).</li>
+        <li>Elle provoque des crises économiques, sociales et religieuses profondes : manque de main-d'œuvre, révoltes paysannes (<em>Jacqueries</em> en France, 1358).</li>
+        <li>La peur de la mort devient omniprésente dans l'art : thème des <em>danses macabres</em>.</li>
+      </ul>
+      <h4>La Guerre de Cent Ans (1337–1453)</h4>
+      <p>Ce n'est pas une seule guerre mais une série de conflits entre la France et l'Angleterre, souvent interrompus par des trêves.</p>
+      <ul>
+        <li><strong>Cause</strong> : le roi d'Angleterre, Édouard III, revendique la couronne de France. Les deux royaumes s'affrontent pour le contrôle de la Guyenne (Aquitaine).</li>
+        <li><strong>Défaites françaises</strong> : Crécy (1346), Poitiers (1356 — le roi Jean II est capturé !), Azincourt (1415).</li>
+        <li>Le roi anglais Henri V épouse la fille du roi de France et obtient la couronne de France par le <strong>traité de Troyes (1420)</strong>. Paris est occupée.</li>
+        <li>Le dauphin Charles n'a plus qu'un petit territoire autour de Bourges.</li>
       </ul>
       <h4>Jeanne d'Arc (1412–1431)</h4>
       <ul>
-        <li>Jeune paysanne lorraine qui entend des voix lui disant de délivrer la France.</li>
-        <li>Elle convainc le dauphin Charles de lui confier une armée.</li>
-        <li><strong>1429</strong> : Elle délivre Orléans assiégée par les Anglais (victoire décisive).</li>
-        <li>Charles VII est sacré roi à Reims (juillet 1429).</li>
-        <li>Capturée par les Bourguignons, vendue aux Anglais, brûlée vive à Rouen en 1431.</li>
-        <li>Réhabilitée en 1456, canonisée en 1920 — sainte patronne de France.</li>
+        <li>Jeune paysanne de Domrémy (Lorraine), née dans une famille modeste. Elle dit entendre les voix de saints (Michel, Catherine, Marguerite) lui ordonnant de « bouter les Anglais hors de France ».</li>
+        <li>Elle convainc le dauphin <strong>Charles VII</strong> à Chinon (1429) et obtient une armée.</li>
+        <li><strong>8 mai 1429</strong> : Elle délivre Orléans assiégée par les Anglais depuis 7 mois. C'est un tournant militaire et moral décisif.</li>
+        <li><strong>Juillet 1429</strong> : Charles VII est sacré roi à Reims — Jeanne est à ses côtés.</li>
+        <li>Capturée par les <strong>Bourguignons</strong> (alliés des Anglais) en 1430, vendue aux Anglais. Jugée par un tribunal ecclésiastique pro-anglais pour hérésie.</li>
+        <li><strong>30 mai 1431</strong> : Brûlée vive sur la place du Vieux-Marché à Rouen. Elle a 19 ans.</li>
+        <li>Réhabilitée par un nouveau procès en 1456. Béatifiée en 1909, <strong>canonisée en 1920</strong>. Fête nationale : 2e dimanche de mai.</li>
       </ul>
-      <h4>La fin de la guerre et les Temps Modernes</h4>
+      <h4>La fin de la guerre et l'ouverture des Temps Modernes</h4>
       <ul>
-        <li>Les Anglais sont finalement chassés de France (sauf Calais) en 1453.</li>
-        <li>Développement de l'imprimerie par Gutenberg (vers 1450) → diffusion du savoir.</li>
-        <li><strong>1492</strong> : Christophe Colomb découvre l'Amérique → fin du Moyen Âge, début des Temps Modernes.</li>
+        <li>Après Jeanne d'Arc, la France reprend progressivement ses territoires. Les Anglais sont définitivement chassés de France en <strong>1453</strong> (sauf Calais, jusqu'en 1558).</li>
+        <li><strong>L'imprimerie de Gutenberg</strong> (vers 1450) : la Bible peut être reproduite en masse. Le savoir circule plus vite et plus loin. Les livres ne sont plus réservés aux monastères.</li>
+        <li><strong>1453</strong> : Chute de Constantinople (Empire byzantin) face aux Ottomans → des savants grecs fuient en Occident avec leurs manuscrits.</li>
+        <li><strong>1492</strong> : Christophe Colomb, financé par la reine d'Espagne Isabelle la Catholique, atteint l'Amérique. C'est la fin du Moyen Âge et le début des <strong>Temps Modernes</strong>.</li>
+        <li>La <strong>Renaissance</strong> : retour aux textes antiques, développement des arts (Léonard de Vinci, Michel-Ange), sciences, explorations.</li>
       </ul>
-      <div class="regle">🔑 Jeanne d'Arc est un symbole national de courage, de foi et d'amour de la patrie. La Guerre de Cent Ans forge le sentiment national français.</div>`
+      <div class="regle">🔑 Jeanne d'Arc est le symbole national du courage, de la foi et de l'amour de la patrie. La Guerre de Cent Ans forge le sentiment national français : pour la première fois, des gens de toute la France se battent pour « la France » et non pour leur seigneur.</div>`
     }
   ],
   periods:[
@@ -1014,94 +1367,164 @@ francais:{
       <h4>Les classes de mots</h4>
       <table><tr><th>Classe</th><th>Rôle</th><th>Exemples</th></tr>
         <tr><td>Nom</td><td>désigne un être, une chose</td><td>chien, liberté, Paris</td></tr>
-        <tr><td>Déterminant</td><td>précède le nom</td><td>le, un, mon, ce, trois</td></tr>
-        <tr><td>Adjectif</td><td>qualifie le nom</td><td>grand, rouge, rapide</td></tr>
+        <tr><td>Déterminant</td><td>précède le nom</td><td>le, un, mon, ce, trois, tout</td></tr>
+        <tr><td>Adjectif qualificatif</td><td>qualifie le nom</td><td>grand, rouge, rapide</td></tr>
         <tr><td>Verbe</td><td>exprime une action ou un état</td><td>courir, être, aimer</td></tr>
-        <tr><td>Pronom</td><td>remplace un nom</td><td>il, elle, nous, qui, celui</td></tr>
-        <tr><td>Adverbe</td><td>modifie verbe, adj. ou adverbe</td><td>vite, très, jamais, ici</td></tr>
-        <tr><td>Préposition</td><td>relie des mots</td><td>de, à, dans, avec, pour</td></tr>
-        <tr><td>Conjonction</td><td>relie propositions</td><td>et, mais, car, parce que</td></tr>
+        <tr><td>Pronom</td><td>remplace un nom</td><td>il, elle, nous, qui, celui, en, y</td></tr>
+        <tr><td>Adverbe</td><td>modifie verbe, adj. ou adverbe</td><td>vite, très, jamais, ici, hier</td></tr>
+        <tr><td>Préposition</td><td>relie des mots</td><td>de, à, dans, avec, pour, sans</td></tr>
+        <tr><td>Conjonction de coordination</td><td>relie mots ou propositions</td><td>mais, ou, et, donc, or, ni, car</td></tr>
+        <tr><td>Conjonction de subordination</td><td>introduit une proposition subordonnée</td><td>que, parce que, quand, si, lorsque</td></tr>
       </table>
-      <h4>La phrase — sujet, verbe, compléments</h4>
+      <h4>La phrase — analyse complète</h4>
       <ul>
-        <li>Le <strong>sujet</strong> (GN ou pronom) fait l'action → il commande l'accord du verbe.</li>
-        <li>Le <strong>verbe</strong> est le noyau de la phrase.</li>
-        <li><strong>COD</strong> (complément d'objet direct) : répond à « Verbe quoi / qui ? » sans préposition.</li>
-        <li><strong>COI</strong> (complément d'objet indirect) : répond à « Verbe à quoi / de quoi ? » avec préposition.</li>
-        <li><strong>CC</strong> (complément circonstanciel) : précise lieu, temps, manière, cause.</li>
+        <li>Le <strong>sujet</strong> (GN ou pronom) fait l'action → commande l'accord du verbe. Peut être inversé (dans les questions).</li>
+        <li>Le <strong>verbe</strong> est le noyau de la phrase. Il peut être à la voix active ou passive.</li>
+        <li><strong>COD</strong> : répond à « Verbe quoi / qui ? » sans préposition. Se déplace difficilement. Peut être pronominalisé (le, la, les).</li>
+        <li><strong>COI</strong> : répond à « Verbe à quoi / de quoi ? » avec préposition (à, de…). Se pronominalisé en lui, leur, y, en.</li>
+        <li><strong>Attribut du sujet</strong> : relié au sujet par un verbe d'état (être, paraître, sembler, devenir…). <em>Il est médecin.</em></li>
+        <li><strong>CC</strong> : lieu (où ?), temps (quand ?), manière (comment ?), cause (pourquoi ?), but (pour quoi faire ?).</li>
       </ul>
-      <div class="exemple">Le chat (sujet) mange (verbe) une souris (COD) rapidement (CC de manière) dans la cuisine (CC de lieu).</div>
+      <div class="exemple">Le chat (sujet) mange (verbe) une souris (COD) rapidement (CC manière) dans la cuisine (CC lieu).<br>La porte (sujet) <em>a été ouverte</em> (voix passive) par le vent (complément d'agent).</div>
+      <h4>Propositions principale et subordonnée</h4>
+      <ul>
+        <li>Une phrase complexe contient plusieurs verbes conjugués → plusieurs <strong>propositions</strong>.</li>
+        <li>La <strong>proposition principale</strong> est indépendante (elle a du sens seule).</li>
+        <li>La <strong>proposition subordonnée</strong> dépend de la principale (introduite par une conjonction de subordination).</li>
+      </ul>
+      <div class="exemple">« Je pense <em>[principale]</em> que tu as raison <em>[subordonnée conjonctive]</em>. »<br>« L'enfant qui joue <em>[subordonnée relative]</em> est mon frère <em>[principale]</em>. »</div>
       <h4>Types et formes de phrases</h4>
       <ul>
-        <li>Types : déclarative, interrogative, impérative, exclamative.</li>
-        <li>Formes : affirmative ↔ négative ; active ↔ passive.</li>
+        <li><strong>Types</strong> : déclarative · interrogative · impérative · exclamative.</li>
+        <li><strong>Formes</strong> : affirmative ↔ négative (ne…pas, ne…jamais, ne…rien, ne…plus) ; active ↔ passive.</li>
+        <li><strong>Discours direct</strong> (guillemets + deux-points) ↔ <strong>discours indirect</strong> (que + subordonnée).</li>
       </ul>
-      <div class="regle">🔑 Pour identifier le sujet : poser « Qui est-ce qui + verbe ? » Pour trouver le COD : « Verbe + qui/quoi ? »</div>`
+      <div class="exemple">Direct : Il dit : « Je viendrai demain. » → Indirect : Il dit qu'il viendrait le lendemain.</div>
+      <div class="regle">🔑 Pour analyser une phrase complexe : 1) Compter les verbes conjugués = nombre de propositions. 2) Identifier la principale. 3) Identifier la/les subordonnées et leur type (relative, conjonctive). 4) Analyser chaque proposition.</div>`
     },
     {id:"conjugaison",title:"Conjugaison",content:`
       <h4>Les temps principaux à maîtriser en CM2</h4>
-      <table><tr><th>Temps</th><th>Usage</th><th>Exemple (aller)</th></tr>
-        <tr><td>Présent</td><td>maintenant, habitude, vérité générale</td><td>je vais</td></tr>
-        <tr><td>Imparfait</td><td>description passée, action en cours dans le passé</td><td>j'allais</td></tr>
-        <tr><td>Passé simple</td><td>action passée précise (récits écrits)</td><td>j'allai</td></tr>
-        <tr><td>Futur simple</td><td>action à venir</td><td>j'irai</td></tr>
-        <tr><td>Passé composé</td><td>action passée (oral et écrit courant)</td><td>je suis allé(e)</td></tr>
-        <tr><td>Plus-que-parfait</td><td>action antérieure à une autre dans le passé</td><td>j'étais allé(e)</td></tr>
-        <tr><td>Conditionnel présent</td><td>hypothèse, politesse</td><td>j'irais</td></tr>
+      <table><tr><th>Temps</th><th>Usage</th><th>aller</th><th>finir</th><th>prendre</th></tr>
+        <tr><td><strong>Présent</strong></td><td>maintenant, habitude, vérité</td><td>je vais</td><td>je finis</td><td>je prends</td></tr>
+        <tr><td><strong>Imparfait</strong></td><td>description passée, durée</td><td>j'allais</td><td>je finissais</td><td>je prenais</td></tr>
+        <tr><td><strong>Passé simple</strong></td><td>action ponctuelle passée (récit écrit)</td><td>j'allai</td><td>je finis</td><td>je pris</td></tr>
+        <tr><td><strong>Futur simple</strong></td><td>action à venir</td><td>j'irai</td><td>je finirai</td><td>je prendrai</td></tr>
+        <tr><td><strong>Passé composé</strong></td><td>action passée terminée (oral/écrit)</td><td>je suis allé(e)</td><td>j'ai fini</td><td>j'ai pris</td></tr>
+        <tr><td><strong>Plus-que-parfait</strong></td><td>avant une autre action passée</td><td>j'étais allé(e)</td><td>j'avais fini</td><td>j'avais pris</td></tr>
+        <tr><td><strong>Conditionnel présent</strong></td><td>hypothèse, politesse, souhait</td><td>j'irais</td><td>je finirais</td><td>je prendrais</td></tr>
       </table>
+      <h4>Verbes irréguliers — à connaître par cœur</h4>
+      <table><tr><th>Infinitif</th><th>Présent (je/tu/il/nous/vous/ils)</th><th>Futur (je)</th><th>Passé simple (il)</th></tr>
+        <tr><td><strong>être</strong></td><td>suis/es/est/sommes/êtes/sont</td><td>serai</td><td>fut</td></tr>
+        <tr><td><strong>avoir</strong></td><td>ai/as/a/avons/avez/ont</td><td>aurai</td><td>eut</td></tr>
+        <tr><td><strong>aller</strong></td><td>vais/vas/va/allons/allez/vont</td><td>irai</td><td>alla</td></tr>
+        <tr><td><strong>faire</strong></td><td>fais/fais/fait/faisons/faites/font</td><td>ferai</td><td>fit</td></tr>
+        <tr><td><strong>venir</strong></td><td>viens/viens/vient/venons/venez/viennent</td><td>viendrai</td><td>vint</td></tr>
+        <tr><td><strong>pouvoir</strong></td><td>peux/peux/peut/pouvons/pouvez/peuvent</td><td>pourrai</td><td>put</td></tr>
+        <tr><td><strong>vouloir</strong></td><td>veux/veux/veut/voulons/voulez/veulent</td><td>voudrai</td><td>voulut</td></tr>
+        <tr><td><strong>voir</strong></td><td>vois/vois/voit/voyons/voyez/voient</td><td>verrai</td><td>vit</td></tr>
+      </table>
+      <h4>Le passé simple — terminaisons</h4>
+      <ul>
+        <li><strong>1er groupe (-er)</strong> : -ai, -as, -a, -âmes, -âtes, -èrent. Ex : il chanta, ils chantèrent.</li>
+        <li><strong>2e groupe (-ir)</strong> : -is, -is, -it, -îmes, -îtes, -irent. Ex : il finit, ils finirent.</li>
+        <li><strong>Irréguliers</strong> : il fut, il eut, il vint, il prit, il dit, il fit, il put, il voulut.</li>
+      </ul>
+      <h4>Le conditionnel — formation et usages</h4>
+      <p>Conditionnel = futur simple sur le même radical + terminaisons de l'imparfait (-ais, -ais, -ait, -ions, -iez, -aient).</p>
+      <div class="exemple"><strong>Hypothèse</strong> : Si j'avais de l'argent, <em>j'achèterais</em> ce livre.<br><strong>Politesse</strong> : <em>Pourriez</em>-vous m'aider ?<br><strong>Futur du passé</strong> : Il savait qu'il <em>réussirait</em>.</div>
       <h4>Les groupes de verbes</h4>
       <ul>
-        <li><strong>1er groupe</strong> : infinitif en -er (sauf aller). Modèle : aimer.</li>
-        <li><strong>2e groupe</strong> : infinitif en -ir, participe présent en -issant. Modèle : finir.</li>
-        <li><strong>3e groupe</strong> : tous les autres (venir, prendre, voir, aller…). Terminaisons variables.</li>
+        <li><strong>1er groupe</strong> (90 % des verbes) : infinitif en -er (sauf aller). Très réguliers.</li>
+        <li><strong>2e groupe</strong> : infinitif en -ir, participe présent en -<em>issant</em>. Ex : finir (finissant), grandir, choisir.</li>
+        <li><strong>3e groupe</strong> : tous les autres — irréguliers. Infinitifs en -re, -oir, et certains -ir (partir, venir…).</li>
       </ul>
-      <h4>Verbes irréguliers incontournables</h4>
-      <p>Être, avoir, aller, faire, venir, prendre, pouvoir, vouloir, savoir, voir, dire, mettre — à connaître à tous les temps.</p>
-      <div class="regle">🔑 Accord sujet-verbe : le verbe s'accorde toujours avec son sujet, même si un complément s'interpose. Ex : « Les enfants de la classe partent. » → partent s'accorde avec enfants.</div>`
+      <div class="regle">🔑 Accord sujet-verbe : le verbe s'accorde toujours avec son sujet, même si un groupe de mots s'interpose. « Les livres de la bibliothèque sont rangés. » → sont s'accorde avec livres. Le plus-que-parfait exprime une action qui s'est passée AVANT une autre action passée.</div>`
     },
     {id:"orthographe",title:"Orthographe",content:`
       <h4>Accord dans le groupe nominal</h4>
-      <p>Le nom donne son genre et son nombre au déterminant et à l'adjectif.</p>
-      <div class="exemple">une belle maison rouge → des belles maisons rouges</div>
+      <p>Le nom donne son genre et son nombre au déterminant et à l'adjectif. Attention aux adjectifs épithètes éloignés du nom !</p>
+      <div class="exemple">une belle maison rouge → des belles maisons rouges · un vieux château médiéval → de vieux châteaux médiévaux</div>
       <h4>Accord du participe passé</h4>
       <ul>
-        <li>Avec <strong>être</strong> : s'accorde avec le sujet. Ex : Elle est partie. Ils sont partis.</li>
-        <li>Avec <strong>avoir</strong> : s'accorde avec le COD si celui-ci est placé <em>avant</em> le verbe. Ex : La chanson que j'ai entendue. Mais : J'ai entendu une chanson.</li>
+        <li>Avec <strong>être</strong> : s'accorde en genre et en nombre avec le sujet. <em>Elle est partie. Ils sont partis. Elles sont arrivées.</em></li>
+        <li>Avec <strong>avoir</strong> : s'accorde avec le COD uniquement s'il est <em>placé avant le verbe</em>.</li>
       </ul>
-      <h4>Homophones grammaticaux</h4>
+      <div class="exemple">J'ai entendu une chanson. (COD après → pas d'accord)<br>La chanson que j'ai entend<strong>ue</strong>. (COD « que » avant → accord féminin singulier)<br>Les films que nous avons regard<strong>és</strong>. (COD « que » avant → accord masculin pluriel)</div>
+      <h4>Homophones grammaticaux — tableau complet CM2</h4>
       <table><tr><th>Homophones</th><th>Distinction</th><th>Astuce</th></tr>
-        <tr><td>a / à</td><td>a = verbe avoir · à = préposition</td><td>Remplacer par « avait » → si possible, c'est a</td></tr>
-        <tr><td>on / ont</td><td>on = pronom · ont = verbe avoir</td><td>Remplacer par « ils ont » → si possible, c'est ont</td></tr>
-        <tr><td>son / sont</td><td>son = déterminant · sont = verbe être</td><td>Remplacer par « étaient » → si possible, c'est sont</td></tr>
-        <tr><td>ce / se</td><td>ce = déterminant/pronom · se = pronom réfléchi</td><td>Devant un verbe réfléchi → se</td></tr>
-        <tr><td>mes/mais</td><td>mes = déterminant possessif · mais = conjonction</td><td>Remplacer par « cependant » → mais</td></tr>
+        <tr><td><strong>a / à</strong></td><td>a = avoir · à = préposition</td><td>Remplacer par « avait »</td></tr>
+        <tr><td><strong>on / ont</strong></td><td>on = pronom · ont = avoir</td><td>Remplacer par « avaient »</td></tr>
+        <tr><td><strong>son / sont</strong></td><td>son = déterminant · sont = être</td><td>Remplacer par « étaient »</td></tr>
+        <tr><td><strong>ce / se</strong></td><td>ce = déterminant/pronom · se = réfléchi</td><td>se précède toujours un verbe réfléchi</td></tr>
+        <tr><td><strong>mes / mais</strong></td><td>mes = déterminant · mais = conjonction</td><td>Remplacer par « cependant »</td></tr>
+        <tr><td><strong>leur / leurs</strong></td><td>leur pronom = invariable · leurs déterm. = variable</td><td>Remplacer par « lui » → si possible, c'est pronom</td></tr>
+        <tr><td><strong>peut / peu / peut-être</strong></td><td>peut = verbe · peu = adverbe · peut-être = doute</td><td>peut → « pouvait » ; peu → « un peu »</td></tr>
+        <tr><td><strong>quand / qu'en / quant à</strong></td><td>quand = temps · qu'en = que + en · quant à = pour ce qui est de</td><td>quand → « lorsque »</td></tr>
+        <tr><td><strong>tout / tous / toute / toutes</strong></td><td>variable selon nature et fonction</td><td>adverbe → invariable : elles sont tout étonnées</td></tr>
       </table>
-      <h4>Règles de base</h4>
+      <h4>Règles d'orthographe lexicale</h4>
       <ul>
-        <li>Noms féminins en [é] : -ée (sauf clé, dictée…)</li>
-        <li>Adjectifs en [eur] : -eur masculin → -eure féminin (meilleur → meilleure)</li>
-        <li>Pluriel : en général +s, sauf -eau/-au → -eaux, -al → -aux, -ail → -aux ou -ails</li>
+        <li>Noms féminins en [é] s'écrivent <strong>-ée</strong> : une journée, une arrivée, une pensée (sauf : une clé, une dictée, une fée).</li>
+        <li>Verbes en -<strong>ger</strong> : garder le -e devant a et o → nous mangeons, il nageait.</li>
+        <li>Verbes en -<strong>cer</strong> : cédille devant a et o → nous commençons, il avançait.</li>
+        <li>Noms en <strong>-tion, -sion</strong> sont féminins : une solution, une révision.</li>
+        <li>Mots invariables à connaître : alors, après, aussi, avec, beaucoup, car, cependant, donc, enfin, ensuite, hier, jamais, parce que, peut-être, puis, soudain, toujours, très.</li>
       </ul>
-      <div class="regle">🔑 Stratégie : lire à voix haute, identifier la nature des mots (nom ? verbe ? adjectif ?), appliquer les règles d'accord.</div>`
+      <h4>Les accords particuliers</h4>
+      <ul>
+        <li>Plusieurs sujets au singulier → verbe au <strong>pluriel</strong> : <em>Le chat et le chien dorment.</em></li>
+        <li>Sujet collectif + complément pluriel → accord selon le sens : <em>Une foule de gens criait / criaient.</em></li>
+        <li><strong>Tout</strong> adverbe (= complètement) est invariable : <em>elles sont tout heureuses</em> (sauf devant fém. commen. par consonne : <em>elles sont toutes petites</em>).</li>
+      </ul>
+      <div class="regle">🔑 Méthode de relecture : 1) Identifier tous les noms et vérifier l'accord des déterminants et adjectifs. 2) Identifier tous les verbes et vérifier l'accord avec le sujet. 3) Vérifier les homophones en utilisant les remplacements. 4) Vérifier les participes passés.</div>`
     },
     {id:"vocabulaire",title:"Vocabulaire",content:`
-      <h4>Formation des mots</h4>
+      <h4>Formation des mots — préfixes et suffixes</h4>
+      <table><tr><th>Préfixe</th><th>Sens</th><th>Exemples</th></tr>
+        <tr><td>in- / im- / il- / ir-</td><td>contraire</td><td>inutile, impossible, illégal, irréel</td></tr>
+        <tr><td>re- / ré-</td><td>à nouveau, en arrière</td><td>refaire, réécrire, revenir</td></tr>
+        <tr><td>anti-</td><td>contre</td><td>antibiotique, antivol, antiracisme</td></tr>
+        <tr><td>pré-</td><td>avant</td><td>préhistoire, prévoir, préfixe</td></tr>
+        <tr><td>télé-</td><td>à distance</td><td>téléphone, télévision, télescope</td></tr>
+        <tr><td>micro-</td><td>petit</td><td>microphone, microscope, microbe</td></tr>
+        <tr><td>bi- / tri-</td><td>deux / trois</td><td>bicyclette, tricolore, triangle</td></tr>
+      </table>
+      <table><tr><th>Suffixe</th><th>Sens / Classe</th><th>Exemples</th></tr>
+        <tr><td>-eur / -euse</td><td>personne qui fait</td><td>chanteur, coureur, coiffeuse</td></tr>
+        <tr><td>-tion / -sion</td><td>action, résultat (nom fém.)</td><td>construction, révision, décision</td></tr>
+        <tr><td>-ment</td><td>adverbe de manière</td><td>rapidement, lentement, vraiment</td></tr>
+        <tr><td>-able / -ible</td><td>qui peut être fait</td><td>mangeable, lisible, visible</td></tr>
+        <tr><td>-iste</td><td>partisan, professionnel</td><td>pianiste, journaliste, optimiste</td></tr>
+        <tr><td>-ique</td><td>adjectif lié à</td><td>électrique, historique, logique</td></tr>
+      </table>
+      <h4>Relations entre les mots</h4>
       <ul>
-        <li><strong>Préfixe</strong> (avant le radical) : in- (impossible), re- (refaire), anti- (antibiotique), pré- (préhistoire).</li>
-        <li><strong>Suffixe</strong> (après le radical) : -eur (chanteur), -tion (construction), -ment (rapidement), -able (mangeable).</li>
-        <li><strong>Radical</strong> : la partie centrale qui porte le sens. Ex : port- → porter, porteur, transport.</li>
+        <li><strong>Synonymes</strong> : sens proche. → La précision du synonyme dépend du contexte ! <em>Joyeux, heureux, gai, ravi, enchanté, radieux</em> ne sont pas tous interchangeables.</li>
+        <li><strong>Antonymes</strong> : sens contraire. → Grand ↔ petit · rapide ↔ lent · sombre ↔ lumineux · courage ↔ lâcheté.</li>
+        <li><strong>Homonymes</strong> : même son, sens différent. → verre/vers/ver/vert · sot/seau/saut/sceau · porc/port/pore.</li>
+        <li><strong>Polysémie</strong> : un seul mot avec plusieurs sens. → <em>vol</em> (vol d'avion / vol à main armée / vol de mouettes).</li>
       </ul>
-      <h4>Sens des mots</h4>
+      <h4>Sens propre et sens figuré</h4>
+      <p>De nombreuses expressions ont un sens figuré (imagé, non littéral) différent du sens propre.</p>
+      <div class="exemple">« Il a la tête dans les nuages » → sens figuré : il est distrait, rêveur.<br>« Casser les pieds » → ennuyer. · « Se faire la belle » → s'évader. · « Il pleut des cordes » → pluie très forte.</div>
+      <h4>Le champ lexical</h4>
+      <p>Ensemble de mots se rapportant à un même thème.</p>
+      <div class="exemple">Champ lexical de la mer : vague, marée, plage, sable, coquillage, phare, voilier, marin, tempête, horizons.</div>
+      <h4>Les figures de style</h4>
       <ul>
-        <li><strong>Synonymes</strong> : mots de sens proche. Joyeux → heureux, gai, content.</li>
-        <li><strong>Antonymes</strong> : mots de sens contraire. Grand ↔ petit, rapide ↔ lent.</li>
-        <li><strong>Homonymes</strong> : même son mais sens différent. Verre (objet) / vert (couleur) / ver (animal).</li>
-        <li><strong>Sens propre / figuré</strong> : « Il a la tête dans les nuages » → sens figuré = il est distrait.</li>
+        <li><strong>Comparaison</strong> : rapproche deux éléments avec « comme », « tel que »… <em>Il court comme le vent.</em></li>
+        <li><strong>Métaphore</strong> : comparaison sans outil comparatif. <em>Il est un lion sur le terrain.</em></li>
+        <li><strong>Personnification</strong> : attribuer des caractéristiques humaines à une chose. <em>Le soleil sourit.</em></li>
+        <li><strong>Hyperbole</strong> : exagération pour accentuer l'effet. <em>Je suis mort de fatigue.</em></li>
       </ul>
-      <h4>Familles de mots</h4>
-      <p>Des mots de la même famille partagent le même radical.</p>
-      <div class="exemple">Famille de TERRE : terrain, enterrer, atterrir, déterrer, terrasse, territoire, souterrain.</div>
-      <div class="regle">🔑 Connaître les principaux préfixes et suffixes latins/grecs permet de deviner le sens d'un mot inconnu. Ex : télé- = à distance (téléphone, télescope).</div>`
+      <h4>Registres de langue</h4>
+      <table><tr><th>Registre</th><th>Contexte</th><th>Exemple</th></tr>
+        <tr><td>Soutenu</td><td>écrit formel, littéraire</td><td>« Je vous serais reconnaissant de… »</td></tr>
+        <tr><td>Courant</td><td>usage quotidien normal</td><td>« Est-ce que vous pouvez m'aider ? »</td></tr>
+        <tr><td>Familier</td><td>amis, famille, oral décontracté</td><td>« T'as un crayon ? »</td></tr>
+      </table>
+      <div class="regle">🔑 Enrichir son vocabulaire permet d'écrire et de parler avec précision et nuance. Un mot précis vaut mieux que trois mots vagues. Lire régulièrement est le meilleur moyen d'augmenter son vocabulaire naturellement.</div>`
     }
   ],
   periods:[
@@ -1121,80 +1544,180 @@ francais:{
   themes:[
     {id:"gram-cm1",title:"Grammaire de base",content:`
       <h4>La phrase</h4>
-      <p>Une phrase commence par une majuscule et se termine par un point (. ? ! …). Elle contient toujours un verbe conjugué.</p>
-      <h4>Sujet et verbe</h4>
+      <p>Une phrase commence par une <strong>majuscule</strong> et se termine par un <strong>point</strong> (. ? ! …). Elle contient toujours un <strong>verbe conjugué</strong>.</p>
       <ul>
-        <li>Le <strong>sujet</strong> fait l'action. On le trouve en posant « Qui est-ce qui... ? »</li>
-        <li>Le <strong>verbe</strong> exprime l'action ou l'état. Il s'accorde avec le sujet.</li>
+        <li>Phrase <strong>déclarative</strong> : énonce un fait. → point simple. <em>Le soleil se lève à l'est.</em></li>
+        <li>Phrase <strong>interrogative</strong> : pose une question. → point d'interrogation. <em>Où vas-tu ?</em></li>
+        <li>Phrase <strong>impérative</strong> : donne un ordre. → point ou exclamation. <em>Ferme la porte !</em></li>
+        <li>Phrase <strong>exclamative</strong> : exprime un sentiment fort. → point d'exclamation. <em>Comme il fait beau !</em></li>
+        <li>Forme <strong>affirmative</strong> ↔ forme <strong>négative</strong> (ne…pas, ne…jamais, ne…rien).</li>
       </ul>
-      <div class="exemple">Les oiseaux chantent → Qui est-ce qui chante ? Les oiseaux = sujet.</div>
-      <h4>Compléments du verbe</h4>
+      <h4>Le sujet et le verbe</h4>
       <ul>
-        <li><strong>COD</strong> : répond à « Verbe quoi ? » sans préposition. Ex : Je mange une pomme. → une pomme.</li>
-        <li><strong>Compléments circonstanciels</strong> : de lieu (où ?), de temps (quand ?), de manière (comment ?).</li>
+        <li>Le <strong>sujet</strong> désigne qui fait ou subit l'action. On le trouve en posant « <em>Qui est-ce qui</em> + verbe ? »</li>
+        <li>Le <strong>verbe</strong> exprime l'action ou l'état. Il s'accorde toujours avec le sujet.</li>
+        <li>Le sujet peut être un groupe nominal (GN) ou un pronom (je, tu, il, elle, nous, vous, ils, elles).</li>
       </ul>
-      <h4>Nature des mots</h4>
+      <div class="exemple">Les oiseaux chantent → Qui est-ce qui chante ? <strong>Les oiseaux</strong> = sujet (GN pluriel → chantent au pluriel).</div>
+      <h4>Les compléments du verbe</h4>
       <ul>
-        <li><strong>Nom</strong> : désigne une personne, un animal, une chose, une idée.</li>
-        <li><strong>Déterminant</strong> : article (le, la, les, un, une, des), possessif (mon, ma…), démonstratif (ce, cette…)</li>
-        <li><strong>Adjectif</strong> : donne une information sur le nom (couleur, forme, qualité).</li>
-        <li><strong>Verbe</strong> : action ou état. S'accorde avec le sujet.</li>
-        <li><strong>Pronom</strong> : remplace un nom pour éviter la répétition.</li>
+        <li><strong>COD</strong> (complément d'objet direct) : répond à « Verbe + quoi/qui ? » sans préposition. On ne peut pas le supprimer. <em>Je mange une pomme. → quoi ? une pomme.</em></li>
+        <li><strong>COI</strong> (complément d'objet indirect) : répond à « Verbe + à quoi / de quoi ? » avec préposition. <em>Je pense à mes vacances.</em></li>
+        <li><strong>CC de lieu</strong> : répond à « où ? ». <em>Il habite à Paris.</em></li>
+        <li><strong>CC de temps</strong> : répond à « quand ? ». <em>Elle part demain.</em></li>
+        <li><strong>CC de manière</strong> : répond à « comment ? ». <em>Il court rapidement.</em></li>
       </ul>
-      <div class="regle">🔑 Le groupe nominal minimal = déterminant + nom. Ex : le chien, une belle maison, mes amis.</div>`
+      <h4>La nature des mots (classes grammaticales)</h4>
+      <table><tr><th>Classe</th><th>Rôle</th><th>Exemples</th></tr>
+        <tr><td><strong>Nom</strong></td><td>personne, animal, chose, idée</td><td>chat, liberté, Paris</td></tr>
+        <tr><td><strong>Déterminant</strong></td><td>introduit le nom</td><td>le, un, mon, ce, trois</td></tr>
+        <tr><td><strong>Adjectif qualificatif</strong></td><td>précise le nom</td><td>grand, rouge, doux</td></tr>
+        <tr><td><strong>Verbe</strong></td><td>action ou état</td><td>courir, être, aimer</td></tr>
+        <tr><td><strong>Pronom</strong></td><td>remplace un nom</td><td>il, elle, nous, qui</td></tr>
+        <tr><td><strong>Adverbe</strong></td><td>modifie verbe ou adjectif</td><td>vite, très, jamais</td></tr>
+        <tr><td><strong>Préposition</strong></td><td>relie des groupes</td><td>de, à, dans, avec</td></tr>
+      </table>
+      <h4>Le groupe nominal (GN)</h4>
+      <p>Le GN minimal = <strong>déterminant + nom</strong>. On peut l'enrichir avec des adjectifs.</p>
+      <div class="exemple">le chien → le gros chien noir → le gros chien noir de mon voisin</div>
+      <div class="regle">🔑 Pour analyser une phrase : 1) Trouver le verbe conjugué. 2) Chercher le sujet (qui fait l'action ?). 3) Identifier les compléments (quoi ? où ? quand ? comment ?). La fonction d'un mot répond à « à quoi sert-il dans la phrase ? »</div>`
     },
     {id:"conj-cm1",title:"Conjugaison CM1",content:`
       <h4>Les temps étudiés en CM1</h4>
-      <ul>
-        <li><strong>Présent</strong> : ce qui se passe maintenant ou toujours.</li>
-        <li><strong>Imparfait</strong> : description dans le passé, action qui durait.</li>
-        <li><strong>Futur simple</strong> : ce qui va se passer.</li>
-        <li><strong>Passé composé</strong> : action passée terminée (à l'oral et à l'écrit courant).</li>
-      </ul>
-      <h4>Terminaisons du présent — 1er groupe (-er)</h4>
-      <div class="exemple">je chante · tu chantes · il/elle chante · nous chantons · vous chantez · ils/elles chantent</div>
+      <table><tr><th>Temps</th><th>Quand l'utiliser ?</th><th>Indices</th></tr>
+        <tr><td><strong>Présent</strong></td><td>maintenant, habitude, vérité générale</td><td>aujourd'hui, maintenant, toujours</td></tr>
+        <tr><td><strong>Imparfait</strong></td><td>description passée, action qui durait</td><td>autrefois, avant, quand j'étais petit</td></tr>
+        <tr><td><strong>Passé composé</strong></td><td>action passée terminée (oral / écrit courant)</td><td>hier, la semaine dernière, déjà</td></tr>
+        <tr><td><strong>Futur simple</strong></td><td>action à venir</td><td>demain, dans 10 ans, bientôt</td></tr>
+      </table>
+      <h4>Terminaisons du présent</h4>
+      <table><tr><th>Pronom</th><th>1er groupe (-er) : chanter</th><th>être</th><th>avoir</th></tr>
+        <tr><td>je / j'</td><td>chant<strong>e</strong></td><td>suis</td><td>ai</td></tr>
+        <tr><td>tu</td><td>chant<strong>es</strong></td><td>es</td><td>as</td></tr>
+        <tr><td>il / elle</td><td>chant<strong>e</strong></td><td>est</td><td>a</td></tr>
+        <tr><td>nous</td><td>chant<strong>ons</strong></td><td>sommes</td><td>avons</td></tr>
+        <tr><td>vous</td><td>chant<strong>ez</strong></td><td>êtes</td><td>avez</td></tr>
+        <tr><td>ils / elles</td><td>chant<strong>ent</strong></td><td>sont</td><td>ont</td></tr>
+      </table>
       <h4>Terminaisons de l'imparfait</h4>
-      <div class="exemple">je chantais · tu chantais · il chantait · nous chantions · vous chantiez · ils chantaient</div>
-      <h4>Terminaisons du futur — 1er groupe</h4>
-      <div class="exemple">je chanterai · tu chanteras · il chantera · nous chanterons · vous chanterez · ils chanteront</div>
-      <h4>Verbes être et avoir (à apprendre par cœur)</h4>
-      <p>Être et avoir servent aussi d'<strong>auxiliaires</strong> pour former le passé composé.</p>
-      <div class="exemple">Passé composé : j'ai chanté (avoir + participe passé) · je suis parti(e) (être + participe passé)</div>
-      <div class="regle">🔑 Avec être, le participe passé s'accorde avec le sujet : Elles sont parties (féminin pluriel).</div>`
+      <p>L'imparfait se forme sur le radical de <strong>nous</strong> au présent, + les terminaisons : <em>-ais, -ais, -ait, -ions, -iez, -aient</em>.</p>
+      <div class="exemple">chanter → nous chant<u>ons</u> → radical : chant- → je chantais, tu chantais, il chantait, nous chantions, vous chantiez, ils chantaient</div>
+      <h4>Terminaisons du futur simple — 1er groupe</h4>
+      <p>Futur = infinitif + terminaisons : <em>-ai, -as, -a, -ons, -ez, -ont</em>.</p>
+      <div class="exemple">chanter → je chanterai · tu chanteras · il chantera · nous chanterons · vous chanterez · ils chanteront</div>
+      <h4>Le passé composé</h4>
+      <p>Passé composé = <strong>auxiliaire (être ou avoir) au présent</strong> + <strong>participe passé</strong>.</p>
+      <ul>
+        <li>La plupart des verbes → auxiliaire <strong>avoir</strong> : j'ai mangé, tu as couru, il a fini.</li>
+        <li>Verbes de mouvement et réfléchis → auxiliaire <strong>être</strong> : je suis parti(e), elle est venue, ils sont restés.</li>
+        <li>Avec être : le participe passé s'accorde avec le <strong>sujet</strong>. Ex : Elles sont <em>parties</em> (féminin pluriel).</li>
+      </ul>
+      <div class="exemple">Liste des verbes avec ÊTRE : aller/venir · partir/arriver · entrer/sortir · monter/descendre · naître/mourir · rester · tomber + tous les verbes pronominaux (se laver, se lever…)</div>
+      <h4>Les groupes de verbes</h4>
+      <ul>
+        <li><strong>1er groupe</strong> : infinitif en <em>-er</em> (sauf aller). Très réguliers. Ex : chanter, manger, jouer.</li>
+        <li><strong>2e groupe</strong> : infinitif en <em>-ir</em>, participe présent en <em>-issant</em>. Ex : finir (finissant), grandir.</li>
+        <li><strong>3e groupe</strong> : tous les autres, irréguliers. Ex : être, avoir, aller, faire, venir, prendre, voir.</li>
+      </ul>
+      <div class="regle">🔑 Être et avoir sont les verbes les plus utilisés : auxiliaires pour les temps composés, ils sont aussi irréguliers. Les apprendre par cœur à tous les temps est indispensable !</div>`
     },
     {id:"ortho-cm1",title:"Orthographe CM1",content:`
       <h4>Les accords dans le groupe nominal</h4>
-      <p>Le déterminant et l'adjectif s'accordent en genre (masculin/féminin) et en nombre (singulier/pluriel) avec le nom.</p>
-      <div class="exemple">un grand chien blanc → des grands chiens blancs</div>
-      <h4>Formation du féminin</h4>
-      <ul>
-        <li>Règle générale : ajouter -e. Ex : grand → grande, petit → petite.</li>
-        <li>-eux → -euse : heureux → heureuse.</li>
-        <li>-er → -ère : léger → légère.</li>
-        <li>Doublements : bon → bonne, gros → grosse, bas → basse.</li>
-      </ul>
+      <p>Le déterminant et l'adjectif s'accordent en <strong>genre</strong> (masculin/féminin) et en <strong>nombre</strong> (singulier/pluriel) avec le nom.</p>
+      <div class="exemple">un grand chien blanc → des grands chiens blancs · une petite fille rousse → de petites filles rousses</div>
+      <h4>L'accord sujet-verbe</h4>
+      <p>Le verbe s'accorde toujours avec son sujet, même si un complément s'interpose.</p>
+      <div class="exemple">Les enfants de la classe <strong>partent</strong>. → qui part ? les enfants → pluriel → partent.<br>Mon frère et ma sœur <strong>jouent</strong> ensemble. → deux sujets → pluriel.</div>
+      <h4>Formation du féminin des adjectifs</h4>
+      <table><tr><th>Règle</th><th>Masculin</th><th>Féminin</th></tr>
+        <tr><td>Général : + e</td><td>grand, petit, fort</td><td>grande, petite, forte</td></tr>
+        <tr><td>-eux → -euse</td><td>heureux, sérieux</td><td>heureuse, sérieuse</td></tr>
+        <tr><td>-er → -ère</td><td>léger, premier</td><td>légère, première</td></tr>
+        <tr><td>-eur → -eure</td><td>meilleur, majeur</td><td>meilleure, majeure</td></tr>
+        <tr><td>Doublons + e</td><td>bon, gros, bas</td><td>bonne, grosse, basse</td></tr>
+        <tr><td>Irréguliers</td><td>beau, vieux, nouveau</td><td>belle, vieille, nouvelle</td></tr>
+      </table>
       <h4>Formation du pluriel</h4>
       <ul>
-        <li>Règle générale : ajouter -s. Ex : chat → chats.</li>
-        <li>-eau, -au → -eaux, -aux : gâteau → gâteaux, noyau → noyaux.</li>
-        <li>-al → -aux : cheval → chevaux (sauf bal → bals, festival → festivals).</li>
-        <li>Noms en -s, -x, -z : invariables. Ex : bois, voix, nez.</li>
+        <li>Règle générale : ajouter <strong>-s</strong>. Ex : chat → chats, maison → maisons.</li>
+        <li><em>-eau, -au</em> → <em>-eaux, -aux</em> : gâteau → gâteaux, tuyau → tuyaux.</li>
+        <li><em>-al</em> → <em>-aux</em> : cheval → chevaux, journal → journaux (exceptions : bal → bals, carnaval → carnavals, festival → festivals).</li>
+        <li>Noms terminés par <em>-s, -x, -z</em> : <strong>invariables</strong>. bois → bois, voix → voix, nez → nez.</li>
       </ul>
-      <h4>Homophones simples</h4>
+      <h4>Homophones grammaticaux — méthode de remplacement</h4>
+      <table><tr><th>Homophone</th><th>Nature</th><th>Remplacement pour vérifier</th></tr>
+        <tr><td><strong>a</strong></td><td>verbe avoir (3e sg)</td><td>remplacer par « avait » → si ça marche, c'est <em>a</em></td></tr>
+        <tr><td><strong>à</strong></td><td>préposition</td><td>si « avait » ne marche pas → <em>à</em></td></tr>
+        <tr><td><strong>est</strong></td><td>verbe être (3e sg)</td><td>remplacer par « était » → si ça marche, c'est <em>est</em></td></tr>
+        <tr><td><strong>et</strong></td><td>conjonction</td><td>remplacer par « et puis »</td></tr>
+        <tr><td><strong>ou</strong></td><td>conjonction (choix)</td><td>remplacer par « ou bien »</td></tr>
+        <tr><td><strong>où</strong></td><td>lieu / interrogation</td><td>remplacer par « là où »</td></tr>
+        <tr><td><strong>on</strong></td><td>pronom sujet</td><td>remplacer par « il »</td></tr>
+        <tr><td><strong>ont</strong></td><td>verbe avoir (3e pl)</td><td>remplacer par « avaient »</td></tr>
+      </table>
+      <h4>La ponctuation</h4>
       <ul>
-        <li><strong>et / est</strong> : et = « et puis » · est = verbe être (remplacer par « était »)</li>
-        <li><strong>ou / où</strong> : où = lieu (remplacer par « là où »)</li>
-        <li><strong>a / à</strong> : a = verbe avoir (remplacer par « avait »)</li>
+        <li>Le <strong>point</strong> (.) : fin de phrase déclarative ou impérative.</li>
+        <li>La <strong>virgule</strong> (,) : séparation dans une liste, après un CC en début de phrase.</li>
+        <li>Le <strong>point d'interrogation</strong> (?) et le <strong>point d'exclamation</strong> (!) : fin de phrase.</li>
+        <li>Les <strong>guillemets</strong> (« ») : discours direct, citation.</li>
+        <li>Les <strong>deux-points</strong> (:) : annoncent une liste, une explication, un dialogue.</li>
       </ul>
-      <div class="regle">🔑 Avant d'écrire un mot, se demander : c'est un nom ? un adjectif ? un verbe ? Cela détermine l'accord à appliquer.</div>`
+      <div class="regle">🔑 Avant d'écrire un mot : 1) Quelle est sa nature ? (nom, verbe, adjectif ?) 2) Avec quoi s'accorde-t-il ? 3) Appliquer la règle. La relecture est indispensable : lire chaque groupe de mots séparément pour vérifier les accords.</div>`
+    },
+    {id:"vocab-cm1",title:"Vocabulaire CM1",content:`
+      <h4>Formation des mots</h4>
+      <ul>
+        <li><strong>Préfixe</strong> : élément placé <em>avant</em> le radical qui modifie le sens.
+          <ul>
+            <li><em>in- / im-</em> = contraire : possible → impossible, utile → inutile, poli → impoli.</li>
+            <li><em>re-</em> = à nouveau : faire → refaire, lire → relire, voir → revoir.</li>
+            <li><em>dé-</em> = contraire / séparation : faire → défaire, couvrir → découvrir.</li>
+            <li><em>pré-</em> = avant : histoire → préhistoire, voir → prévoir.</li>
+          </ul>
+        </li>
+        <li><strong>Suffixe</strong> : élément placé <em>après</em> le radical.
+          <ul>
+            <li><em>-eur/-euse</em> : chanter → chanteur/chanteuse, courir → coureur.</li>
+            <li><em>-tion/-sion</em> : construire → construction, décider → décision.</li>
+            <li><em>-ment</em> : rapide → rapidement, lent → lentement (adverbes).</li>
+            <li><em>-able/-ible</em> : manger → mangeable, lire → lisible.</li>
+          </ul>
+        </li>
+        <li><strong>Radical</strong> : la partie centrale qui porte le sens de base.
+          <div class="exemple">Famille de PORT : porter, porteur, transport, importer, exporter, rapport, apporter.</div>
+        </li>
+      </ul>
+      <h4>Les relations entre les mots</h4>
+      <ul>
+        <li><strong>Synonymes</strong> : mots de sens proche. → joyeux = heureux, gai, content, ravi.</li>
+        <li><strong>Antonymes</strong> : mots de sens contraire. → grand ↔ petit · rapide ↔ lent · sombre ↔ lumineux.</li>
+        <li><strong>Homonymes</strong> : même prononciation, sens différent. → verre / vers / vert / ver · coin / coing.</li>
+        <li><strong>Familles de mots</strong> : mots qui partagent le même radical.
+          <div class="exemple">Famille de TERRE : terrain, enterrer, atterrir, souterrain, terrasse, territoire, parterre.</div>
+        </li>
+      </ul>
+      <h4>Sens propre et sens figuré</h4>
+      <ul>
+        <li><strong>Sens propre</strong> : sens habituel, concret. → « Il court vite. »</li>
+        <li><strong>Sens figuré</strong> : sens imagé, non littéral. → « Le temps file. » (le temps passe vite)</li>
+      </ul>
+      <div class="exemple">« Il a du cœur » (sens figuré = il est généreux) · « La tête de la liste » (le premier) · « Casser les pieds » (ennuyer)</div>
+      <h4>Utiliser le dictionnaire</h4>
+      <ul>
+        <li>Les mots sont classés par <strong>ordre alphabétique</strong>. Si les premières lettres sont identiques, on compare la 2e, puis la 3e lettre…</li>
+        <li>Une entrée de dictionnaire donne : la nature du mot, le genre (pour les noms), la définition, des exemples d'emploi, parfois l'étymologie.</li>
+        <li>Un même mot peut avoir plusieurs <strong>définitions</strong> (sens multiples) selon le contexte.</li>
+      </ul>
+      <div class="regle">🔑 Connaître les préfixes et suffixes permet de deviner le sens d'un mot inconnu. Ex : « télé- » vient du grec et signifie « à distance » → téléphone (parler à distance), télescope (voir à distance), télévision.</div>`
     }
   ],
   periods:[
     {id:"p1",label:"Période 1",dates:"Sep–Oct",themeIds:["gram-cm1"]},
     {id:"p2",label:"Période 2",dates:"Nov–Déc",themeIds:["conj-cm1"]},
     {id:"p3",label:"Période 3",dates:"Jan–Fév",themeIds:["ortho-cm1"]},
-    {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["gram-cm1","conj-cm1"]},
-    {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["gram-cm1","conj-cm1","ortho-cm1"]}
+    {id:"p4",label:"Période 4",dates:"Mar–Avr",themeIds:["vocab-cm1"]},
+    {id:"p5",label:"Période 5 — révision",dates:"Mai–Juin",themeIds:["gram-cm1","conj-cm1","ortho-cm1","vocab-cm1"]}
   ]
 },
 
@@ -1744,7 +2267,7 @@ emc:{
 const HOME_GROUPS = [
   {
     title:"📐 Mathématiques",
-    subjects:['maths']
+    subjects:['maths','maths-cm1']
   },
   {
     title:"🏛️ Histoire",
